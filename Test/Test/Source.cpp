@@ -1,15 +1,13 @@
 #include <GLFW/glfw3.h>
+#include <cstdlib>
 
 int main(void) {
 
+	/* Initialize the library */
 	if (!glfwInit()) throw "Lib isn`t working!";
 
-	GLFWwindow* window;
-
-	/* Initialize the library */
-
 	/* Create a windowed mode window and its OpenGL context */
-	window = glfwCreateWindow(640, 480, "Hello World", nullptr, nullptr);
+	const auto window = glfwCreateWindow(640, 480, "Hello World", nullptr, nullptr);
 	if (!window) {
 		glfwTerminate();
 		throw "Window isn`t working!";
@@ -32,5 +30,5 @@ int main(void) {
 	}
 
 	glfwTerminate();
-	return 0;
+	return EXIT_SUCCESS;
 }
