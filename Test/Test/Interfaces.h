@@ -1,5 +1,24 @@
 #pragma once
 
+enum Color {
+	BLACK,
+	BLUE,
+	GREEN,
+	CYAN,
+	RED,
+	MAGENTA,
+	BROWN,
+	LIGHTGRAY,
+	DARKGRAY,
+	LIGHTBLUE,
+	LIGHTGREEN,
+	LIGHTCYAN,
+	LIGHTRED,
+	LIGHTMAGENTA,
+	YELLOW,
+	WHITE
+};
+
 struct IMove //интерфейс передвижения
 {
 	virtual void ChangePosition(double dx, double dy) abstract;
@@ -25,3 +44,4 @@ public:
 private:
 	bool focus;
 };
+
