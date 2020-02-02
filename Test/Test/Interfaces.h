@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 
 enum Color {
 	BLACK,
@@ -20,32 +19,56 @@ enum Color {
 	WHITE
 };
 
-std::string to_string(Color color) {
-	switch (color) {
-	case BLACK: return static_cast<std::string>("Black");
-	case BLUE: return static_cast<std::string>("Blue");
-	case GREEN: return static_cast<std::string>("Green");
-	case CYAN: return static_cast<std::string>("Cyan");
-	case RED: return static_cast<std::string>("Red");
-	case MAGENTA: return static_cast<std::string>("Magenta");
-	case BROWN: return static_cast<std::string>("Brown");
-	case LIGHTGRAY: return static_cast<std::string>("Light gray");
-	case DARKGRAY: return static_cast<std::string>("Dark gray");
-	case LIGHTBLUE: return static_cast<std::string>("Light blue");
-	case LIGHTGREEN: return static_cast<std::string>("Light green");
-	case LIGHTCYAN: return static_cast<std::string>("Light cyan");
-	case LIGHTRED: return static_cast<std::string>("Light red");
-	case LIGHTMAGENTA: return static_cast<std::string>("Light magenta");
-	case YELLOW: return static_cast<std::string>("Yellow");
-	case WHITE: return static_cast<std::string>("White");
-	default: return static_cast<std::string>("Unknown");
+class XY {
+public:
+	XY() = default;
+	XY(float x) : XY(x, x) {}
+	XY(float x, float y) : x(x), y(y) {}
+	virtual float getX() const {
+		return this->x;
 	}
-}
+	virtual float getY() const {
+		return this->y;
+	}
+	virtual void setX(float x) {
+		this->x = x;
+	}
+	virtual void setY(float y) {
+		this->y = y;
+	}
+	virtual void setXY(float x, float y) {
+		this->setX(x);
+		this->setY(y);
+	}
+	virtual void setXY(XY dxdy) {
+		this->setXY(dxdy.getX(), dxdy.getY());
+	}
+	virtual void changeX(float dx) {
+		this->x += dx;
+	}
+	virtual void changeY(float dy) {
+		this->y += dy;
+	}
+	virtual void changeXY(float dx, float dy) {
+		this->changeX(dx);
+		this->changeY(dy);
+	}
+	virtual void changeXY(XY dxdy) {
+		this->changeXY(dxdy.getX(), dxdy.getY());
+	}
+protected:
+	float x;
+	float y;
+};
 
 struct IMove //интерфейс передвижения
 {
 	virtual void ChangePosition(float dx, float dy) abstract;
-	virtual void SetPosition(float dx, float dy) abstract;
+	virtual void SetPosition(float x, float y) abstract;
+	virtual void ChangePosition(XY xy) abstract;
+	virtual void SetPosition(XY xy) abstract;
+	virtual void RememberPosition(float x, float y) abstract;
+	virtual void RememberPosition(XY xy) abstract;
 	virtual void PreviousPosition() abstract;
 	virtual ~IMove() = default;
 };

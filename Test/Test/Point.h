@@ -1,16 +1,33 @@
 #pragma once
 #include "Interfaces.h"
+#include <vector>
 
 class Point : IMove, IColor
 {
 public:
 	Point() = delete;
-	Point(float x) : Point(x, x) {}
-	Point(float x, float y) : Point(x, y, WHITE) {}
-	Point(float x, float y, Color color) : x(x), y(y), IColor(color) {}
-	virtual ~Point() = default;
+	Point(float x);
+	Point(float x, float y);
+	Point(float x, float y, Color color);
+	//---------------------------------------------------------------------
+	void ChangePosition(float dx, float dy) override;
+	void ChangePosition(XY dxdy) override;
+	//---------------------------------------------------------------------
+	void SetPosition(float x, float y) override;
+	void SetPosition(XY xy) override;
+	//---------------------------------------------------------------------
+	void PreviousPosition() override;
+	//---------------------------------------------------------------------
+	Color getColor() override;
+	void setColor(Color color) override;
+	//---------------------------------------------------------------------
+	XY getPosition() const;
+	//---------------------------------------------------------------------
+	virtual ~Point();
 protected:
-	float x;
-	float y;
+	void RememberPosition(XY xy) override;
+	void RememberPosition(float x, float y) override;
+	//---------------------------------------------------------------------
+	XY coordinate;
+	std::vector<XY> history;
 };
-
