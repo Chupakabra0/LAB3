@@ -8,7 +8,7 @@ public:
 	Point(float x) : Point(x, x) {}
 	Point(float x, float y) : Point(x, y, WHITE) {}
 	Point(float x, float y, Color color) : x(x), y(y), IColor(color) {}
-	virtual ~Point();
+	virtual ~Point() = default;
 protected:
 	float x;
 	float y;
