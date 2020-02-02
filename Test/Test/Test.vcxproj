@@ -77,6 +77,9 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
+    <Link>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -98,6 +101,7 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -117,11 +121,16 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
     <Import Project="..\packages\glfw.3.3.2\build\native\glfw.targets" Condition="Exists('..\packages\glfw.3.3.2\build\native\glfw.targets')" />
     <Import Project="..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets" Condition="Exists('..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets')" />
     <Import Project="..\packages\glew.1.9.0.1\build\native\glew.targets" Condition="Exists('..\packages\glew.1.9.0.1\build\native\glew.targets')" />
+    <Import Project="..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets" Condition="Exists('..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets')" />
+    <Import Project="..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets" Condition="Exists('..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
@@ -130,5 +139,7 @@
     <Error Condition="!Exists('..\packages\glfw.3.3.2\build\native\glfw.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glfw.3.3.2\build\native\glfw.targets'))" />
     <Error Condition="!Exists('..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glew.redist.1.9.0.1\build\native\glew.redist.targets'))" />
     <Error Condition="!Exists('..\packages\glew.1.9.0.1\build\native\glew.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glew.1.9.0.1\build\native\glew.targets'))" />
+    <Error Condition="!Exists('..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nupengl.core.redist.0.1.0.1\build\native\nupengl.core.redist.targets'))" />
+    <Error Condition="!Exists('..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\nupengl.core.0.1.0.1\build\native\nupengl.core.targets'))" />
   </Target>
 </Project>
