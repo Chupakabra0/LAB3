@@ -73,6 +73,10 @@ struct IMove //интерфейс передвижения
 	virtual ~IMove() = default;
 };
 
+struct IDraw {
+	virtual void Draw() abstract;
+};
+
 class IColor {
 public:
 	IColor() = delete;

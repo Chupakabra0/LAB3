@@ -2,13 +2,15 @@
 #include <cstdlib>
 #include "Point.h"
 #include <iostream>
-//#define WINDOW
+#define WINDOW
 
 void output(Point* point) {
 	std::cout << "X: " << point->getPosition().getX() << " Y: " << point->getPosition().getY() << std::endl;
 }
 
 int main(void) {
+
+	Point first(100.f, 100.f);
 
 #ifdef WINDOW 
   	/* Initialize the library */
@@ -28,11 +30,15 @@ int main(void) {
 	while (!glfwWindowShouldClose(window))
 	{
 		/* Render here */
-		glClear(GL_COLOR_BUFFER_BIT);
-
+		glClearColor(0.f, 0.f, 0.f, 1.f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		
 		/* Swap front and back buffers */
+		glBegin(GL_POINTS); //TODO make class-method
+			glColor3f(0.1f, 0.6f, 0);
+			glVertex2f(first.getPosition().getX() / 1000, first.getPosition().getY() / 1000); //TODO remove /1000
+		glEnd();
 		glfwSwapBuffers(window);
-
 		/* Poll for and process events */
 		glfwPollEvents();
 	}
@@ -40,7 +46,6 @@ int main(void) {
 	glfwTerminate();
 #endif
 
-	Point first(1.f, 1.f);
 	std::cout << "First: ";
 	output(&first);
 

@@ -1,8 +1,9 @@
 #pragma once
 #include "Interfaces.h"
 #include <vector>
+#include <GLFW/glfw3.h>
 
-class Point : IMove, IColor
+class Point : IMove, IColor, IDraw
 {
 public:
 	Point() = delete;
@@ -22,6 +23,9 @@ public:
 	void setColor(Color color) override;
 	//---------------------------------------------------------------------
 	XY getPosition() const;
+	//---------------------------------------------------------------------
+	void Draw() override {
+	}
 	//---------------------------------------------------------------------
 	virtual ~Point();
 protected:
