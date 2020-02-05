@@ -63,6 +63,29 @@ public:
 	RGB() = default;
 	RGB(float color) : RGB(color, color, color) {}
 	RGB(float red, float green, float blue) : red(red), green(green), blue(blue) {}
+	float getR() const {
+		return this->red;
+	}
+	float getG() const {
+		return this->green;
+	}
+	float getB() const {
+		return this->blue;
+	}
+	void setR(float red) {
+		this->red = red;
+	}
+	void setG(float green) {
+		this->green = green;
+	}
+	void setB(float blue) {
+		this->blue = blue;
+	}
+	void setRGB(float red, float green, float blue) {
+		this->setR(red);
+		this->setG(green);
+		this->setB(blue);
+	}
 	virtual ~RGB() = default;
 protected:
 	float red;
