@@ -3,7 +3,7 @@
 #include <vector>
 #include "RGB.h"
 
-class Point : public IMove, public IDraw, public IRotate
+class Point : public IMove, public IDraw, public IRotate, public IScale //TODO ğåàëèçîâàòü èíòåğôåéñ ìàñøòàáà
 {
 public:
 	Point() = delete;
@@ -37,7 +37,7 @@ protected:
 	//---------------------------------------------------------------------
 	XY coordinate;
 	float angle;
-	std::vector<XY> historyPosition;
+	std::vector<XY> historyPosition; //TODO ĞÅÀËÈÇÎÂÀÒÜ ÊËÀÑÑ-ÊÎÌÏÎÇÈÖÈŞ ÊËÀÑÑÎÂ ÒÎ×ÊÈ, ÓÃËÀ, ÌÀÑØÒÀÁÀ È ÖÂÅÒÀ ÄËß ÂÅÄÅÍÈß ÈÑÒÎĞÈÈ ÈÇÌÅÍÅÍÈÉ
 	std::vector<float> historyAngel;
 	RGB color;
 };
