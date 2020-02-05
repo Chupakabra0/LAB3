@@ -15,21 +15,19 @@ public:
 	//---------------------------------------------------------------------
 	void ChangePosition(float dx, float dy) override;
 	void ChangePosition(XY dxdy) override;
-	//---------------------------------------------------------------------
 	void SetPosition(float x, float y) override;
 	void SetPosition(XY xy) override;
-	//---------------------------------------------------------------------
 	void PreviousPosition() override;
+	XY GetPosition() const;
 	//---------------------------------------------------------------------
 	void ChangeAngle(float angle) override;
-	//---------------------------------------------------------------------
 	void SetAngle(float angle) override;
-	//---------------------------------------------------------------------
 	void PreviousAngle() override;
-	//---------------------------------------------------------------------
-	XY getPosition() const;
+	float getAngle() const;
 	//---------------------------------------------------------------------
 	void Draw() override {}
+	//---------------------------------------------------------------------
+	RGB GetColor() const;
 	//---------------------------------------------------------------------
 	virtual ~Point();
 protected:

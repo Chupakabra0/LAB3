@@ -5,7 +5,7 @@
 #define WINDOW
 
 void output(Point* point) {
-	std::cout << "X: " << point->getPosition().getX() << " Y: " << point->getPosition().getY() << std::endl;
+	std::cout << "X: " << point->GetPosition().getX() << " Y: " << point->GetPosition().getY() << std::endl;
 }
 
 int main(void) {
@@ -36,7 +36,7 @@ int main(void) {
 		/* Swap front and back buffers */
 		glBegin(GL_POINTS); //TODO make class-method
 			glColor3f(0.1f, 0.6f, 0);
-			glVertex2f(first.getPosition().getX() / 1000, first.getPosition().getY() / 1000); //TODO remove /1000
+			glVertex2f(first.GetPosition().getX() / 1000, first.GetPosition().getY() / 1000); //TODO remove /1000
 		glEnd();
 		glfwSwapBuffers(window);
 		/* Poll for and process events */

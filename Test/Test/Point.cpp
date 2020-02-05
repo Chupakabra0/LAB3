@@ -38,6 +38,10 @@ void Point::PreviousPosition() {
 	//else throw...
 }
 
+XY Point::GetPosition() const {
+	return this->coordinate;
+}
+
 void Point::ChangeAngle(float angle)
 {
 	this->angle += angle;
@@ -56,8 +60,14 @@ void Point::PreviousAngle()
 	//else throw...
 }
 
-XY Point::getPosition() const {
-	return this->coordinate;
+float Point::getAngle() const
+{
+	return this->angle;
+}
+
+RGB Point::GetColor() const
+{
+	return this->color;
 }
 
 Point::~Point() = default;
