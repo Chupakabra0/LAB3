@@ -126,11 +126,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Point.cpp" />
+    <ClCompile Include="RGB.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Interfaces.h" />
     <ClInclude Include="Point.h" />
+    <ClInclude Include="RGB.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
