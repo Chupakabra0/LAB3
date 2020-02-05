@@ -1,6 +1,7 @@
 #pragma once
 #include "Interfaces.h"
 #include <vector>
+#include "RGB.h"
 
 class Point : public IMove, public IDraw
 {

@@ -1,5 +1,6 @@
 #pragma once
 #include <GLFW/glfw3.h>
+#include "XY.h"
 
 __interface IMove //интерфейс передвижения
 {

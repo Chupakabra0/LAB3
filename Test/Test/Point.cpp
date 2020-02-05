@@ -1,4 +1,5 @@
 #include "Point.h"
+
 Point::Point(float x): Point(x, x) {}
 Point::Point(float x, float y): Point(x, y, 0.f) {}
 Point::Point(float x, float y, float color) : Point(x, y, RGB(color)) {}
