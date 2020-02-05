@@ -13,6 +13,14 @@ __interface IMove //интерфейс передвижения
 	virtual void PreviousPosition() abstract;
 };
 
-__interface  IDraw {
+__interface IRotate //интерфейс поворота
+{
+	virtual void ChangeAngle(float angle) abstract;
+	virtual void SetAngle(float angle) abstract;
+	virtual void RememberAngle(float angle) abstract;
+	virtual void PreviousAngle() abstract;
+};
+
+__interface  IDraw { //интерфейс рисования
 	virtual void Draw() abstract;
 };
