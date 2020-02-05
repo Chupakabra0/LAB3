@@ -1,15 +1,16 @@
 #pragma once
 #include "Interfaces.h"
 #include <vector>
-#include <GLFW/glfw3.h>
 
-class Point : IMove, IColor, IDraw
+class Point : public IMove, public IDraw
 {
 public:
 	Point() = delete;
 	Point(float x);
 	Point(float x, float y);
-	Point(float x, float y, Color color);
+	Point(float x, float y, float color);
+	Point(float x, float y, float red, float green, float blue);
+	Point(float x, float y, RGB color);
 	//---------------------------------------------------------------------
 	void ChangePosition(float dx, float dy) override;
 	void ChangePosition(XY dxdy) override;
@@ -19,8 +20,6 @@ public:
 	//---------------------------------------------------------------------
 	void PreviousPosition() override;
 	//---------------------------------------------------------------------
-	Color getColor() override;
-	void setColor(Color color) override;
 	//---------------------------------------------------------------------
 	XY getPosition() const;
 	//---------------------------------------------------------------------
@@ -34,4 +33,5 @@ protected:
 	//---------------------------------------------------------------------
 	XY coordinate;
 	std::vector<XY> history;
+	RGB color;
 };

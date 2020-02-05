@@ -1,23 +1,5 @@
 #pragma once
-
-enum Color {
-	BLACK,
-	BLUE,
-	GREEN,
-	CYAN,
-	RED,
-	MAGENTA,
-	BROWN,
-	LIGHTGRAY,
-	DARKGRAY,
-	LIGHTBLUE,
-	LIGHTGREEN,
-	LIGHTCYAN,
-	LIGHTRED,
-	LIGHTMAGENTA,
-	YELLOW,
-	WHITE
-};
+#include <GLFW/glfw3.h>
 
 class XY {
 public:
@@ -61,7 +43,7 @@ protected:
 	float y;
 };
 
-struct IMove //интерфейс передвижения
+__interface IMove //интерфейс передвижения
 {
 	virtual void ChangePosition(float dx, float dy) abstract;
 	virtual void SetPosition(float x, float y) abstract;
@@ -70,24 +52,20 @@ struct IMove //интерфейс передвижения
 	virtual void RememberPosition(float x, float y) abstract;
 	virtual void RememberPosition(XY xy) abstract;
 	virtual void PreviousPosition() abstract;
-	virtual ~IMove() = default;
 };
 
-struct IDraw {
+__interface  IDraw {
 	virtual void Draw() abstract;
 };
 
-class IColor {
+class RGB {
 public:
-	IColor() = delete;
-	IColor(Color color) : color(color) {}
-	virtual Color getColor() {
-		return this->color;
-	}
-	virtual void setColor(Color color) {
-		this->color = color;
-	}
-	virtual ~IColor() = default;
+	RGB() = default;
+	RGB(float color) : RGB(color, color, color) {}
+	RGB(float red, float green, float blue) : red(red), green(green), blue(blue) {}
+	virtual ~RGB() = default;
 protected:
-	Color color;
+	float red;
+	float green;
+	float blue;
 };

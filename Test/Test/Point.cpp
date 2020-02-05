@@ -1,8 +1,10 @@
 #include "Point.h"
 Point::Point(float x): Point(x, x) {}
-Point::Point(float x, float y): Point(x, y, WHITE) {}
+Point::Point(float x, float y): Point(x, y, 0.f) {}
+Point::Point(float x, float y, float color) : Point(x, y, RGB(color)) {}
+Point::Point(float x, float y, float red, float green, float blue) : Point(x, y, RGB(red, green, blue)) {}
 
-Point::Point(float x, float y, Color color): coordinate(x, y), IColor(color) {
+Point::Point(float x, float y, RGB color) : coordinate(x, y), color(color) {
 	this->Point::RememberPosition(this->coordinate);
 }
 
@@ -31,14 +33,6 @@ void Point::PreviousPosition() {
 		this->history.pop_back();
 		this->SetPosition(this->history[this->history.size() - 1]);
 	}
-}
-
-Color Point::getColor() {
-	return this->color;
-}
-
-void Point::setColor(Color color) {
-	this->color = color;
 }
 
 XY Point::getPosition() const {
