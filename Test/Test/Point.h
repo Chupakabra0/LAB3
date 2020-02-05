@@ -3,7 +3,7 @@
 #include <vector>
 #include "RGB.h"
 
-class Point : public IMove, public IDraw
+class Point : public IMove, public IDraw, public IRotate
 {
 public:
 	Point() = delete;
@@ -21,7 +21,13 @@ public:
 	//---------------------------------------------------------------------
 	void PreviousPosition() override;
 	//---------------------------------------------------------------------
+	void ChangeAngle(float angle) override;
 	//---------------------------------------------------------------------
+	void SetAngle(float angle) override;
+	//---------------------------------------------------------------------
+	void PreviousAngle() override;
+	//---------------------------------------------------------------------
+
 	XY getPosition() const;
 	//---------------------------------------------------------------------
 	void Draw() override {}
@@ -30,8 +36,11 @@ public:
 protected:
 	void RememberPosition(XY xy) override;
 	void RememberPosition(float x, float y) override;
+	void RememberAngle(float angle) override;
 	//---------------------------------------------------------------------
 	XY coordinate;
-	std::vector<XY> history;
+	float angle;
+	std::vector<XY> historyPosition;
+	std::vector<float> historyAngel;
 	RGB color;
 };
