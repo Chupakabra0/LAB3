@@ -14,10 +14,10 @@ void Point::Previous() {
 	if (this->history.size() > 1) {
 		this->history.pop_back();
 		const auto size = this->history.size() - 1;
-		if (this->GetDot() != this->history[size].GetDot()) this->dot = Dot(this->history[size].GetDot());
-		if (this->GetAngle() != this->history[size].GetAngle()) this->angle = Angle(this->history[size].GetAngle());
-		if (this->GetScale() != this->history[size].GetScale()) this->scale = Scale(this->history[size].GetScale());  //TODO добавить приватный сеттер без запоминания истории
-		if (this->GetColor() != this->history[size].GetColor()) this->color = RGB(this->history[size].GetColor());
+		if (this->GetDot() != this->history[size].GetDot()) this->SetDotWithoutR(this->history[size].GetDot());
+		if (this->GetAngle() != this->history[size].GetAngle()) this->SetAngleWithoutR(this->history[size].GetAngle());
+		if (this->GetScale() != this->history[size].GetScale()) this->SetScaleWithoutR(this->history[size].GetScale());
+		if (this->GetColor() != this->history[size].GetColor()) this->SetColorWithoutR(this->history[size].GetColor());
 	}
 	//else throw...
 }

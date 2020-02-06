@@ -3,7 +3,7 @@
 
 class XY {
 public:
-	XY() = default;
+	XY();
 	XY(float x);
 	XY(float x, float y);
 	//---------------------------------------------------------------------

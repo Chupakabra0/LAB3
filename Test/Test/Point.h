@@ -129,6 +129,19 @@ public:
 	//---------------------------------------------------------------------
 	virtual ~Point();
 protected:
+	//---------------------------------------------------------------------
+	void SetScaleWithoutR(const Scale& scale) {
+		this->scale.SetScale(scale.GetScale());
+	}
+	void SetAngleWithoutR(const Angle& angle) {
+		this->angle.SetAngle(angle.GetAngle());
+	}
+	void SetDotWithoutR(const Dot& dot) {
+		this->dot.SetPosition(dot.GetPosition());
+	}
+	void SetColorWithoutR(const RGB& color) {
+		this->color.setRGB(color.getR(), color.getG(), color.getB());
+	}
 	void Remember();
 	Scale scale;
 	Angle angle;
