@@ -25,6 +25,11 @@ public:
 	void PreviousAngle() override;
 	float getAngle() const;
 	//---------------------------------------------------------------------
+	void ChangeScale(float percent) override;
+	void SetScale(float percent) override;
+	void PreviousScale() override;
+	float GetScale() const;
+	//---------------------------------------------------------------------
 	void Draw() override {}
 	//---------------------------------------------------------------------
 	RGB GetColor() const;
@@ -34,10 +39,13 @@ protected:
 	void RememberPosition(XY xy) override;
 	void RememberPosition(float x, float y) override;
 	void RememberAngle(float angle) override;
+	void RememberScale(float percent) override;
 	//---------------------------------------------------------------------
 	XY coordinate;
 	float angle;
+	float scale;
 	std::vector<XY> historyPosition; //TODO –≈¿À»«Œ¬¿“‹  À¿——- ŒÃœŒ«»÷»ﬁ  À¿——Œ¬ “Œ◊ », ”√À¿, Ã¿—ÿ“¿¡¿ » ÷¬≈“¿ ƒÀﬂ ¬≈ƒ≈Õ»ﬂ »—“Œ–»» »«Ã≈Õ≈Õ»…
 	std::vector<float> historyAngel;
+	std::vector<float> historyScale;
 	RGB color;
 };

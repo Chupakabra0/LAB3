@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include "Point.h"
 #include <iostream>
-#define WINDOW
+//#define WINDOW
 
 void output(Point* point) {
 	std::cout << "X: " << point->GetPosition().getX() << " Y: " << point->GetPosition().getY() << std::endl;

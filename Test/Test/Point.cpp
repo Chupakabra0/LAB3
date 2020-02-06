@@ -5,9 +5,10 @@ Point::Point(float x, float y): Point(x, y, 0.f) {}
 Point::Point(float x, float y, float color) : Point(x, y, RGB(color)) {}
 Point::Point(float x, float y, float red, float green, float blue) : Point(x, y, RGB(red, green, blue)) {}
 
-Point::Point(float x, float y, RGB color) : coordinate(x, y), color(color), angle(0.f) {
+Point::Point(float x, float y, RGB color) : coordinate(x, y), color(color), angle(0.f), scale(1.f) {
 	this->Point::RememberPosition(this->coordinate);
 	this->Point::RememberAngle(this->angle);
+	this->Point::RememberScale(this->scale);
 }
 
 void Point::ChangePosition(float dx, float dy) {
@@ -45,10 +46,12 @@ XY Point::GetPosition() const {
 void Point::ChangeAngle(float angle)
 {
 	this->angle += angle;
+	this->RememberAngle(this->angle);
 }
 
 void Point::SetAngle(float angle) {
 	this->angle = angle;
+	this->RememberAngle(this->angle);
 }
 
 void Point::PreviousAngle()
@@ -65,6 +68,32 @@ float Point::getAngle() const
 	return this->angle;
 }
 
+void Point::ChangeScale(float percent)
+{
+	this->scale += percent;
+	this->RememberScale(this->angle);
+}
+
+void Point::SetScale(float percent)
+{
+	this->scale = percent;
+	this->RememberAngle(this->angle);
+}
+
+void Point::PreviousScale()
+{
+	if (!this->historyScale.empty()) {
+		this->historyScale.pop_back();
+		this->SetScale(this->historyScale[this->historyScale.size() - 1]);
+	}
+	// else throw...
+}
+
+float Point::GetScale() const
+{
+	return this->scale;
+}
+
 RGB Point::GetColor() const
 {
 	return this->color;
@@ -79,4 +108,14 @@ void Point::RememberPosition(XY xy) {
 void Point::RememberPosition(float x, float y) {
 	const XY temp(x, y);
 	this->historyPosition.push_back(temp);
+}
+
+void Point::RememberAngle(float angle)
+{
+	this->historyAngel.push_back(angle);
+}
+
+void Point::RememberScale(float percent)
+{
+	this->historyScale.push_back(percent);
 }
