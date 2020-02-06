@@ -18,14 +18,3 @@ void XY::setXY(float x, float y) {
 }
 
 void XY::setXY(XY dxdy) { this->setXY(dxdy.getX(), dxdy.getY()); }
-
-void XY::changeX(float dx) { this->x += dx; }
-
-void XY::changeY(float dy) { this->y += dy; }
-
-void XY::changeXY(float dx, float dy) {
-	this->changeX(dx);
-	this->changeY(dy);
-}
-
-void XY::changeXY(XY dxdy) { this->changeXY(dxdy.getX(), dxdy.getY()); }

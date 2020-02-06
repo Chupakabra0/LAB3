@@ -1,14 +1,18 @@
 #include <GLFW/glfw3.h>
 #include <cstdlib>
 #include "Point.h"
+#include <windows.h>
 #include <iostream>
 //#define WINDOW
 
 void output(Point* point) {
-	std::cout << "X: " << point->GetPosition().getX() << " Y: " << point->GetPosition().getY() << std::endl;
+	std::cout << "X: " << point->GetDot().GetPosition().getX() << " Y: " << point->GetDot().GetPosition().getY() << std::endl;
 }
 
 int main(void) {
+	
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
 
 	Point first(100.f, 100.f);
 
@@ -50,15 +54,17 @@ int main(void) {
 	output(&first);
 
 	std::cout << "+(1.f; 2.f)";
-	first.ChangePosition(1.f, 2.f);
+	first.SetDot(Dot(first.GetDot().GetPosition().getX() + 1.f, first.GetDot().GetPosition().getY() + 2.f));
 	output(&first);
 
 	std::cout << "=(0.f; 0.f)";
-	first.SetPosition(0.f, 0.f);
+	first.SetDot(Dot(0.f, 0.f));
 	output(&first);
 
-	std::cout << "Previous: ";
-	first.PreviousPosition();
+	std::cout << "Previous:" << std::endl;
+	first.Previous();
+	first.Previous();
+
 	output(&first);
 
 	system("pause > NUL");
