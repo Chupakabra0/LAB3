@@ -21,7 +21,16 @@ int main(void) {
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed) window.close();
 			if (Keyboard::isKeyPressed(Keyboard::Key::Up)) {
-				first.ChangePosition(XY(0, -1.f));
+				first.ChangePosition(XY(0.f, -1.f));
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Key::Down)) {
+				first.ChangePosition(XY(0.f, 1.f));
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Key::Left)) {
+				first.ChangePosition(XY(-1.f, 0.f));
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Key::Right)) {
+				first.ChangePosition(XY(1.f, 0.f));
 			}
 		}
 		window.clear();
