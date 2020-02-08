@@ -10,7 +10,7 @@ Point::Point(float x, float y): Point(x, y, 0.f) {}
 Point::Point(float x, float y, RGB color) : Point(XY(x, y), color){  }
 
 Point::Point(XY xy, RGB color) : dot(xy), color(color), scale(1.f) {
-	this->Remember();
+	this->Point::Remember();
 }
 
 void Point::Draw(RenderWindow& window) {
