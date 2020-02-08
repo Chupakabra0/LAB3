@@ -32,6 +32,26 @@ RGB Point::GetColor() const {
 	return this->color;
 }
 
+void Point::SetScale(const Scale& scale) {
+	this->scale.SetScale(scale.GetScale());
+	this->Remember();
+}
+
+void Point::SetAngle(const Angle& angle) {
+	this->angle.SetAngle(angle.GetAngle());
+	this->Remember();
+}
+
+void Point::SetDot(const Dot& dot) {
+	this->dot.SetPosition(dot.GetPosition());
+	this->Remember();
+}
+
+void Point::SetColor(const RGB& color) {
+	this->color.setRGB(color.getR(), color.getG(), color.getB());
+	this->Remember();
+}
+
 void Dot::SetPosition(float x, float y) {
 	this->dot.setXY(x, y);
 }
@@ -43,6 +63,14 @@ void Dot::SetPosition(XY xy) {
 XY Dot::GetPosition() const {
 	return this->dot;
 }
+
+Dot History::GetDot() const { return this->dot; }
+
+Scale History::GetScale() const { return this->scale; }
+
+Angle History::GetAngle() const { return this->angle; }
+
+RGB History::GetColor() const { return this->color; }
 
 void Angle::SetAngle(float angle) {
 	this->angle = angle;
@@ -71,3 +99,10 @@ void Point::Remember() {
 }
 
 Point::~Point() = default;
+void Point::SetScaleWithoutR(const Scale& scale) { this->scale.SetScale(scale.GetScale()); }
+
+void Point::SetAngleWithoutR(const Angle& angle) { this->angle.SetAngle(angle.GetAngle()); }
+
+void Point::SetDotWithoutR(const Dot& dot) { this->dot.SetPosition(dot.GetPosition()); }
+
+void Point::SetColorWithoutR(const RGB& color) { this->color.setRGB(color.getR(), color.getG(), color.getB()); }

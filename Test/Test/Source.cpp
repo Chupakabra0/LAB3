@@ -1,9 +1,11 @@
-#include <GLFW/glfw3.h>
+#include <SFML/Graphics.hpp>
 #include <cstdlib>
 #include "Point.h"
 #include <windows.h>
 #include <iostream>
 //#define WINDOW
+
+using namespace sf;
 
 void output(Point* point) {
 	std::cout << "X: " << point->GetDot().GetPosition().getX() << " Y: " << point->GetDot().GetPosition().getY() << std::endl;
@@ -14,41 +16,25 @@ int main(void) {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
-	Point first(100.f, 100.f);
+	RenderWindow window(VideoMode(200, 200), "SFML Works!");
 
-#ifdef WINDOW 
-  	/* Initialize the library */
-	if (!glfwInit()) throw "Lib isn`t working!";
-
-	/* Create a windowed mode window and its OpenGL context */
-	const auto window = glfwCreateWindow(640, 480, "Hello World", nullptr, nullptr);
-	if (!window) {
-		glfwTerminate();
-		throw "Window isn`t working!";
-	}
-
-	/* Make the window's context current */
-	glfwMakeContextCurrent(window);
-
-	/* Loop until the user closes the window */
-	while (!glfwWindowShouldClose(window))
+	// Главный цикл приложения. Выполняется, пока открыто окно
+	while (window.isOpen())
 	{
-		/* Render here */
-		glClearColor(0.f, 0.f, 0.f, 1.f);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		
-		/* Swap front and back buffers */
-		glBegin(GL_POINTS); //TODO make class-method
-			glColor3f(0.1f, 0.6f, 0);
-			glVertex2f(first.GetPosition().getX() / 1000, first.GetPosition().getY() / 1000); //TODO remove /1000
-		glEnd();
-		glfwSwapBuffers(window);
-		/* Poll for and process events */
-		glfwPollEvents();
+		// Обрабатываем очередь событий в цикле
+		Event event;
+		while (window.pollEvent(event))
+		{
+			// Пользователь нажал на «крестик» и хочет закрыть окно?
+			if (event.type == Event::Closed)
+				// Тогда закрываем его
+				window.close();
+		}
+		// Отрисовка окна	
+		window.display();
 	}
 
-	glfwTerminate();
-#endif
+	Point first(100.f, 100.f);
 
 	std::cout << "First: ";
 	output(&first);

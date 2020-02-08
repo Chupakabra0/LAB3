@@ -1,6 +1,5 @@
 #pragma once
 #include "Interfaces.h"
-#include <utility>
 #include <vector>
 #include "RGB.h"
 
@@ -73,18 +72,10 @@ public:
 	History() = delete;
 	explicit History(Dot dot, Scale scale, Angle angle, RGB color) : dot(dot), scale(scale), angle(angle), color(color) {}
 	//---------------------------------------------------------------------
-	Dot GetDot() const {
-		return this->dot;
-	}
-	Scale GetScale() const {
-		return this->scale;
-	}
-	Angle GetAngle() const {
-		return this->angle;
-	}
-	RGB GetColor() const {
-		return this->color;
-	}
+	Dot GetDot() const;
+	Scale GetScale() const;
+	Angle GetAngle() const;
+	RGB GetColor() const;
 protected:
 	Dot dot;
 	Scale scale;
@@ -110,39 +101,20 @@ public:
 	Dot GetDot() const;
 	RGB GetColor() const;
 	//---------------------------------------------------------------------
-	void SetScale(const Scale& scale) {
-		this->scale.SetScale(scale.GetScale());
-		this->Remember();
-	}
-	void SetAngle(const Angle& angle) {
-		this->angle.SetAngle(angle.GetAngle());
-		this->Remember();
-	}
-	void SetDot(const Dot& dot) {
-		this->dot.SetPosition(dot.GetPosition());
-		this->Remember();
-	}
-	void SetColor(const RGB& color) {
-		this->color.setRGB(color.getR(), color.getG(), color.getB());
-		this->Remember();
-	}
+	void SetScale(const Scale& scale);
+	void SetAngle(const Angle& angle);
+	void SetDot(const Dot& dot);
+	void SetColor(const RGB& color);
 	//---------------------------------------------------------------------
 	virtual ~Point();
 protected:
+	void SetScaleWithoutR(const Scale& scale);
+	void SetAngleWithoutR(const Angle& angle);
+	void SetDotWithoutR(const Dot& dot);
+	void SetColorWithoutR(const RGB& color);
 	//---------------------------------------------------------------------
-	void SetScaleWithoutR(const Scale& scale) {
-		this->scale.SetScale(scale.GetScale());
-	}
-	void SetAngleWithoutR(const Angle& angle) {
-		this->angle.SetAngle(angle.GetAngle());
-	}
-	void SetDotWithoutR(const Dot& dot) {
-		this->dot.SetPosition(dot.GetPosition());
-	}
-	void SetColorWithoutR(const RGB& color) {
-		this->color.setRGB(color.getR(), color.getG(), color.getB());
-	}
 	void Remember();
+	//---------------------------------------------------------------------
 	Scale scale;
 	Angle angle;
 	Dot dot;
