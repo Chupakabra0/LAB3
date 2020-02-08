@@ -15,11 +15,11 @@ __interface IDraw { //интерфейс рисования
 	void Draw(sf::RenderWindow& window);
 };
 
-__interface IScale {
+__interface IScale { //интерфейс масштабирования
 	void SetScale(float percent);
 };
 
-__interface IHistory {
-	void Previous();
-	void Remember();
+__interface IHistory {  //интерфейс ведения истории
+	void PreviousCondition();
+	void RememberCondition();
 };

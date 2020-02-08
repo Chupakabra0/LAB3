@@ -17,7 +17,7 @@ public:
 	//---------------------------------------------------------------------
 	void Draw(sf::RenderWindow& window) override;
 	//---------------------------------------------------------------------
-	void Previous() override;
+	void PreviousCondition() override;
 	//---------------------------------------------------------------------
 	Scale GetScale() const;
 	Dot GetDot() const;
@@ -33,7 +33,7 @@ protected:
 	void SetDotWithoutR(const Dot& dot);
 	void SetColorWithoutR(const RGB& color);
 	//---------------------------------------------------------------------
-	void Remember() override;
+	void RememberCondition() override;
 	//---------------------------------------------------------------------
 	Scale scale;
 	Dot dot;

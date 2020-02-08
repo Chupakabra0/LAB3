@@ -10,7 +10,7 @@ Point::Point(float x, float y): Point(x, y, 0.f) {}
 Point::Point(float x, float y, RGB color) : Point(XY(x, y), color){  }
 
 Point::Point(XY xy, RGB color) : dot(xy), color(color), scale(1.f) {
-	this->Point::Remember();
+	this->Point::RememberCondition();
 }
 
 void Point::Draw(RenderWindow& window) {
@@ -19,7 +19,7 @@ void Point::Draw(RenderWindow& window) {
 	window.draw(dot);
 }
 
-void Point::Previous() {
+void Point::PreviousCondition() {
 	if (this->history.size() > 1) {
 		this->history.pop_back();
 		const auto size = this->history.size() - 1;
@@ -40,20 +40,20 @@ RGB Point::GetColor() const {
 
 void Point::SetScale(const Scale& scale) {
 	this->scale.SetScale(scale.GetScale());
-	this->Remember();
+	this->RememberCondition();
 }
 
 void Point::SetDot(const Dot& dot) {
 	this->dot.SetPosition(dot.GetPosition());
-	this->Remember();
+	this->RememberCondition();
 }
 
 void Point::SetColor(const RGB& color) {
 	this->color.setRGB(color.getR(), color.getG(), color.getB());
-	this->Remember();
+	this->RememberCondition();
 }
 
-void Point::Remember() {
+void Point::RememberCondition() {
 	this->history.emplace_back(this->GetDot(), this->GetScale(), NULL, this->GetColor());
 }
 
