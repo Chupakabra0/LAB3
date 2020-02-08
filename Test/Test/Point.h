@@ -17,15 +17,15 @@ public:
 	//---------------------------------------------------------------------
 	void Draw(sf::RenderWindow& window) override;
 	//---------------------------------------------------------------------
-	void PreviousCondition() override;
-	//---------------------------------------------------------------------
-	Scale GetScale() const;
-	Dot GetDot() const;
-	RGB GetColor() const;
+	//Scale GetScale() const;
+	//Dot GetDot() const;
+	//RGB GetColor() const;
 	//---------------------------------------------------------------------
 	void SetScale(const Scale& scale);
 	void SetDot(const Dot& dot);
 	void SetColor(const RGB& color);
+	//---------------------------------------------------------------------
+	void PreviousCondition() override;
 	//---------------------------------------------------------------------
 	virtual ~Point();
 protected:

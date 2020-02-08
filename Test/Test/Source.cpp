@@ -28,7 +28,7 @@ int main(void) {
 				first.SetDot(Dot(first.GetDot().GetPosition().getX(), first.GetDot().GetPosition().getY() - 0.1f));
 			}
 		}
-		window.clear();
+		window.clear(;
 		first.Draw(window);
 		window.display();
 	}

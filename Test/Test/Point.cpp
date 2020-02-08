@@ -15,7 +15,7 @@ Point::Point(XY xy, RGB color) : dot(xy), color(color), scale(1.f) {
 
 void Point::Draw(RenderWindow& window) {
 	CircleShape dot(1);
-	dot.setPosition(this->GetDot().GetPosition().getX(), this->GetDot().GetPosition().getY());
+	dot.setPosition(this->dot.GetPosition().getX(), this->dot.GetPosition().getY());
 	window.draw(dot);
 }
 
@@ -23,20 +23,20 @@ void Point::PreviousCondition() {
 	if (this->history.size() > 1) {
 		this->history.pop_back();
 		const auto size = this->history.size() - 1;
-		if (this->GetDot() != this->history[size].GetDot()) this->SetDotWithoutR(this->history[size].GetDot());
-		if (this->GetScale() != this->history[size].GetScale()) this->SetScaleWithoutR(this->history[size].GetScale());
-		if (this->GetColor() != this->history[size].GetColor()) this->SetColorWithoutR(this->history[size].GetColor());
+		if (this->dot != this->history[size].GetDot()) this->SetDotWithoutR(this->history[size].GetDot());
+		if (this->scale != this->history[size].GetScale()) this->SetScaleWithoutR(this->history[size].GetScale());
+		if (this->color != this->history[size].GetColor()) this->SetColorWithoutR(this->history[size].GetColor());
 	}
 	//else throw...
 }
 
-Scale Point::GetScale() const { return this->scale; }
-
-Dot Point::GetDot() const { return this->dot; }
-
-RGB Point::GetColor() const {
-	return this->color;
-}
+//Scale Point::GetScale() const { return this->scale; }
+//
+//Dot Point::GetDot() const { return this->dot; }
+//
+//RGB Point::GetColor() const {
+//	return this->color;
+//}
 
 void Point::SetScale(const Scale& scale) {
 	this->scale.SetScale(scale.GetScale());
@@ -54,7 +54,7 @@ void Point::SetColor(const RGB& color) {
 }
 
 void Point::RememberCondition() {
-	this->history.emplace_back(this->GetDot(), this->GetScale(), NULL, this->GetColor());
+	this->history.emplace_back(this->dot, this->scale, NULL, this->color);
 }
 
 Point::~Point() = default;
