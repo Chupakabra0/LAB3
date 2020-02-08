@@ -1,5 +1,6 @@
 #pragma once
 #include "XY.h"
+#include <SFML/Graphics.hpp>
 
 __interface IMove { //интерфейс передвижения
 	virtual void SetPosition(float x, float y) abstract;
@@ -11,7 +12,7 @@ __interface IRotate { //интерфейс поворота
 };
 
 __interface IDraw { //интерфейс рисования
-	virtual void Draw() abstract;
+	virtual void Draw(sf::RenderWindow& window) abstract;
 };
 
 __interface IScale {

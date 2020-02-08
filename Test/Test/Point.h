@@ -16,7 +16,7 @@ public:
 	Point(float x, float y, RGB color);
 	Point(XY xy, RGB color);
 	//---------------------------------------------------------------------
-	void Draw() override;
+	void Draw(sf::RenderWindow& window) override;
 	//---------------------------------------------------------------------
 	void Previous();
 	//---------------------------------------------------------------------

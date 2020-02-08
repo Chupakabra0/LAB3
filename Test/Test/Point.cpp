@@ -2,6 +2,9 @@
 #include "Scale.h"
 #include "Angle.h"
 #include "History.h"
+#include <SFML/Graphics.hpp>
+
+using namespace sf;
 
 Point::Point(float x): Point(x, x) {}
 Point::Point(float x, float y): Point(x, y, 0.f) {}
@@ -11,7 +14,11 @@ Point::Point(XY xy, RGB color) : dot(xy), color(color), angle(0.f), scale(1.f) {
 	this->Remember();
 }
 
-void Point::Draw() {}
+void Point::Draw(RenderWindow& window) {
+	CircleShape dot(1);
+	dot.setPosition(this->GetDot().GetPosition().getX(), this->GetDot().GetPosition().getY());
+	window.draw(dot);
+}
 
 void Point::Previous() {
 	if (this->history.size() > 1) {
