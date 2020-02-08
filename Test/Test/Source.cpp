@@ -23,8 +23,12 @@ int main(void) {
 	while (window.isOpen()) {
 		Event event;
 		while (window.pollEvent(event)) {
-			if (event.type == Event::KeyPressed  || event.type == Event::Closed) window.close();
+			if (event.type == Event::Closed) window.close();
+			if (Keyboard::isKeyPressed(Keyboard::Key::Up)) {
+				first.SetDot(Dot(first.GetDot().GetPosition().getX(), first.GetDot().GetPosition().getY() - 0.1f));
+			}
 		}
+		window.clear();
 		first.Draw(window);
 		window.display();
 	}
