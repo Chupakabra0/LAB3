@@ -4,11 +4,11 @@ XY History::GetDot() const {
 	return this->dot;
 }
 
-float History::GetScale() const {
+Scale History::GetScale() const {
 	return this->scale;
 }
 
-float History::GetAngle() const {
+Angle History::GetAngle() const {
 	return this->angle;
 }
 

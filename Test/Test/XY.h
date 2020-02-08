@@ -3,8 +3,8 @@
 class XY {
 public:
 	XY();
-	XY(float x);
-	XY(float x, float y);
+	explicit XY(float x);
+	explicit XY(float x, float y);
 	//---------------------------------------------------------------------
 	virtual float getX() const;
 	virtual float getY() const;
@@ -15,6 +15,7 @@ public:
 	//---------------------------------------------------------------------
 	friend bool operator==(const XY& first, const XY& second);
 	friend bool operator!=(const XY& first, const XY& second);
+	explicit operator int();
 	//---------------------------------------------------------------------
 	virtual ~XY() = default;
 protected:

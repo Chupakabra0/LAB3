@@ -18,42 +18,22 @@ void Point::Draw(RenderWindow& window) {
 	window.draw(dot);
 }
 
-void Point::SetPosition(float xy) {
-	this->SetPosition(xy, xy);
-}
-
-void Point::SetPosition(float x, float y) {
-	this->SetPosition(XY(x, y));
-}
-
 void Point::SetPosition(XY xy) {
 	this->dot.setXY(xy.getX(), xy.getY());
 	this->RememberCondition();
-}
-
-void Point::ChangePosition(float xy) {
-	this->ChangePosition(xy, xy);
-}
-
-void Point::ChangePosition(float x, float y) {
-	this->ChangePosition(XY(x, y));
 }
 
 void Point::ChangePosition(XY xy) {
 	this->SetPosition(XY(xy.getX() + this->dot.getX(), xy.getY() + this->dot.getY()));
 }
 
-void Point::SetScale(float scale) {
+void Point::SetScale(Scale scale) {
 	this->scale = scale;
 	this->RememberCondition();
 }
 
-void Point::ChangeScale(float scale) {
-	this->SetScale(scale + this->scale);
-}
-
-void Point::SetColor(float red, float green, float blue) {
-	this->SetColor(RGB(red, green, blue));
+void Point::ChangeScale(Scale scale) {
+	this->SetScale(Scale(scale.GetValue() + this->scale.GetValue()));
 }
 
 void Point::SetColor(RGB rgb) {
@@ -61,13 +41,12 @@ void Point::SetColor(RGB rgb) {
 	this->RememberCondition();
 }
 
-
 void Point::PreviousCondition() {
 	if (this->history.size() > 1) {
 		this->history.pop_back();
 		const auto size = this->history.size() - 1;
 		if (this->dot != this->history[size].GetDot()) this->AdminSetPosition(this->history[size].GetDot());
-		if (this->scale != this->history[size].GetScale()) this->AdminSetScale(this->history[size].GetScale());
+		if (this->scale.GetValue() != this->history[size].GetScale().GetValue()) this->AdminSetScale(this->history[size].GetScale().GetValue());
 		if (this->color != this->history[size].GetColor()) this->AdminSetColor(this->history[size].GetColor());
 	}
 	//else throw...
@@ -92,7 +71,7 @@ void Point::AdminSetScale(float scale) {
 }
 
 void Point::AdminChangeScale(float scale) {
-	this->AdminSetScale(this->scale + scale);
+	this->AdminSetScale(this->scale.GetValue() + scale);
 }
 
 void Point::AdminSetColor(RGB rgb) {

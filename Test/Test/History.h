@@ -1,19 +1,20 @@
 #pragma once
 #include "RGB.h"
 #include "XY.h"
+#include "Interfaces.h"
 
 class History {
 public:
 	History() = delete;
-	explicit History(XY dot, float scale, float angle, RGB color) : dot(dot), scale(scale), angle(angle), color(color) {}
+	explicit History(XY dot, Scale scale, Angle angle, RGB color) : dot(dot), scale(scale), angle(angle), color(color) {}
 	//---------------------------------------------------------------------
 	XY GetDot() const;
-	float GetScale() const;
-	float GetAngle() const;
+	Scale GetScale() const;
+	Angle GetAngle() const;
 	RGB GetColor() const;
 protected:
 	XY dot;
-	float scale;
-	float angle;
+	Scale scale;
+	Angle angle;
 	RGB color;
 };

@@ -15,17 +15,12 @@ public:
 	//---------------------------------------------------------------------
 	void Draw(sf::RenderWindow& window) override;
 	//---------------------------------------------------------------------
-	void SetPosition(float xy) override;
-	void SetPosition(float x, float y) override;
 	void SetPosition(XY xy) override;
-	void ChangePosition(float xy) override;
-	void ChangePosition(float x, float y) override;
 	void ChangePosition(XY xy) override;
 	//---------------------------------------------------------------------
-	void SetScale(float scale) override;
-	void ChangeScale(float scale) override;
+	void SetScale(Scale scale) override;
+	void ChangeScale(Scale scale) override;
 	//---------------------------------------------------------------------
-	void SetColor(float red, float green, float blue) override;
 	void SetColor(RGB rgb) override;
 	//---------------------------------------------------------------------
 	void PreviousCondition() override;
@@ -42,7 +37,7 @@ protected:
 	//---------------------------------------------------------------------
 	void RememberCondition() override;
 	//---------------------------------------------------------------------
-	float scale;
+	Scale scale;
 	XY dot;
 	RGB color;
 	std::vector<History> history;
