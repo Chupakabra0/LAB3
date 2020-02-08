@@ -1,16 +1,11 @@
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
 #include "Point.h"
-#include <windows.h>
-#include <iostream>
 //#define WINDOW
 
 using namespace sf;
 
 int main(void) {
-	
-	SetConsoleCP(1251);
-	SetConsoleOutputCP(1251);
 
 	Point first(100.f, 100.f);
 

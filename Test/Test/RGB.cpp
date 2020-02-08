@@ -4,17 +4,29 @@ RGB::RGB() = default;
 RGB::RGB(float color) : RGB(color, color, color) {}
 RGB::RGB(float red, float green, float blue) : red(red), green(green), blue(blue) {}
 
-float RGB::getR() const { return this->red; }
+float RGB::getR() const {
+	return this->red;
+}
 
-float RGB::getG() const { return this->green; }
+float RGB::getG() const {
+	return this->green;
+}
 
-float RGB::getB() const { return this->blue; }
+float RGB::getB() const {
+	return this->blue;
+}
 
-void RGB::setR(float red) { this->red = red; }
+void RGB::setR(float red) {
+	this->red = red;
+}
 
-void RGB::setG(float green) { this->green = green; }
+void RGB::setG(float green) {
+	this->green = green;
+}
 
-void RGB::setB(float blue) { this->blue = blue; }
+void RGB::setB(float blue) {
+	this->blue = blue;
+}
 
 void RGB::setRGB(float red, float green, float blue) {
 	this->setR(red);
@@ -28,7 +40,9 @@ bool operator==(const RGB& first, const RGB& second) {
 	return first.getB() == second.getB() && first.getG() == second.getG() && first.getR() == second.getR();
 }
 
-bool operator!=(const RGB& first, const RGB& second) { return !(first == second); }
+bool operator!=(const RGB& first, const RGB& second) {
+	return !(first == second);
+}
 
 RGB& RGB::operator=(RGB& rgb) {
 	if (this->getR() != rgb.getR()) this->setR(rgb.getR());

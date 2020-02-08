@@ -6,7 +6,7 @@ using namespace sf;
 
 Point::Point(float x): Point(x, x) {}
 Point::Point(float x, float y): Point(x, y, 0.f) {}
-Point::Point(float x, float y, RGB color) : Point(XY(x, y), color){  }
+Point::Point(float x, float y, RGB color) : Point(XY(x, y), color) { }
 
 Point::Point(XY xy, RGB color) : dot(xy), color(color), scale(1.f) {
 	this->Point::RememberCondition();
@@ -18,34 +18,28 @@ void Point::Draw(RenderWindow& window) {
 	window.draw(dot);
 }
 
-void Point::SetPosition(float xy)
-{
+void Point::SetPosition(float xy) {
 	this->SetPosition(xy, xy);
 }
 
-void Point::SetPosition(float x, float y)
-{
+void Point::SetPosition(float x, float y) {
 	this->SetPosition(XY(x, y));
 }
 
-void Point::SetPosition(XY xy)
-{
+void Point::SetPosition(XY xy) {
 	this->dot.setXY(xy.getX(), xy.getY());
 	this->RememberCondition();
 }
 
-void Point::ChangePosition(float xy)
-{
+void Point::ChangePosition(float xy) {
 	this->ChangePosition(xy, xy);
 }
 
-void Point::ChangePosition(float x, float y)
-{
+void Point::ChangePosition(float x, float y) {
 	this->ChangePosition(XY(x, y));
 }
 
-void Point::ChangePosition(XY xy)
-{
+void Point::ChangePosition(XY xy) {
 	this->SetPosition(XY(xy.getX() + this->dot.getX(), xy.getY() + this->dot.getY()));
 }
 
@@ -79,27 +73,17 @@ void Point::PreviousCondition() {
 	//else throw...
 }
 
-//Scale Point::GetScale() const { return this->scale; }
-//
-//Dot Point::GetDot() const { return this->dot; }
-//
-//RGB Point::GetColor() const {
-//	return this->color;
-//}
-
 void Point::RememberCondition() {
 	this->history.emplace_back(this->dot, this->scale, NULL, this->color);
 }
 
 Point::~Point() = default;
 
-void Point::AdminSetPosition(XY xy)
-{
+void Point::AdminSetPosition(XY xy) {
 	this->dot.setXY(xy.getX(), xy.getY());
 }
 
-void Point::AdminChangePosition(XY xy)
-{
+void Point::AdminChangePosition(XY xy) {
 	this->AdminSetPosition(XY(this->dot.getX() + xy.getX(), this->dot.getY() + xy.getY()));
 }
 
