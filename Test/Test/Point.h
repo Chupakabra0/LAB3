@@ -2,11 +2,9 @@
 #include "Interfaces.h"														 
 #include <vector>															 
 #include "RGB.h"															 
-#include "Scale.h"															 															 			 
-#include "Dot.h"
 #include "History.h"
 
-class Point : public IDraw, public IHistory
+class Point : public IMove, public IScale, public IDraw, public IColor, public IHistory
 {
 public:
 	Point() = delete;
@@ -17,26 +15,35 @@ public:
 	//---------------------------------------------------------------------
 	void Draw(sf::RenderWindow& window) override;
 	//---------------------------------------------------------------------
-	//Scale GetScale() const;
-	//Dot GetDot() const;
-	//RGB GetColor() const;
+	void SetPosition(float xy) override;
+	void SetPosition(float x, float y) override;
+	void SetPosition(XY xy) override;
+	void ChangePosition(float xy) override;
+	void ChangePosition(float x, float y) override;
+	void ChangePosition(XY xy) override;
 	//---------------------------------------------------------------------
-	void SetScale(const Scale& scale);
-	void SetDot(const Dot& dot);
-	void SetColor(const RGB& color);
+	void SetScale(float scale) override;
+	void ChangeScale(float scale) override;
+	//---------------------------------------------------------------------
+	void SetColor(float red, float green, float blue) override;
+	void SetColor(RGB rgb) override;
 	//---------------------------------------------------------------------
 	void PreviousCondition() override;
 	//---------------------------------------------------------------------
 	virtual ~Point();
 protected:
-	void SetScaleWithoutR(const Scale& scale);
-	void SetDotWithoutR(const Dot& dot);
-	void SetColorWithoutR(const RGB& color);
+	void AdminSetPosition(XY xy);
+	void AdminChangePosition(XY xy);
+	//---------------------------------------------------------------------
+	void AdminSetScale(float scale);
+	void AdminChangeScale(float scale);
+	//---------------------------------------------------------------------
+	void AdminSetColor(RGB rgb);
 	//---------------------------------------------------------------------
 	void RememberCondition() override;
 	//---------------------------------------------------------------------
-	Scale scale;
-	Dot dot;
+	float scale;
+	XY dot;
 	RGB color;
 	std::vector<History> history;
 };

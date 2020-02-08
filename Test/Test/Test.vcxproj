@@ -123,23 +123,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Angle.cpp" />
-    <ClCompile Include="Dot.cpp" />
     <ClCompile Include="History.cpp" />
     <ClCompile Include="Point.cpp" />
     <ClCompile Include="RGB.cpp" />
-    <ClCompile Include="Scale.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="XY.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Angle.h" />
-    <ClInclude Include="Dot.h" />
     <ClInclude Include="History.h" />
     <ClInclude Include="Interfaces.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="RGB.h" />
-    <ClInclude Include="Scale.h" />
     <ClInclude Include="XY.h" />
   </ItemGroup>
   <ItemGroup>

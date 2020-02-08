@@ -23,3 +23,16 @@ void RGB::setRGB(float red, float green, float blue) {
 }
 
 RGB::~RGB() = default;
+
+bool operator==(const RGB& first, const RGB& second) {
+	return first.getB() == second.getB() && first.getG() == second.getG() && first.getR() == second.getR();
+}
+
+bool operator!=(const RGB& first, const RGB& second) { return !(first == second); }
+
+RGB& RGB::operator=(RGB& rgb) {
+	if (this->getR() != rgb.getR()) this->setR(rgb.getR());
+	if (this->getG() != rgb.getG()) this->setG(rgb.getG());
+	if (this->getB() != rgb.getB()) this->setB(rgb.getB());
+	return *this;
+}

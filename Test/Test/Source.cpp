@@ -7,10 +7,6 @@
 
 using namespace sf;
 
-void output(Point* point) {
-	std::cout << "X: " << point->GetDot().GetPosition().getX() << " Y: " << point->GetDot().GetPosition().getY() << std::endl;
-}
-
 int main(void) {
 	
 	SetConsoleCP(1251);
@@ -25,16 +21,13 @@ int main(void) {
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed) window.close();
 			if (Keyboard::isKeyPressed(Keyboard::Key::Up)) {
-				first.SetDot(Dot(first.GetDot().GetPosition().getX(), first.GetDot().GetPosition().getY() - 0.1f));
+				first.ChangePosition(XY(0, -1.f));
 			}
 		}
-		window.clear(;
+		window.clear();
 		first.Draw(window);
 		window.display();
 	}
 
-	output(&first);
-
-	system("pause > NUL");
 	return EXIT_SUCCESS;
 }
