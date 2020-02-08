@@ -1,6 +1,5 @@
 #include "Point.h"
 #include "Scale.h"
-#include "Angle.h"
 #include "History.h"
 #include <SFML/Graphics.hpp>
 

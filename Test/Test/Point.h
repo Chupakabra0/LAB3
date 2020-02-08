@@ -3,11 +3,10 @@
 #include <vector>															 
 #include "RGB.h"															 
 #include "Scale.h"															 															 			 
-#include "Angle.h"
 #include "Dot.h"
 #include "History.h"
 
-class Point : public IDraw
+class Point : public IDraw, public IHistory
 {
 public:
 	Point() = delete;
@@ -18,10 +17,9 @@ public:
 	//---------------------------------------------------------------------
 	void Draw(sf::RenderWindow& window) override;
 	//---------------------------------------------------------------------
-	void Previous();
+	void Previous() override;
 	//---------------------------------------------------------------------
 	Scale GetScale() const;
-	Angle GetAngle() const;
 	Dot GetDot() const;
 	RGB GetColor() const;
 	//---------------------------------------------------------------------
@@ -35,7 +33,7 @@ protected:
 	void SetDotWithoutR(const Dot& dot);
 	void SetColorWithoutR(const RGB& color);
 	//---------------------------------------------------------------------
-	void Remember();
+	void Remember() override;
 	//---------------------------------------------------------------------
 	Scale scale;
 	Dot dot;

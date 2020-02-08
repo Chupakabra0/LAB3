@@ -3,18 +3,23 @@
 #include <SFML/Graphics.hpp>
 
 __interface IMove { //интерфейс передвижения
-	virtual void SetPosition(float x, float y) abstract;
-	virtual void SetPosition(XY xy) abstract;
+	void SetPosition(float x, float y);
+	void SetPosition(XY xy);
 };
 
 __interface IRotate { //интерфейс поворота 
-	virtual void SetAngle(float angle) abstract;
+	void SetAngle(float angle);
 };
 
 __interface IDraw { //интерфейс рисования
-	virtual void Draw(sf::RenderWindow& window) abstract;
+	void Draw(sf::RenderWindow& window);
 };
 
 __interface IScale {
-	virtual void SetScale(float percent) abstract;
+	void SetScale(float percent);
+};
+
+__interface IHistory {
+	void Previous();
+	void Remember();
 };
