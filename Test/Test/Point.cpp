@@ -1,4 +1,7 @@
 #include "Point.h"
+#include "Scale.h"
+#include "Angle.h"
+#include "History.h"
 
 Point::Point(float x): Point(x, x) {}
 Point::Point(float x, float y): Point(x, y, 0.f) {}
@@ -50,48 +53,6 @@ void Point::SetDot(const Dot& dot) {
 void Point::SetColor(const RGB& color) {
 	this->color.setRGB(color.getR(), color.getG(), color.getB());
 	this->Remember();
-}
-
-void Dot::SetPosition(float x, float y) {
-	this->dot.setXY(x, y);
-}
-
-void Dot::SetPosition(XY xy) {
-	this->dot.setXY(xy);
-}
-
-XY Dot::GetPosition() const {
-	return this->dot;
-}
-
-Dot History::GetDot() const { return this->dot; }
-
-Scale History::GetScale() const { return this->scale; }
-
-Angle History::GetAngle() const { return this->angle; }
-
-RGB History::GetColor() const { return this->color; }
-
-void Angle::SetAngle(float angle) {
-	this->angle = angle;
-}
-
-float Angle::GetAngle() const {
-	return this->angle;
-}
-
-void Scale::ChangeScale(float percent)
-{
-	this->scale += percent;
-}
-
-void Scale::SetScale(float percent)
-{
-	this->scale = percent;
-}
-
-float Scale::GetScale() const {
-	return this->scale;
 }
 
 void Point::Remember() {

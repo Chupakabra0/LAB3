@@ -18,3 +18,9 @@ void XY::setXY(float x, float y) {
 }
 
 void XY::setXY(XY dxdy) { this->setXY(dxdy.getX(), dxdy.getY()); }
+
+bool operator==(const XY& first, const XY& second) {
+	return first.getX() == second.getX() && first.getY() == second.getY();
+}
+
+bool operator!=(const XY& first, const XY& second) { return !(first == second); }

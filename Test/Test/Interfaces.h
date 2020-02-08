@@ -15,6 +15,5 @@ __interface IDraw { //интерфейс рисования
 };
 
 __interface IScale {
-	virtual void ChangeScale(float percent) abstract;
 	virtual void SetScale(float percent) abstract;
 };

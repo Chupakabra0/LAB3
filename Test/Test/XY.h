@@ -13,12 +13,8 @@ public:
 	virtual void setXY(float x, float y);
 	virtual void setXY(XY dxdy);
 	//---------------------------------------------------------------------
-	friend bool operator==(const XY& first, const XY& second) {
-		return first.getX() == second.getX() && first.getY() == second.getY();
-	}
-	friend bool operator!=(const XY& first, const XY& second) {
-		return !(first == second);
-	}
+	friend bool operator==(const XY& first, const XY& second);
+	friend bool operator!=(const XY& first, const XY& second);
 	//---------------------------------------------------------------------
 	virtual ~XY() = default;
 protected:
