@@ -12,9 +12,6 @@ public:
 	Point(float x, float y);
 	Point(float x, float y, RGB color);
 	Point(XY xy, RGB color);
-	XY GetXY() {
-		return this->dot;
-	}
 	virtual ~Point();
 protected:
 	void Draw(sf::RenderWindow& window) override;
