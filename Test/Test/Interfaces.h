@@ -32,30 +32,27 @@ protected:
 	float scale;
 };
 
-__interface IMove { //интерфейс передвижения
-	void SetPosition(XY xy);
-	void ChangePosition(XY xy);
+__interface IShape {  //интерфейс ведения истории
+	virtual void PreviousCondition() abstract;
+	virtual void RememberCondition() abstract;
 };
 
-__interface IRotate { //интерфейс поворота 
-	void SetAngle(Angle angle);
-	void ChangeAngle(Angle angle);
+__interface IMove : IShape { //интерфейс передвижения
+	virtual void SetPosition(XY xy) abstract;
+	virtual void ChangePosition(XY xy) abstract;
 };
 
-__interface IDraw { //интерфейс рисования
-	void Draw(sf::RenderWindow& window);
+__interface IRotate : IShape { //интерфейс поворота 
+	virtual void SetAngle(Angle angle)  abstract;
+	virtual void ChangeAngle(Angle angle) abstract;
 };
 
-__interface IScale { //интерфейс масштабирования
-	void SetScale(Scale scale);
-	void ChangeScale(Scale scale);
+__interface IDraw : IShape { //интерфейс рисования
+	virtual void Draw(sf::RenderWindow& window) abstract;
+	virtual void SetColor(RGB rgb) abstract;
 };
 
-__interface IColor {
-	void SetColor(RGB rgb);
-};
-
-__interface IHistory {  //интерфейс ведения истории
-	void PreviousCondition();
-	void RememberCondition();
+__interface IScale : IShape { //интерфейс масштабирования
+	virtual void SetScale(Scale scale) abstract;
+	virtual void ChangeScale(Scale scale) abstract;
 };

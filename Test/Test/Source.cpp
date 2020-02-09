@@ -2,37 +2,52 @@
 #include <cstdlib>
 #include "Point.h"
 #include "ShapeDealer.h"
+#include <iostream>
 //#define WINDOW
 
 using namespace sf;
 
 int main(void) {
 
-	Point a(100.f, 100.f);
-
 	RenderWindow window{ VideoMode(600, 600), L"Геометрические фигуры" };
 
-	ShapeDealer::Move(&a, XY(1));
+	std::vector<IShape*> shapes;
+
+	Clock clock;
 
 	while (window.isOpen()) {
+
+		float time = clock.getElapsedTime().asMicroseconds();
+		time /= 1000.f;
+
 		Event event;
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed) window.close();
-			if (Keyboard::isKeyPressed(Keyboard::Key::Up)) {
-				a.ChangePosition(XY(0.f, -1.f));
+			if (!shapes.empty()) {
+				if (Keyboard::isKeyPressed(Keyboard::Key::Up)) {
+					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(0.f, -1.f));
+				}
+				if (Keyboard::isKeyPressed(Keyboard::Key::Down)) {
+					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(0.f, 1.f));
+				}
+				if (Keyboard::isKeyPressed(Keyboard::Key::Left)) {
+					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(-1.f, 0.f));
+				}
+				if (Keyboard::isKeyPressed(Keyboard::Key::Right)) {
+					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(1.f, 0.f));
+				}
 			}
-			if (Keyboard::isKeyPressed(Keyboard::Key::Down)) {
-				a.ChangePosition(XY(0.f, 1.f));
-			}
-			if (Keyboard::isKeyPressed(Keyboard::Key::Left)) {
-				a.ChangePosition(XY(-1.f, 0.f));
-			}
-			if (Keyboard::isKeyPressed(Keyboard::Key::Right)) {
-				a.ChangePosition(XY(1.f, 0.f));
+			if (Keyboard::isKeyPressed(Keyboard::Key::Add) && time >= 100.f) {
+				Point* temp = new Point(XY(100.f), RGB(10, 20, 30));
+				shapes.push_back(dynamic_cast<IDraw*>(temp));
+				time = 0.f;
 			}
 		}
 		window.clear();
-		ShapeDealer::Draw(&a, window);
+		for (auto i = 0; i < shapes.size(); i++) {
+			std::cout << i + 1 << std::endl;
+			ShapeDealer::Draw(dynamic_cast<IDraw*>(shapes[i]), window);
+		}
 		window.display();
 	}
 

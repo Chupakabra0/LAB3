@@ -15,7 +15,6 @@ public:
 	//---------------------------------------------------------------------
 	friend bool operator==(const XY& first, const XY& second);
 	friend bool operator!=(const XY& first, const XY& second);
-	explicit operator int();
 	//---------------------------------------------------------------------
 	virtual ~XY() = default;
 protected:

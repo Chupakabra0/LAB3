@@ -4,7 +4,7 @@
 #include "RGB.h"															 
 #include "History.h"
 
-class Point : public IMove, public IScale, public IDraw, public IColor, public IHistory
+class Point : public IMove, public IScale, public IDraw
 {
 public:
 	Point() = delete;
@@ -12,7 +12,11 @@ public:
 	Point(float x, float y);
 	Point(float x, float y, RGB color);
 	Point(XY xy, RGB color);
-	//---------------------------------------------------------------------
+	XY GetXY() {
+		return this->dot;
+	}
+	virtual ~Point();
+protected:
 	void Draw(sf::RenderWindow& window) override;
 	//---------------------------------------------------------------------
 	void SetPosition(XY xy) override;
@@ -24,17 +28,6 @@ public:
 	void SetColor(RGB rgb) override;
 	//---------------------------------------------------------------------
 	void PreviousCondition() override;
-	//---------------------------------------------------------------------
-	virtual ~Point();
-protected:
-	void AdminSetPosition(XY xy);
-	void AdminChangePosition(XY xy);
-	//---------------------------------------------------------------------
-	void AdminSetScale(float scale);
-	void AdminChangeScale(float scale);
-	//---------------------------------------------------------------------
-	void AdminSetColor(RGB rgb);
-	//---------------------------------------------------------------------
 	void RememberCondition() override;
 	//---------------------------------------------------------------------
 	Scale scale;
