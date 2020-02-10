@@ -3,8 +3,14 @@
 #include <vector>															 
 #include "RGB.h"															 
 #include "History.h"
+#include <iostream>
 
-class Point : public IMove, public IScale, public IDraw
+struct Figure : IMove, IScale, IDraw, IRotate {
+	Figure() = default;
+	virtual ~Figure() = default;
+};
+
+class Point : public Figure
 {
 public:
 	Point() = delete;
@@ -24,11 +30,24 @@ protected:
 	//---------------------------------------------------------------------
 	void SetColor(RGB rgb) override;
 	//---------------------------------------------------------------------
+	void SetAngle(Angle angle) override {
+		this->angle = angle;
+	}
+	void ChangeAngle(Angle angle) override {
+		this->SetAngle(Angle(this->angle.GetValue() + angle.GetValue()));
+	}
+	//---------------------------------------------------------------------
 	void PreviousCondition() override;
 	void RememberCondition() override;
 	//---------------------------------------------------------------------
 	Scale scale;
+	Angle angle;
 	XY dot;
 	RGB color;
 	std::vector<History> history;
+private:
+
+
+
+
 };

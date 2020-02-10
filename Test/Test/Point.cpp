@@ -14,7 +14,9 @@ Point::Point(XY xy, RGB color) : dot(xy), color(color), scale(1.f) {
 
 void Point::Draw(RenderWindow& window) {
 	CircleShape dot(1);
-	dot.setPosition(this->dot.getX(), this->dot.getY());
+	const auto x = (this->dot.getX() - this->dot.getX() - 10) * cos(this->angle.GetValue()) - (this->dot.getY() - this->dot.getX()- 10) * sin(this->angle.GetValue()) + (this->dot.getX() + 10);
+	const auto y = (this->dot.getX() - this->dot.getX() - 10) * sin(this->angle.GetValue()) + (this->dot.getY() - this->dot.getX() - 10) * cos(this->angle.GetValue()) + (this->dot.getY() + 10);
+	dot.setPosition(x, y);
 	window.draw(dot);
 }
 

@@ -37,9 +37,17 @@ int main(void) {
 					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(1.f, 0.f));
 				}
 			}
-			if (Keyboard::isKeyPressed(Keyboard::Key::Add) && time >= 100.f) {
-				Point* temp = new Point(XY(100.f), RGB(10, 20, 30));
+			if (Keyboard::isKeyPressed(Keyboard::Key::Add) && time >= 200.f) {
+				Point* temp = new Point(XY(200.f), RGB(10, 20, 30));
 				shapes.push_back(dynamic_cast<IDraw*>(temp));
+				time = 0.f;
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Key::E) && time >= 200.f) {
+				ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[shapes.size() - 1]), -0.1f);
+				time = 0.f;
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Key::Q) && time >= 200.f) {
+				ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[shapes.size() - 1]), 0.1f);
 				time = 0.f;
 			}
 		}
