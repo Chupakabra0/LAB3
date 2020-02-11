@@ -8,7 +8,6 @@ struct ShapeDealer
 	//---------------------------------------------------------------------
 	static void Draw(IDraw* draw, sf::RenderWindow& window) {
 		draw->Draw(window);
-		draw->RememberCondition();
 	}
 	static void Move(IMove* move, XY xy) {
 		move->ChangePosition(xy);
@@ -37,5 +36,11 @@ struct ShapeDealer
 	static void SetScale(IScale* object, Scale scale) {
 		object->SetScale(scale);
 		object->RememberCondition();
+	}
+	static void LegacyCondition(IShape* shape) {
+		shape->PreviousCondition();
+	}
+	static void FirstCondition(IShape* shape) {
+		shape->FirstCondition();
 	}
 };

@@ -4,15 +4,15 @@
 
 using namespace sf;
 
-Point::Point(float x): Point(x, x) {}
-Point::Point(float x, float y): Point(x, y, 0.f) {}
-Point::Point(float x, float y, RGB color) : Point(XY(x, y), color) { }
+Circle::Circle(float x): Circle(x, x) {}
+Circle::Circle(float x, float y): Circle(x, y, 0.f) {}
+Circle::Circle(float x, float y, RGB color) : Circle(XY(x, y), color) { }
 
-Point::Point(XY xy, RGB color) : dot(xy), color(color), scale(1.f) {
-	this->Point::RememberCondition();
+Circle::Circle(XY xy, RGB color) : dot(xy), color(color), scale(1.f) {
+	this->Circle::RememberCondition();
 }
 
-void Point::Draw(RenderWindow& window) {
+void Circle::Draw(RenderWindow& window) {
 	CircleShape dot(1);
 	dot.setPosition(this->dot.getX() , this->dot.getY());
 	dot.scale(this->scale.GetValueX(), this->scale.GetValueY());
@@ -20,27 +20,27 @@ void Point::Draw(RenderWindow& window) {
 	window.draw(dot);
 }
 
-void Point::SetPosition(XY xy) {
+void Circle::SetPosition(XY xy) {
 	this->dot.setXY(xy.getX(), xy.getY());
 }
 
-void Point::ChangePosition(XY xy) {
+void Circle::ChangePosition(XY xy) {
 	this->SetPosition(XY(xy.getX() + this->dot.getX(), xy.getY() + this->dot.getY()));
 }
 
-void Point::SetScale(Scale scale) {
+void Circle::SetScale(Scale scale) {
 	this->scale = scale;
 }
 
-void Point::ChangeScale(Scale scale) {
+void Circle::ChangeScale(Scale scale) {
 	this->SetScale(Scale(scale.GetValueX() + this->scale.GetValueY()));
 }
 
-void Point::SetColor(RGB rgb) {
+void Circle::SetColor(RGB rgb) {
 	this->color = rgb;
 }
 
-void Point::PreviousCondition() {
+void Circle::PreviousCondition() {
 	if (this->history.size() > 1) {
 		this->history.pop_back();
 		const auto size = this->history.size() - 1;
@@ -51,8 +51,17 @@ void Point::PreviousCondition() {
 	//else throw...
 }
 
-void Point::RememberCondition() {
+void Circle::RememberCondition() {
 	this->history.emplace_back(this->dot, this->scale, this->angle, this->color);
 }
 
-Point::~Point() = default;
+void Circle::FirstCondition()
+{
+	if (this->dot != this->history[0].GetDot()) this->SetPosition(this->history[0].GetDot());
+	if (this->scale != this->history[0].GetScale()) this->SetScale(this->history[0].GetScale());
+	if (this->color != this->history[0].GetColor()) this->SetColor(this->history[0].GetColor());
+	this->history.clear();
+	this->RememberCondition();
+}
+
+Circle::~Circle() = default;

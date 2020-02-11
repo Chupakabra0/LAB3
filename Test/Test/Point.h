@@ -9,15 +9,15 @@ struct Figure : IMove, IScale, IDraw, IRotate {
 	virtual ~Figure() = default;
 };
 
-class Point : public Figure
+class Circle : public Figure
 {
 public:
-	Point() = delete;
-	Point(float x);
-	Point(float x, float y);
-	Point(float x, float y, RGB color);
-	Point(XY xy, RGB color);
-	virtual ~Point();
+	Circle() = delete;
+	Circle(float x);
+	Circle(float x, float y);
+	Circle(float x, float y, RGB color);
+	Circle(XY xy, RGB color);
+	virtual ~Circle();
 protected:
 	void Draw(sf::RenderWindow& window) override;
 	//---------------------------------------------------------------------
@@ -38,6 +38,7 @@ protected:
 	//---------------------------------------------------------------------
 	void PreviousCondition() override;
 	void RememberCondition() override;
+	void FirstCondition() override;
 	//---------------------------------------------------------------------
 	Scale scale;
 	Angle angle;

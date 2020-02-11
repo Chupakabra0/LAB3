@@ -7,6 +7,8 @@
 using namespace sf;
 
 struct Const {
+	Const() = delete;
+	~Const() = delete;
 	constexpr static float SPEED = 1000.f;
 	constexpr static float TIME = 200.f;
 	constexpr static float MOVE = 1.f;
@@ -62,9 +64,17 @@ int main(void) {
 					ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[shapes.size() - 1]), Scale(Const::SCALE_MINUS));
 					time = 0.f;
 				}
+				if (Keyboard::isKeyPressed(Keyboard::Key::Z) && time >= Const::TIME) { //уменьшение масштаба
+					ShapeDealer::LegacyCondition(dynamic_cast<IShape*>(shapes[shapes.size() - 1]));
+					time = 0.f;
+				}
+				if (Keyboard::isKeyPressed(Keyboard::Key::X) && time >= Const::TIME) { //уменьшение масштаба
+					ShapeDealer::FirstCondition(dynamic_cast<IShape*>(shapes[shapes.size() - 1]));
+					time = 0.f;
+				}
 			}
 			if (Keyboard::isKeyPressed(Keyboard::Key::Add) && time >= Const::TIME) {
-				Point* temp = new Point(XY(200.f), RGB(10, 20, 30));
+				Circle* temp = new Circle(XY(200.f), RGB(10, 20, 30));
 				shapes.push_back(dynamic_cast<IDraw*>(temp));
 				time = 0.f;
 			}

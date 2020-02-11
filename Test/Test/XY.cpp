@@ -30,7 +30,7 @@ void XY::setXY(XY dxdy) {
 }
 
 bool operator==(const XY& first, const XY& second) {
-	return first.getX() == second.getX() && first.getY() == second.getY();
+	return (first.getX() == second.getX()) && (first.getY() == second.getY());
 }
 
 bool operator!=(const XY& first, const XY& second) {

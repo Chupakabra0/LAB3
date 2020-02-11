@@ -46,6 +46,7 @@ protected:
 __interface IShape {  //интерфейс ведения истории
 	virtual void PreviousCondition() abstract;
 	virtual void RememberCondition() abstract;
+	virtual void FirstCondition()	 abstract;
 };
 
 __interface IMove : IShape { //интерфейс передвижения
