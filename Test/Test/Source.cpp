@@ -27,7 +27,7 @@ int main(void) {
 
 	while (window.isOpen()) {
 
-		auto time = clock.getElapsedTime().asMicroseconds();
+		float time = static_cast<float>(clock.getElapsedTime().asMicroseconds());
 		time /= Const::SPEED;
 
 		Event event;

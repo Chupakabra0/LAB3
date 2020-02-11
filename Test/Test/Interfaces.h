@@ -5,8 +5,8 @@
 
 class Angle {
 public:
-	Angle() = default;
-	Angle(float angle): angle(angle) {
+	explicit Angle() = default;
+	explicit Angle(float angle): angle(angle) {
 		AngleRot(*this);
 	}
 	float GetValue() const {
@@ -23,9 +23,9 @@ protected:
 
 class Scale {
 public:
-	Scale() = default;
-	Scale(float scale) : Scale(scale, scale) {}
-	Scale(float scaleX, float scaleY) : scaleX(scaleX), scaleY(scaleY){}
+	explicit Scale() = default;
+	explicit Scale(float scale) : Scale(scale, scale) {}
+	explicit Scale(float scaleX, float scaleY) : scaleX(scaleX), scaleY(scaleY){}
 	float GetValueX() const {
 		return this->scaleX;
 	}

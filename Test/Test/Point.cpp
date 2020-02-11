@@ -52,7 +52,7 @@ void Point::PreviousCondition() {
 }
 
 void Point::RememberCondition() {
-	this->history.emplace_back(this->dot, this->scale, NULL, this->color);
+	this->history.emplace_back(this->dot, this->scale, this->angle, this->color);
 }
 
 Point::~Point() = default;

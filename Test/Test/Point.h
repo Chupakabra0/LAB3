@@ -44,9 +44,4 @@ protected:
 	XY dot;
 	RGB color;
 	std::vector<History> history;
-private:
-
-
-
-
 };
