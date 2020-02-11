@@ -6,7 +6,16 @@
 
 using namespace sf;
 
-const float TIME = 200.f;
+struct Const {
+	constexpr static float SPEED = 1000.f;
+	constexpr static float TIME = 200.f;
+	constexpr static float MOVE = 1.f;
+	constexpr static float ANGLE = 0.1f;
+	constexpr static float SCALE_PLUS = 1.f;
+	constexpr static float SCALE_MINUS = -1.f;
+};
+
+//float Const::TIME = 200.f;
 
 int main(void) {
 
@@ -18,39 +27,43 @@ int main(void) {
 
 	while (window.isOpen()) {
 
-		float time = clock.getElapsedTime().asMicroseconds();
-		time /= 1000.f;
+		auto time = clock.getElapsedTime().asMicroseconds();
+		time /= Const::SPEED;
 
 		Event event;
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed) window.close();
 			if (!shapes.empty()) {
-				if (Keyboard::isKeyPressed(Keyboard::Key::Up)) {
-					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(0.f, -1.f));
+				if (Keyboard::isKeyPressed(Keyboard::Key::Up)) { //вверх
+					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(0.f, -Const::MOVE));
 				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::Down)) {
-					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(0.f, 1.f));
+				if (Keyboard::isKeyPressed(Keyboard::Key::Down)) { //вниз
+					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(0.f, Const::MOVE));
 				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::Left)) {
-					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(-1.f, 0.f));
+				if (Keyboard::isKeyPressed(Keyboard::Key::Left)) { //влево
+					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(-Const::MOVE, 0.f));
 				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::Right)) {
-					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(1.f, 0.f));
+				if (Keyboard::isKeyPressed(Keyboard::Key::Right)) { //вправо
+					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(Const::MOVE, 0.f));
 				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::E) && time >= TIME) {
-					ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[shapes.size() - 1]), -0.1f);
+				if (Keyboard::isKeyPressed(Keyboard::Key::E) && time >= Const::TIME) { //поворот влево
+					ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[shapes.size() - 1]), Angle(-Const::ANGLE));
 					time = 0.f;
 				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::Q) && time >= TIME) {
-					ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[shapes.size() - 1]), 0.1f);
+				if (Keyboard::isKeyPressed(Keyboard::Key::Q) && time >= Const::TIME) { //поворот вправо
+					ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[shapes.size() - 1]), Angle(Const::ANGLE));
 					time = 0.f;
 				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::W) && time >= TIME) {
-					ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[shapes.size() - 1]), 1.5f);
+				if (Keyboard::isKeyPressed(Keyboard::Key::W) && time >= Const::TIME) { //увеличение масштаба
+					ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[shapes.size() - 1]), Scale(Const::SCALE_PLUS));
+					time = 0.f;
+				}
+				if (Keyboard::isKeyPressed(Keyboard::Key::S) && time >= Const::TIME) { //уменьшение масштаба
+					ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[shapes.size() - 1]), Scale(Const::SCALE_MINUS));
 					time = 0.f;
 				}
 			}
-			if (Keyboard::isKeyPressed(Keyboard::Key::Add) && time >= TIME) {
+			if (Keyboard::isKeyPressed(Keyboard::Key::Add) && time >= Const::TIME) {
 				Point* temp = new Point(XY(200.f), RGB(10, 20, 30));
 				shapes.push_back(dynamic_cast<IDraw*>(temp));
 				time = 0.f;
