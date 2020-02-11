@@ -14,9 +14,9 @@ Point::Point(XY xy, RGB color) : dot(xy), color(color), scale(1.f) {
 
 void Point::Draw(RenderWindow& window) {
 	CircleShape dot(1);
-	const auto x = (this->dot.getX() - this->dot.getX() - 10) * cos(this->angle.GetValue()) - (this->dot.getY() - this->dot.getX()- 10) * sin(this->angle.GetValue()) + (this->dot.getX() + 10);
-	const auto y = (this->dot.getX() - this->dot.getX() - 10) * sin(this->angle.GetValue()) + (this->dot.getY() - this->dot.getX() - 10) * cos(this->angle.GetValue()) + (this->dot.getY() + 10);
-	dot.setPosition(x, y);
+	dot.setPosition(this->dot.getX() , this->dot.getY());
+	dot.scale(this->scale.GetValueX(), this->scale.GetValueY());
+	dot.rotate(this->angle.GetValue());
 	window.draw(dot);
 }
 
@@ -33,7 +33,7 @@ void Point::SetScale(Scale scale) {
 }
 
 void Point::ChangeScale(Scale scale) {
-	this->SetScale(Scale(scale.GetValue() + this->scale.GetValue()));
+	this->SetScale(Scale(scale.GetValueX() + this->scale.GetValueY()));
 }
 
 void Point::SetColor(RGB rgb) {
@@ -45,7 +45,7 @@ void Point::PreviousCondition() {
 		this->history.pop_back();
 		const auto size = this->history.size() - 1;
 		if (this->dot != this->history[size].GetDot()) this->SetPosition(this->history[size].GetDot());
-		if (this->scale.GetValue() != this->history[size].GetScale().GetValue()) this->SetScale(this->history[size].GetScale().GetValue());
+		if (this->scale != this->history[size].GetScale()) this->SetScale(this->history[size].GetScale());
 		if (this->color != this->history[size].GetColor()) this->SetColor(this->history[size].GetColor());
 	}
 	//else throw...

@@ -3,7 +3,6 @@
 #include <vector>															 
 #include "RGB.h"															 
 #include "History.h"
-#include <iostream>
 
 struct Figure : IMove, IScale, IDraw, IRotate {
 	Figure() = default;

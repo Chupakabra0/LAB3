@@ -24,12 +24,23 @@ protected:
 class Scale {
 public:
 	Scale() = default;
-	Scale(float scale) : scale(scale) {}
-	float GetValue() const {
-		return this->scale;
+	Scale(float scale) : Scale(scale, scale) {}
+	Scale(float scaleX, float scaleY) : scaleX(scaleX), scaleY(scaleY){}
+	float GetValueX() const {
+		return this->scaleX;
+	}
+	float GetValueY() const {
+		return this->scaleY;
+	}
+	friend bool operator==(const Scale& first, const Scale& second) {
+		return first.GetValueX() == second.GetValueX() && first.GetValueY() == second.GetValueY();
+	}
+	friend bool operator!=(const Scale& first, const Scale& second) {
+		return !(first == second);
 	}
 protected:
-	float scale;
+	float scaleX;
+	float scaleY;
 };
 
 __interface IShape {  //интерфейс ведения истории

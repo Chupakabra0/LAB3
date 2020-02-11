@@ -3,9 +3,10 @@
 #include "Point.h"
 #include "ShapeDealer.h"
 #include <iostream>
-//#define WINDOW
 
 using namespace sf;
+
+const float TIME = 200.f;
 
 int main(void) {
 
@@ -36,18 +37,22 @@ int main(void) {
 				if (Keyboard::isKeyPressed(Keyboard::Key::Right)) {
 					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(1.f, 0.f));
 				}
+				if (Keyboard::isKeyPressed(Keyboard::Key::E) && time >= TIME) {
+					ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[shapes.size() - 1]), -0.1f);
+					time = 0.f;
+				}
+				if (Keyboard::isKeyPressed(Keyboard::Key::Q) && time >= TIME) {
+					ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[shapes.size() - 1]), 0.1f);
+					time = 0.f;
+				}
+				if (Keyboard::isKeyPressed(Keyboard::Key::W) && time >= TIME) {
+					ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[shapes.size() - 1]), 1.5f);
+					time = 0.f;
+				}
 			}
-			if (Keyboard::isKeyPressed(Keyboard::Key::Add) && time >= 200.f) {
+			if (Keyboard::isKeyPressed(Keyboard::Key::Add) && time >= TIME) {
 				Point* temp = new Point(XY(200.f), RGB(10, 20, 30));
 				shapes.push_back(dynamic_cast<IDraw*>(temp));
-				time = 0.f;
-			}
-			if (Keyboard::isKeyPressed(Keyboard::Key::E) && time >= 200.f) {
-				ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[shapes.size() - 1]), -0.1f);
-				time = 0.f;
-			}
-			if (Keyboard::isKeyPressed(Keyboard::Key::Q) && time >= 200.f) {
-				ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[shapes.size() - 1]), 0.1f);
 				time = 0.f;
 			}
 		}
