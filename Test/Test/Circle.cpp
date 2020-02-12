@@ -4,16 +4,16 @@
 
 using namespace sf;
 
-Circle::Circle(float x): Circle(x, x) {}
-Circle::Circle(float x, float y): Circle(x, y, Color(255, 255, 255 , 255)) {}
-Circle::Circle(float x, float y, Color color) : Circle(XY(x, y), color) { }
+Circle::Circle(float x, float radius): Circle(x, x, radius) {}
+Circle::Circle(float x, float y, float radius): Circle(x, y, Color(255, 255, 255 , 255), radius) {}
+Circle::Circle(float x, float y, Color color, float radius) : Circle(XY(x, y), color, radius) { }
 
-Circle::Circle(XY xy, Color color) : dot(xy), color(color), scale(1.f) {
+Circle::Circle(XY xy, Color color, float radius) : dot(xy), color(color), scale(1.f), radius(radius) {
 	this->Circle::RememberCondition();
 }
 
 void Circle::Draw(RenderWindow& window) {
-	CircleShape dot(1);
+	CircleShape dot(this->radius);
 	dot.setPosition(this->dot.getX() , this->dot.getY());
 	dot.scale(this->scale.GetValueX(), this->scale.GetValueY());
 	dot.rotate(this->angle.GetValue());

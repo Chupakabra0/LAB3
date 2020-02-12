@@ -67,7 +67,7 @@ void foo(std::vector<IShape*>& shapes, const Event& event, float& time) {
 		else if (event.type == Event::KeyReleased) {
 			switch (event.key.code) {
 			case Keyboard::Key::Add: {
-				Circle* temp = new Circle(XY(200.f), Color(100, 255, 30, 255));
+				Circle* temp = new Circle(XY(200.f), Color(100, 255, 30, 255), 1.f);
 				shapes.push_back(dynamic_cast<IDraw*>(temp));
 				break;
 			}

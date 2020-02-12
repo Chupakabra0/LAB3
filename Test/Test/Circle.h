@@ -12,10 +12,10 @@ class Circle : public Figure
 {
 public:
 	Circle() = delete;
-	Circle(float x);
-	Circle(float x, float y);
-	Circle(float x, float y, sf::Color color);
-	Circle(XY xy, sf::Color color);
+	Circle(float x, float radius);
+	Circle(float x, float y, float radius);
+	Circle(float x, float y, sf::Color color, float radius);
+	Circle(XY xy, sf::Color color, float radius);
 	virtual ~Circle();
 protected:
 	void Draw(sf::RenderWindow& window) override;
@@ -42,6 +42,7 @@ protected:
 	Scale scale;
 	Angle angle;
 	XY dot;
+	float radius;
 	sf::Color color;
 	std::vector<History> history;
 };
