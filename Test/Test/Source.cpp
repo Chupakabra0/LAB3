@@ -19,7 +19,7 @@ struct Const {
 
 void foo(std::vector<IShape*>& shapes, const Event& event, float& time) {
 	if (time >= Const::TIME) {
-		if (!shapes.empty()) {
+		if (!shapes.empty() && event.type == Event::KeyPressed) {
 			switch (event.key.code) {
 			case Keyboard::Key::Up: {
 				ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(0.f, -Const::MOVE));
@@ -64,20 +64,19 @@ void foo(std::vector<IShape*>& shapes, const Event& event, float& time) {
 			default: break;
 			}
 		}
-		switch (event.key.code) {
-		case Keyboard::Key::Add: {
-			Circle* temp = new Circle(XY(200.f), Color(100, 200, 30, 40));
-			shapes.push_back(dynamic_cast<IDraw*>(temp));
-			break;
+		else if (event.type == Event::KeyReleased) {
+			switch (event.key.code) {
+			case Keyboard::Key::Add: {
+				Circle* temp = new Circle(XY(200.f), Color(100, 255, 30, 255));
+				shapes.push_back(dynamic_cast<IDraw*>(temp));
+				break;
+			}
+			default: break;
+			}
 		}
-		default: break;
-		}
-
 		time = 0.f;
 	}
 }
-
-//float Const::TIME = 200.f;
 
 int main(void) {
 
