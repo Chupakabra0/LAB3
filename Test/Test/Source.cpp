@@ -1,8 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
-#include "Point.h"
 #include "ShapeDealer.h"
 #include <iostream>
+#include "Circle.h"
 
 using namespace sf;
 

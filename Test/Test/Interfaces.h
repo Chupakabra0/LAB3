@@ -21,25 +21,28 @@ protected:
 };
 
 class Scale {
+
 public:
 	explicit Scale() = default;
-	explicit Scale(float scale) : Scale(scale, scale) {}
-	explicit Scale(float scaleX, float scaleY) : scaleX(scaleX), scaleY(scaleY){}
+	explicit Scale(float scale) : Scale(XY(scale)) {}
+	explicit Scale(XY scale) : scale(scale) {}
 	float GetValueX() const {
-		return this->scaleX;
+		return this->scale.getX();
 	}
 	float GetValueY() const {
-		return this->scaleY;
+		return this->scale.getY();
 	}
 	friend bool operator==(const Scale& first, const Scale& second) {
-		return first.GetValueX() == second.GetValueX() && first.GetValueY() == second.GetValueY();
+		return first.getPoint() == second.getPoint();
 	}
 	friend bool operator!=(const Scale& first, const Scale& second) {
 		return !(first == second);
 	}
 protected:
-	float scaleX;
-	float scaleY;
+	XY scale;
+	XY getPoint() const {
+		return this->scale;
+	}
 };
 
 __interface IShape {  //интерфейс ведения истории

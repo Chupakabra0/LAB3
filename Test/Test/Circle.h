@@ -40,7 +40,7 @@ protected:
 	void FirstCondition() override;
 	//---------------------------------------------------------------------
 	Scale scale;
-	Angle angle{};
+	Angle angle;
 	XY dot;
 	sf::Color color;
 	std::vector<History> history;

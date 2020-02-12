@@ -125,7 +125,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="History.cpp" />
-    <ClCompile Include="Point.cpp" />
+    <ClCompile Include="Circle.cpp" />
     <ClCompile Include="ShapeDealer.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="XY.cpp" />
@@ -133,7 +133,7 @@
   <ItemGroup>
     <ClInclude Include="History.h" />
     <ClInclude Include="Interfaces.h" />
-    <ClInclude Include="Point.h" />
+    <ClInclude Include="Circle.h" />
     <ClInclude Include="ShapeDealer.h" />
     <ClInclude Include="XY.h" />
   </ItemGroup>
