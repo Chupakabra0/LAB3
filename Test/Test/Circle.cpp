@@ -17,6 +17,8 @@ void Circle::Draw(RenderWindow& window) {
 	dot.setPosition(this->dot.getX() , this->dot.getY());
 	dot.scale(this->scale.GetValueX(), this->scale.GetValueY());
 	dot.rotate(this->angle.GetValue());
+	dot.setFillColor(this->color);
+	dot.setOutlineColor(dot.getFillColor());
 	window.draw(dot);
 }
 
