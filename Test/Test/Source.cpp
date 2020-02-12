@@ -78,14 +78,13 @@ struct Const {
 
 };
 
-
 int main(void) {
 
 	RenderWindow window{ VideoMode(600, 600), L"Геометрические фигуры" };
 
 	std::vector<IShape*> shapes;
-
 	Clock clock;
+
 
 	while (window.isOpen()) {
 
