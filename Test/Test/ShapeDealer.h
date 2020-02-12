@@ -25,7 +25,7 @@ struct ShapeDealer
 		rotate->SetAngle(angle);
 		rotate->RememberCondition();
 	}
-	static void SetColor(IDraw* object, RGB color) {
+	static void SetColor(IDraw* object, sf::Color color) {
 		object->SetColor(color);
 		object->RememberCondition();
 	}

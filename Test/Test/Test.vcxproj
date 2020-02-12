@@ -126,7 +126,6 @@
   <ItemGroup>
     <ClCompile Include="History.cpp" />
     <ClCompile Include="Point.cpp" />
-    <ClCompile Include="RGB.cpp" />
     <ClCompile Include="ShapeDealer.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="XY.cpp" />
@@ -135,7 +134,6 @@
     <ClInclude Include="History.h" />
     <ClInclude Include="Interfaces.h" />
     <ClInclude Include="Point.h" />
-    <ClInclude Include="RGB.h" />
     <ClInclude Include="ShapeDealer.h" />
     <ClInclude Include="XY.h" />
   </ItemGroup>

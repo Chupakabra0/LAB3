@@ -5,10 +5,10 @@
 using namespace sf;
 
 Circle::Circle(float x): Circle(x, x) {}
-Circle::Circle(float x, float y): Circle(x, y, 0.f) {}
-Circle::Circle(float x, float y, RGB color) : Circle(XY(x, y), color) { }
+Circle::Circle(float x, float y): Circle(x, y, Color(255, 255, 255 , 255)) {}
+Circle::Circle(float x, float y, Color color) : Circle(XY(x, y), color) { }
 
-Circle::Circle(XY xy, RGB color) : dot(xy), color(color), scale(1.f) {
+Circle::Circle(XY xy, Color color) : dot(xy), color(color), scale(1.f) {
 	this->Circle::RememberCondition();
 }
 
@@ -36,7 +36,7 @@ void Circle::ChangeScale(Scale scale) {
 	this->SetScale(Scale(scale.GetValueX() + this->scale.GetValueY()));
 }
 
-void Circle::SetColor(RGB rgb) {
+void Circle::SetColor(sf::Color rgb) {
 	this->color = rgb;
 }
 

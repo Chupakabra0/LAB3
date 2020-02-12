@@ -1,6 +1,5 @@
 #pragma once
 #include "XY.h"
-#include "RGB.h"
 #include <SFML/Graphics.hpp>
 
 class Angle {
@@ -61,7 +60,7 @@ __interface IRotate : IShape { //интерфейс поворота
 
 __interface IDraw : IShape { //интерфейс рисования
 	virtual void Draw(sf::RenderWindow& window) abstract;
-	virtual void SetColor(RGB rgb) abstract;
+	virtual void SetColor(sf::Color rgba) abstract;
 };
 
 __interface IScale : IShape { //интерфейс масштабирования

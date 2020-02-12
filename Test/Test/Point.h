@@ -1,7 +1,6 @@
 #pragma once																 
 #include "Interfaces.h"														 
-#include <vector>															 
-#include "RGB.h"															 
+#include <vector>															 														 
 #include "History.h"
 
 struct Figure : IMove, IScale, IDraw, IRotate {
@@ -15,8 +14,8 @@ public:
 	Circle() = delete;
 	Circle(float x);
 	Circle(float x, float y);
-	Circle(float x, float y, RGB color);
-	Circle(XY xy, RGB color);
+	Circle(float x, float y, sf::Color color);
+	Circle(XY xy, sf::Color color);
 	virtual ~Circle();
 protected:
 	void Draw(sf::RenderWindow& window) override;
@@ -27,7 +26,7 @@ protected:
 	void SetScale(Scale scale) override;
 	void ChangeScale(Scale scale) override;
 	//---------------------------------------------------------------------
-	void SetColor(RGB rgb) override;
+	void SetColor(sf::Color rgb) override;
 	//---------------------------------------------------------------------
 	void SetAngle(Angle angle) override {
 		this->angle = angle;
@@ -41,8 +40,8 @@ protected:
 	void FirstCondition() override;
 	//---------------------------------------------------------------------
 	Scale scale;
-	Angle angle;
+	Angle angle{};
 	XY dot;
-	RGB color;
+	sf::Color color;
 	std::vector<History> history;
 };

@@ -74,7 +74,7 @@ int main(void) {
 				}
 			}
 			if (Keyboard::isKeyPressed(Keyboard::Key::Add) && time >= Const::TIME) {
-				Circle* temp = new Circle(XY(200.f), RGB(10, 20, 30));
+				Circle* temp = new Circle(XY(200.f), Color(10, 20, 30, 40));
 				shapes.push_back(dynamic_cast<IDraw*>(temp));
 				time = 0.f;
 			}

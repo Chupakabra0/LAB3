@@ -12,6 +12,6 @@ Angle History::GetAngle() const {
 	return this->angle;
 }
 
-RGB History::GetColor() const {
+sf::Color History::GetColor() const {
 	return this->color;
 }
