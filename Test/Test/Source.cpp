@@ -4,6 +4,9 @@
 #include <iostream>
 #include "Circle.h"
 
+#include <string>
+#include <sstream>
+
 using namespace sf;
 
 struct Const {
@@ -15,6 +18,7 @@ struct Const {
 	constexpr static float ANGLE = 0.1f;
 	constexpr static float SCALE_PLUS = 1.f;
 	constexpr static float SCALE_MINUS = -1.f;
+
 	static void Key(std::vector<IShape*>& shapes, const Event& event, float& time) {
 		if (time >= Const::TIME) {
 			if (!shapes.empty() && event.type == Event::KeyPressed) {
@@ -49,7 +53,7 @@ struct Const {
 				}
 				case Keyboard::Key::S: {
 					ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[shapes.size() - 1]), Scale(Const::SCALE_MINUS));
-					break;;
+					break;
 				}
 				case Keyboard::Key::Z: {
 					ShapeDealer::LegacyCondition(dynamic_cast<IShape*>(shapes[shapes.size() - 1]));
@@ -85,6 +89,9 @@ int main(void) {
 	std::vector<IShape*> shapes;
 	Clock clock;
 
+	int num;
+	std::string stext;
+
 	while (window.isOpen()) {
 
 		float time = static_cast<float>(clock.getElapsedTime().asMicroseconds());
@@ -94,6 +101,18 @@ int main(void) {
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed) window.close();
 			Const::Key(shapes, event, time);
+			if (event.type == sf::Event::TextEntered) {
+				if (event.key.code > 47 && event.key.code < 58) {
+					stext += {static_cast<char>(event.key.code)};
+				}
+				if (event.key.code == 8 && !stext.empty()) {
+					stext.erase(stext.cend() - 1);
+				}
+				std::stringstream ss;
+				ss << stext;
+				ss >> num;
+				std::cout << num << std::endl;
+			}
 		}
 		window.clear();
 		for (auto i = 0; i < shapes.size(); i++) {
@@ -105,7 +124,7 @@ int main(void) {
 		Text text;
 		Font font;
 		font.loadFromFile("BAUHS93.ttf");
-		text.setString("FUCK THIS SHIT!");
+		text.setString(stext);
 		text.setFont(font);
 		window.draw(text);
 		//
