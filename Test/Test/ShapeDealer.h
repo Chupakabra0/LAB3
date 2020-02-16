@@ -1,6 +1,7 @@
 #pragma once
 #include "Interfaces.h"
 
+
 struct ShapeDealer
 {
 	ShapeDealer() = delete;

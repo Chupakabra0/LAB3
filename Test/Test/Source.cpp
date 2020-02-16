@@ -84,7 +84,6 @@ int main(void) {
 
 	std::vector<IShape*> shapes;
 	Clock clock;
-	int num;
 
 	while (window.isOpen()) {
 
@@ -94,12 +93,6 @@ int main(void) {
 		Event event;
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed) window.close();
-			if (event.type == Event::TextEntered) {
-				if (event.key.code > 47 && event.key.code < 58) {
-					std::string text = {static_cast<char>(event.key.code)};
-					num = stol(text);
-				}
-			}
 			Const::Key(shapes, event, time);
 		}
 		window.clear();
@@ -107,6 +100,16 @@ int main(void) {
 			std::cout << i + 1 << std::endl;
 			ShapeDealer::Draw(dynamic_cast<IDraw*>(shapes[i]), window);
 		}
+
+		//
+		Text text;
+		Font font;
+		font.loadFromFile("BAUHS93.ttf");
+		text.setString("FUCK THIS SHIT!");
+		text.setFont(font);
+		window.draw(text);
+		//
+
 		window.display();
 	}
 
