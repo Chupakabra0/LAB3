@@ -82,12 +82,10 @@ struct Const {
 
 	static void Text(std::string& string, const Event& event) {
 		if (event.type == sf::Event::TextEntered) {
-			if (event.key.code > 47 && event.key.code < 58) {
-				string += {static_cast<char>(event.key.code)};
+			if (event.text.unicode == '\b') {
+				if (!string.empty()) string.erase(string.cend() - 1);
 			}
-			if (event.key.code == 8 && !string.empty()) {
-				string.erase(string.cend() - 1);
-			}
+			else string += {static_cast<char>(event.text.unicode)};
 		}
 	}
 };
@@ -103,7 +101,7 @@ int main(void) {
 
 	while (window.isOpen()) {
 
-		float time = static_cast<float>(clock.getElapsedTime().asMicroseconds());
+		auto time = static_cast<float>(clock.getElapsedTime().asMicroseconds());
 		time /= Const::SPEED;
 
 		Event event;
