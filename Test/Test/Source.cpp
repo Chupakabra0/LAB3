@@ -85,7 +85,17 @@ struct Const {
 			if (event.text.unicode == '\b') {
 				if (!string.empty()) string.erase(string.cend() - 1);
 			}
+			else if (event.text.unicode == 13) Check(string);
 			else string += {static_cast<char>(event.text.unicode)};
+		}
+	}
+
+	static void Check(const std::string& string) {
+		if (!string.find("Set")) {
+
+			if (!string.find("R")) {
+				
+			}
 		}
 	}
 };
