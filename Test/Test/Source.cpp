@@ -80,6 +80,16 @@ struct Const {
 		}
 	}
 
+	static void Text(std::string& string, const Event& event) {
+		if (event.type == sf::Event::TextEntered) {
+			if (event.key.code > 47 && event.key.code < 58) {
+				string += {static_cast<char>(event.key.code)};
+			}
+			if (event.key.code == 8 && !string.empty()) {
+				string.erase(string.cend() - 1);
+			}
+		}
+	}
 };
 
 int main(void) {
@@ -89,8 +99,7 @@ int main(void) {
 	std::vector<IShape*> shapes;
 	Clock clock;
 
-	int num;
-	std::string stext;
+	std::string cmd;
 
 	while (window.isOpen()) {
 
@@ -101,18 +110,7 @@ int main(void) {
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed) window.close();
 			Const::Key(shapes, event, time);
-			if (event.type == sf::Event::TextEntered) {
-				if (event.key.code > 47 && event.key.code < 58) {
-					stext += {static_cast<char>(event.key.code)};
-				}
-				if (event.key.code == 8 && !stext.empty()) {
-					stext.erase(stext.cend() - 1);
-				}
-				std::stringstream ss;
-				ss << stext;
-				ss >> num;
-				std::cout << num << std::endl;
-			}
+			Const::Text(cmd, event);
 		}
 		window.clear();
 		for (auto i = 0; i < shapes.size(); i++) {
@@ -124,7 +122,7 @@ int main(void) {
 		Text text;
 		Font font;
 		font.loadFromFile("BAUHS93.ttf");
-		text.setString(stext);
+		text.setString(cmd);
 		text.setFont(font);
 		window.draw(text);
 		//
