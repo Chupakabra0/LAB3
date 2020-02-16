@@ -93,9 +93,6 @@ struct Const {
 	static void Check(const std::string& string) {
 		if (!string.find("Set")) {
 
-			if (!string.find("R")) {
-				
-			}
 		}
 	}
 };
