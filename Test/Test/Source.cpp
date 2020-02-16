@@ -96,7 +96,7 @@ int main(void) {
 			if (event.type == Event::Closed) window.close();
 			if (event.type == Event::TextEntered) {
 				if (event.key.code > 47 && event.key.code < 58) {
-					std::string text = { event.key.code };
+					std::string text = {static_cast<char>(event.key.code)};
 					num = stol(text);
 				}
 			}
