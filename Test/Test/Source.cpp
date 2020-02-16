@@ -24,35 +24,35 @@ struct Const {
 			if (!shapes.empty() && event.type == Event::KeyPressed) {
 				switch (event.key.code) {
 				case Keyboard::Key::Up: {
-					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(0.f, -Const::MOVE));
+					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(0.f, -MOVE));
 					break;
 				}
 				case Keyboard::Key::Down: {
-					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(0.f, Const::MOVE));
+					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(0.f, MOVE));
 					break;
 				}
 				case Keyboard::Key::Left: {
-					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(-Const::MOVE, 0.f));
+					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(-MOVE, 0.f));
 					break;
 				}
 				case Keyboard::Key::Right: {
-					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(Const::MOVE, 0.f));
+					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[shapes.size() - 1]), XY(MOVE, 0.f));
 					break;
 				}
 				case Keyboard::Key::E: {
-					ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[shapes.size() - 1]), Angle(-Const::ANGLE));
+					ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[shapes.size() - 1]), Angle(-ANGLE));
 					break;
 				}
 				case Keyboard::Key::Q: {
-					ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[shapes.size() - 1]), Angle(Const::ANGLE));
+					ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[shapes.size() - 1]), Angle(ANGLE));
 					break;
 				}
 				case Keyboard::Key::W: {
-					ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[shapes.size() - 1]), Scale(Const::SCALE_PLUS));
+					ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[shapes.size() - 1]), Scale(SCALE_PLUS));
 					break;
 				}
 				case Keyboard::Key::S: {
-					ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[shapes.size() - 1]), Scale(Const::SCALE_MINUS));
+					ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[shapes.size() - 1]), Scale(SCALE_MINUS));
 					break;
 				}
 				case Keyboard::Key::Z: {
