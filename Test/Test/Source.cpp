@@ -84,7 +84,7 @@ int main(void) {
 
 	std::vector<IShape*> shapes;
 	Clock clock;
-
+	int num;
 
 	while (window.isOpen()) {
 
@@ -94,6 +94,12 @@ int main(void) {
 		Event event;
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed) window.close();
+			if (event.type == Event::TextEntered) {
+				if (event.key.code > 47 && event.key.code < 58) {
+					std::string text = { event.key.code };
+					num = stol(text);
+				}
+			}
 			Const::Key(shapes, event, time);
 		}
 		window.clear();
