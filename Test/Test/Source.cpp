@@ -9,17 +9,21 @@
 
 using namespace sf;
 
+enum figureID {
+	CIRCLE
+};
+
 struct Const {
 	Const() = delete;
 	~Const() = delete;
 	constexpr static float SPEED = 1000.f;
 	constexpr static float TIME = 500.f;
-	constexpr static float MOVE = 1.f;
+	constexpr static float MOVE = 3.f;
 	constexpr static float ANGLE = 0.1f;
 	constexpr static float SCALE_PLUS = 1.f;
 	constexpr static float SCALE_MINUS = -1.f;
 
-	static void Key(std::vector<IShape*>& shapes, Event& event, float& time, unsigned int& focus) {
+	static void Key(std::vector<IShape*>& shapes, Event& event, float& time, unsigned int& focus, unsigned int& id) {
 		if (time >= Const::TIME) {
 			if (!shapes.empty() && event.type == Event::KeyPressed) {
 				if (Keyboard::isKeyPressed(Keyboard::Key::Left)) {
@@ -67,41 +71,34 @@ struct Const {
 			}
 			else if (event.type == Event::KeyReleased) {
 				if (event.key.code == Keyboard::Key::Add) {
-					//TODO CREATE
-					if (!shapes.empty()) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
-					Circle* temp = new Circle(XY(200.f), Color(200, 0, 30, 255), 2.f);
-					shapes.push_back(dynamic_cast<IDraw*>(temp));
-					focus = shapes.size() - 1;
-					ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
+					std::vector<float> coordinates;
+					CreateFigure(shapes, coordinates, focus, id);
 				}
 			}
 			time = 0.f;
 		}
 	}
 
-	static void Text(std::vector<IShape*>& shapes, std::string& string, const Event& event, unsigned int& focus) {
+	static void Text(std::vector<IShape*>& shapes, std::string& string, const Event& event, unsigned int& focus, unsigned int& id) {
 		if (event.type == sf::Event::TextEntered) {
 			if (event.text.unicode == '\b') {
 				if (!string.empty()) string.erase(string.cend() - 1);
 			}
-			else if (event.text.unicode == 13) Check(shapes, string, focus);
-			else string += {static_cast<char>(event.text.unicode)};
+			else if (event.text.unicode == 13) Check(shapes, string, focus, id);
+			else if (event.text.unicode != 43) string += {static_cast<char>(event.text.unicode)};
 		}
 	}
 
 private:
-	static void Check(std::vector<IShape*>& shapes, std::string& string, unsigned int& focus) {
-		if (!string.find("CreateCircle")) {
+	static void Check(std::vector<IShape*>& shapes, std::string& string, unsigned int& focus, unsigned int& id) {
+		if (!string.find("Create")) {
+			if (!string.find(typeid(Circle).name()))
 			string = NumberCheck(string);
 			std::replace(string.begin(), string.end(), '_', ' ');
 			std::istringstream ss(string);
 			std::vector<float> coordinates{ std::istream_iterator<float>(ss), {} };
 			//TODO CREATE
-			if (!shapes.empty()) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
-			Circle* temp = new Circle(XY(coordinates[0], coordinates[1]), Color(200.f, 0.f, 0.f), 5.f);
-			shapes.push_back(dynamic_cast<IDraw*>(temp));
-			focus = shapes.size() - 1;
-			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
+			CreateFigure(shapes, coordinates, focus, id);
 			
 		}
 		else {
@@ -121,14 +118,46 @@ private:
 		return result;
 	}
 
-	static void CreateFigure(std::vector<IShape*>& shapes, std::vector<float>& coordinates, unsigned int& focus) {
-		if (typeid(shapes).name() == "Circle") {
-			if (!shapes.empty()) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
-			Circle* temp = new Circle(XY(coordinates[0], coordinates[1]), Color(200.f, 0.f, 0.f), 5.f);
-			shapes.push_back(dynamic_cast<IDraw*>(temp));
-			focus = shapes.size() - 1;
-			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
+	static void CreateFigure(std::vector<IShape*>& shapes, std::vector<float>& coordinates, unsigned int& focus, unsigned int& id) {
+		if (!shapes.empty()) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
+		Figure* temp = nullptr;
+		switch (id) {
+			case CIRCLE: {
+				XY xy;
+				Color color;
+				float radius = 10.f;
+				if (coordinates.empty()) {
+					xy.setXY(0.f, 0.f);
+					color = Color::Red;
+				}
+				else if (coordinates.size() == 1) {
+					xy.setXY(coordinates[0], coordinates[0]);
+					color = Color::Red;
+				}
+				else if (coordinates.size() == 2) {
+					xy.setXY(coordinates[0], coordinates[1]);
+					color = Color::Red;
+				}
+				else if (coordinates.size() == 3 || coordinates.size() == 4 || coordinates.size() == 5) {
+					xy.setXY(coordinates[0], coordinates[1]);
+					radius = coordinates[2];
+					color = Color::Red;
+				}
+				else if (coordinates.size() >= 6) {
+					xy.setXY(coordinates[0], coordinates[1]);
+					radius = coordinates[2];
+					color = Color(coordinates[3], coordinates[4], coordinates[5]);
+				}
+				temp = new Circle(XY(xy.getX(), xy.getY()), color, radius);
+				break;
+			}
+			default: {
+				break;
+			}
 		}
+		shapes.push_back(dynamic_cast<IDraw*>(temp));
+		focus = shapes.size() - 1;
+		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
 	}
 };
 
@@ -140,6 +169,7 @@ int main(void) {
 	Clock clock;
 	std::string cmd;
 	unsigned int focus = 0;
+	unsigned int id = CIRCLE;
 
 	while (window.isOpen()) {
 
@@ -150,8 +180,8 @@ int main(void) {
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed) window.close();
 
-			Const::Key(shapes, event, time, focus);
-			Const::Text(shapes, cmd, event, focus);
+			Const::Key(shapes, event, time, focus, id);
+			Const::Text(shapes, cmd, event, focus, id);
 		}
 
 		window.clear();

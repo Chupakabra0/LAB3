@@ -20,7 +20,7 @@ void Circle::Draw(RenderWindow& window) {
 	dot.setFillColor(this->color);
 	dot.setOutlineColor(dot.getFillColor());
 	if (this->isFocused) {
-		dot.setOutlineThickness(15.f);
+		dot.setOutlineThickness(1.f);
 		dot.setOutlineColor(Color::Green);
 	}
 	window.draw(dot);
