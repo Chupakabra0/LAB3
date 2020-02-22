@@ -62,6 +62,41 @@ struct Const {
 			time = 0.f;
 		}
 	}
+
+	static void Text(std::vector<IShape*>& shapes, std::string& string, const Event& event) {
+		if (event.type == sf::Event::TextEntered) {
+			if (event.text.unicode == '\b') {
+				if (!string.empty()) string.erase(string.cend() - 1);
+			}
+			else if (event.text.unicode == 13) Check(shapes, string);
+			else string += {static_cast<char>(event.text.unicode)};
+		}
+	}
+
+private:
+	static void Check(std::vector<IShape*>& shapes, std::string& string) {
+		if (!string.find("CreateCircle")) {
+			string = NumberCheck(string);
+			std::replace(string.begin(), string.end(), '_', ' ');
+			std::istringstream ss(string);
+			std::vector<float> coordinates{ std::istream_iterator<float>(ss), {} };
+			Circle* temp = new Circle(XY(coordinates[0], coordinates[1]), Color(200.f, 0.f, 0.f), 5.f);
+			shapes.push_back(dynamic_cast<IDraw*>(temp));
+			string.erase();
+			
+		}
+	}
+
+	static std::string NumberCheck(std::string& string) {
+		std::string result;
+		const auto size = string.size();
+		for (auto i = 0; i < size; i++) {
+			if (string[i] == '_' || (string[i] >= '0' && string [i] <= '9')){
+				result += string[i];
+			}
+		}
+		return result;
+	}
 };
 
 int main(void) {
@@ -70,6 +105,7 @@ int main(void) {
 
 	std::vector<IShape*> shapes;
 	Clock clock;
+	std::string cmd;
 
 	while (window.isOpen()) {
 
@@ -79,7 +115,9 @@ int main(void) {
 		Event event;
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed) window.close();
+
 			Const::Key(shapes, event, time);
+			Const::Text(shapes, cmd, event);
 		}
 
 		window.clear();
@@ -87,6 +125,16 @@ int main(void) {
 			std::cout << i + 1 << std::endl;
 			ShapeDealer::Draw(dynamic_cast<IDraw*>(shapes[i]), window);
 		}
+
+		//
+		Text text;
+		Font font;
+		font.loadFromFile("BAUHS93.ttf");
+		text.setString(cmd);
+		text.setFont(font);
+		window.draw(text);
+		//
+
 
 		window.display();
 	}
