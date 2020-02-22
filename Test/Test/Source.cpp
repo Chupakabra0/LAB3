@@ -97,7 +97,6 @@ private:
 			std::replace(string.begin(), string.end(), '_', ' ');
 			std::istringstream ss(string);
 			std::vector<float> coordinates{ std::istream_iterator<float>(ss), {} };
-			//TODO CREATE
 			CreateFigure(shapes, coordinates, focus, id);
 			
 		}
