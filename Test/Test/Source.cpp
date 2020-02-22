@@ -62,22 +62,6 @@ struct Const {
 			time = 0.f;
 		}
 	}
-
-	static void Text(std::string& string, const Event& event) {
-		if (event.type == sf::Event::TextEntered) {
-			if (event.text.unicode == '\b') {
-				if (!string.empty()) string.erase(string.cend() - 1);
-			}
-			else if (event.text.unicode == 13) Check(string);
-			else string += {static_cast<char>(event.text.unicode)};
-		}
-	}
-
-	static void Check(const std::string& string) {
-		if (!string.find("Set")) {
-
-		}
-	}
 };
 
 int main(void) {
@@ -86,8 +70,6 @@ int main(void) {
 
 	std::vector<IShape*> shapes;
 	Clock clock;
-
-	std::string cmd;
 
 	while (window.isOpen()) {
 
@@ -98,22 +80,13 @@ int main(void) {
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed) window.close();
 			Const::Key(shapes, event, time);
-			Const::Text(cmd, event);
 		}
+
 		window.clear();
 		for (auto i = 0; i < shapes.size(); i++) {
 			std::cout << i + 1 << std::endl;
 			ShapeDealer::Draw(dynamic_cast<IDraw*>(shapes[i]), window);
 		}
-
-		//
-		Text text;
-		Font font;
-		font.loadFromFile("BAUHS93.ttf");
-		text.setString(cmd);
-		text.setFont(font);
-		window.draw(text);
-		//
 
 		window.display();
 	}
