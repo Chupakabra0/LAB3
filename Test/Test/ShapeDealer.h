@@ -1,6 +1,6 @@
 #pragma once
 #include "Interfaces.h"
-
+#include "Circle.h"
 
 struct ShapeDealer
 {
@@ -43,5 +43,8 @@ struct ShapeDealer
 	}
 	static void FirstCondition(IShape* shape) {
 		shape->FirstCondition();
+	}
+	static void SwitchFocus(Figure* figure) {
+		figure->setFocus(!figure->getFocus());
 	}
 };

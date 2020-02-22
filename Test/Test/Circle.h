@@ -4,8 +4,18 @@
 #include "History.h"
 
 struct Figure : IMove, IScale, IDraw, IRotate {
-	Figure() = default;
+	Figure() {
+		this->setFocus(false);
+	}
 	virtual ~Figure() = default;
+	bool getFocus() const {
+		return this->isFocused;
+	}
+	void setFocus(bool focus) {
+		if (this->isFocused != focus) this->isFocused = focus;
+	}
+protected:
+	bool isFocused;
 };
 
 class Circle : public Figure

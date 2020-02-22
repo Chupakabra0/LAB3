@@ -19,6 +19,10 @@ void Circle::Draw(RenderWindow& window) {
 	dot.rotate(this->angle.GetValue());
 	dot.setFillColor(this->color);
 	dot.setOutlineColor(dot.getFillColor());
+	if (this->isFocused) {
+		dot.setOutlineThickness(15.f);
+		dot.setOutlineColor(Color::Green);
+	}
 	window.draw(dot);
 }
 
