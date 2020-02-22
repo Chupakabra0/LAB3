@@ -92,12 +92,13 @@ struct Const {
 private:
 	static void Check(std::vector<IShape*>& shapes, std::string& string, unsigned int& focus, unsigned int& id) {
 		if (!string.find("Create")) {
-			if (!string.find(typeid(Circle).name()))
-			string = NumberCheck(string);
-			std::replace(string.begin(), string.end(), '_', ' ');
-			std::istringstream ss(string);
-			std::vector<float> coordinates{ std::istream_iterator<float>(ss), {} };
-			CreateFigure(shapes, coordinates, focus, id);
+			if (!string.find(typeid(Circle).name()) + std::string("class ").size()) {
+				string = NumberCheck(string);
+				std::replace(string.begin(), string.end(), '_', ' ');
+				std::istringstream ss(string);
+				std::vector<float> coordinates{ std::istream_iterator<float>(ss), {} };
+				CreateFigure(shapes, coordinates, focus, id);
+			}
 			
 		}
 		else {
