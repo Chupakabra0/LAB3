@@ -14,9 +14,17 @@ enum figureID {
 	CIRCLE
 };
 
+std::string to_string(figureID id) {
+	switch (id) {
+	case CIRCLE: return typeid(Circle).name() + std::string("class ").size();
+	default: return "unknown";
+	}
+}
+
 struct Const {
 	Const() = delete;
 	~Const() = delete;
+
 	constexpr static float SPEED = 1000.f;
 	constexpr static float TIME = 500.f;
 	constexpr static float MOVE = 3.f;
@@ -24,7 +32,11 @@ struct Const {
 	constexpr static float SCALE_PLUS = 1.f;
 	constexpr static float SCALE_MINUS = -1.f;
 
-	static void Key(std::vector<IShape*>& shapes, Event& event, float& time, unsigned int& focus, unsigned int& id) {
+	const static std::string SET;
+	const static std::string CREATE;
+	const static std::string POSITION;
+
+	static void Key(std::vector<IShape*>& shapes, Event& event, float& time, unsigned int& focus, figureID& id) {
 		if (time >= Const::TIME) {
 			if (!shapes.empty() && event.type == Event::KeyPressed) {
 				if (Keyboard::isKeyPressed(Keyboard::Key::Left)) {
@@ -80,7 +92,7 @@ struct Const {
 		}
 	}
 
-	static void Text(std::vector<IShape*>& shapes, std::string& string, const Event& event, unsigned int& focus, unsigned int& id) {
+	static void Text(std::vector<IShape*>& shapes, std::string& string, const Event& event, unsigned int& focus, figureID& id) {
 		if (event.type == sf::Event::TextEntered) {
 			if (event.text.unicode == '\b') {
 				if (!string.empty()) string.erase(string.cend() - 1);
@@ -91,18 +103,15 @@ struct Const {
 	}
 
 private:
-	static void Check(std::vector<IShape*>& shapes, std::string& string, unsigned int& focus, unsigned int& id) {
-		std::string c = "Create";
-		std::string p = "Position";
-		std::string s = "Set";
-		if (string.find(c, 0) != -1) {
-			if (string.find(typeid(Circle).name() + std::string("class ").size(), 0) != -1) {
+	static void Check(std::vector<IShape*>& shapes, std::string& string, unsigned int& focus, figureID& id) {
+		if (string.find("Create", 0) != -1) {
+			if (string.find(to_string(CIRCLE), 0) != -1) {
 				auto coordinates = Convert(string);
 				CreateFigure(shapes, coordinates, focus, id);
 			}
 		}
-		else if (string.find(s, 0) != -1) {
-			if (string.find(p, 0) != -1) {
+		else if (string.find("Set", 0) != -1) {
+			if (string.find("Position", 0) != -1) {
 				auto coordinates = Convert(string);
 				SetFigurePosition(dynamic_cast<IMove*>(shapes[focus]), coordinates);
 			}
@@ -129,7 +138,7 @@ private:
 		return result;
 	}
 
-	static void CreateFigure(std::vector<IShape*>& shapes, std::vector<float>& coordinates, unsigned int& focus, unsigned int& id) {
+	static void CreateFigure(std::vector<IShape*>& shapes, std::vector<float>& coordinates, unsigned int& focus, figureID& id) {
 		if (!shapes.empty()) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
 		Figure* temp = nullptr;
 		switch (id) {
@@ -178,6 +187,11 @@ private:
 	}
 };
 
+const std::string Const::SET = "Set"; 
+const std::string Const::CREATE = "Create";
+const std::string Const::POSITION = "Position";
+
+
 int main(void) {
 
 	RenderWindow window{ VideoMode(600, 600), L"Геометрические фигуры" };
@@ -186,7 +200,7 @@ int main(void) {
 	Clock clock;
 	std::string cmd;
 	unsigned int focus = 0;
-	unsigned int id = CIRCLE;
+	figureID id = CIRCLE;
 
 	while (window.isOpen()) {
 
