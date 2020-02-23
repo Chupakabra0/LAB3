@@ -14,9 +14,9 @@ enum figureID {
 	CIRCLE
 };
 
-std::string to_string(ENUM id) {
+std::string to_string(figureID id) {
 	switch (id) {
-	case ENUMERATOR: return typeid(Circle).name() + std::string("class ").size();
+	case CIRCLE: return typeid(Circle).name() + std::string("class ").size();
 	default: return "unknown";
 	}
 }
@@ -25,8 +25,8 @@ struct Const {
 	Const() = delete;
 	~Const() = delete;
 
-	constexpr static float SPEED = 1000.f;
-	constexpr static float TIME = 500.f;
+	constexpr static float SPEED = 800.f;
+	constexpr static float TIME = 2.f;
 	constexpr static float MOVE = 1.f;
 	constexpr static float ANGLE = 0.1f;
 	constexpr static float SCALE_PLUS = 1.f;
@@ -36,82 +36,79 @@ struct Const {
 	const static std::string CREATE;
 	const static std::string POSITION;
 
-	static void Key(std::vector<IShape*>& shapes, Event& event, float& time, unsigned int& focus, figureID& id) {
-		if (time >= Const::TIME) {
-			if (!shapes.empty() && event.type == Event::KeyPressed) {
-				if (Keyboard::isKeyPressed(Keyboard::Key::Left)) {
-					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[focus]), XY(-MOVE, 0.f));
-				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::Right)) {
-					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[focus]), XY(MOVE, 0.f));
-				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::Up)) {
-					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[focus]), XY(0.f, -MOVE));
-				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::Down)) {
-					ShapeDealer::Move(dynamic_cast<IMove*>(shapes[focus]), XY(0.f, MOVE));
-				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::E)) {
-					ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[focus]), Angle(-ANGLE));
-				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::Q)) {
-					ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[focus]), Angle(ANGLE));
-				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::W)) {
-					ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[focus]), Scale(SCALE_PLUS));
-				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::S)) {
-					ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[focus]), Scale(SCALE_MINUS));
-				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::Z)) {
-					ShapeDealer::LegacyCondition(dynamic_cast<IShape*>(shapes[focus]));
-				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::X)) {
-					ShapeDealer::FirstCondition(dynamic_cast<IShape*>(shapes[focus]));
-				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::PageDown)) {
-					ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
-					if (focus != 0) focus--;
-					else focus = shapes.size() - 1;
-					ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
-				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::PageUp)) {
-					ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
-					if (focus != shapes.size() - 1) focus++;
-					else focus = 0;
-					ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
-				}
+	const static std::string CIRCLE;
+
+	static void Key(std::vector<IShape*>& shapes, Event& event, unsigned int& focus, figureID& id) {
+		if (!shapes.empty() && event.type == Event::KeyPressed) {
+			if (Keyboard::isKeyPressed(Keyboard::Key::Left)) {
+				ShapeDealer::Move(dynamic_cast<IMove*>(shapes[focus]), XY(-MOVE, 0.f));
 			}
-			else if (event.type == Event::KeyReleased) {
-				if (event.key.code == Keyboard::Key::Add) {
-					std::vector<float> coordinates;
-					CreateFigure(shapes, coordinates, focus, id);
-				}
+			if (Keyboard::isKeyPressed(Keyboard::Key::Right)) {
+				ShapeDealer::Move(dynamic_cast<IMove*>(shapes[focus]), XY(MOVE, 0.f));
 			}
-			time = 0.f;
+			if (Keyboard::isKeyPressed(Keyboard::Key::Up)) {
+				ShapeDealer::Move(dynamic_cast<IMove*>(shapes[focus]), XY(0.f, -MOVE));
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Key::Down)) {
+				ShapeDealer::Move(dynamic_cast<IMove*>(shapes[focus]), XY(0.f, MOVE));
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Key::E)) {
+				ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[focus]), Angle(-ANGLE));
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Key::Q)) {
+				ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[focus]), Angle(ANGLE));
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Key::W)) {
+				ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[focus]), Scale(SCALE_PLUS));
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Key::S)) {
+				ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[focus]), Scale(SCALE_MINUS));
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Key::Z)) {
+				ShapeDealer::LegacyCondition(dynamic_cast<IShape*>(shapes[focus]));
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Key::X)) {
+				ShapeDealer::FirstCondition(dynamic_cast<IShape*>(shapes[focus]));
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Key::PageDown)) {
+				ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
+				if (focus != 0) focus--;
+				else focus = shapes.size() - 1;
+				ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Key::PageUp)) {
+				ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
+				if (focus != shapes.size() - 1) focus++;
+				else focus = 0;
+				ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
+			}
+		}
+		else if (event.type == Event::KeyReleased) {
+			if (event.key.code == Keyboard::Key::Add) {
+				std::vector<float> coordinates;
+				CreateFigure(shapes, coordinates, focus, id);
+			}
 		}
 	}
 
 	static void Text(std::vector<IShape*>& shapes, std::string& string, const Event& event, unsigned int& focus, figureID& id) {
 		if (event.type == sf::Event::TextEntered) {
-			if (event.text.unicode == '\b') {
-				if (!string.empty()) string.erase(string.cend() - 1);
-			}
+			if (event.text.unicode == '\b') { if (!string.empty()) string.erase(string.cend() - 1); }
 			else if (event.text.unicode == 13) Check(shapes, string, focus, id);
-			else if (event.text.unicode != 43) string += {static_cast<char>(event.text.unicode)};
+			else if (event.text.unicode != 43 && event.text.unicode != 96 && event.text.unicode != 1105) string += {static_cast<char>(event.text.unicode)};
 		}
 	}
 
 private:
 	static void Check(std::vector<IShape*>& shapes, std::string& string, unsigned int& focus, figureID& id) {
-		if (string.find("Create", 0) != -1) {
-			if (string.find(to_string(CIRCLE), 0) != -1) {
+		if (string.find(CREATE, 0) != -1) {
+			if (string.find(CIRCLE, 0) != -1) {
 				auto coordinates = Convert(string);
 				CreateFigure(shapes, coordinates, focus, id);
 			}
 		}
-		else if (string.find("Set", 0) != -1) {
-			if (string.find("Position", 0) != -1) {
+		else if (string.find(SET, 0) != -1) {
+			if (string.find(POSITION, 0) != -1) {
 				auto coordinates = Convert(string);
 				SetFigurePosition(dynamic_cast<IMove*>(shapes[focus]), coordinates);
 			}
@@ -141,7 +138,7 @@ private:
 		if (!shapes.empty()) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
 		Figure* temp = nullptr;
 		switch (id) {
-			case CIRCLE: {
+		case figureID::CIRCLE: {
 				XY xy;
 				Color color;
 				float radius = 10.f;
@@ -190,6 +187,8 @@ const std::string Const::SET = "Set";
 const std::string Const::CREATE = "Create";
 const std::string Const::POSITION = "Position";
 
+const std::string Const::CIRCLE = to_string(figureID::CIRCLE);
+
 int main(void) {
 
 	RenderWindow window{ VideoMode(1000, 1000), L"Геометрические фигуры" };
@@ -199,17 +198,28 @@ int main(void) {
 	std::string cmd; // тут командная строка
 	unsigned int focus = 0; // тут номер фигуры под фокусом TODO сделать массив фокусируемых фигур
 	figureID id = CIRCLE; // id текущей фигуры
+	bool CMDActive = false;
 
 	while (window.isOpen()) {
 
-		auto time = static_cast<float>(clock.getElapsedTime().asMicroseconds()); 
-		time /= Const::SPEED; // обновляем время
-
 		Event event;
 		while (window.pollEvent(event)) {
+
+			auto time = static_cast<float>(clock.getElapsedTime().asMicroseconds());
+			clock.restart();
+			time /= Const::SPEED; // обновляем время
+
 			if (event.type == Event::Closed) window.close();
-			Const::Key(shapes, event, time, focus, id);
-			Const::Text(shapes, cmd, event, focus, id);
+
+			if (!CMDActive) Const::Key(shapes, event, focus, id);
+			else Const::Text(shapes, cmd, event, focus, id);
+
+			if (Keyboard::isKeyPressed(Keyboard::Key::Tilde))
+				if (time >= Const::TIME) {
+					CMDActive = !CMDActive;
+					cmd.erase();
+					time = 0.f;
+				}
 		}
 
 		window.clear();
