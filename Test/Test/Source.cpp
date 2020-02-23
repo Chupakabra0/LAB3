@@ -14,9 +14,9 @@ enum figureID {
 	CIRCLE
 };
 
-std::string to_string(figureID id) {
+std::string to_string(ENUM id) {
 	switch (id) {
-	case CIRCLE: return typeid(Circle).name() + std::string("class ").size();
+	case ENUMERATOR: return typeid(Circle).name() + std::string("class ").size();
 	default: return "unknown";
 	}
 }
@@ -27,7 +27,7 @@ struct Const {
 
 	constexpr static float SPEED = 1000.f;
 	constexpr static float TIME = 500.f;
-	constexpr static float MOVE = 3.f;
+	constexpr static float MOVE = 1.f;
 	constexpr static float ANGLE = 0.1f;
 	constexpr static float SCALE_PLUS = 1.f;
 	constexpr static float SCALE_MINUS = -1.f;
@@ -60,9 +60,9 @@ struct Const {
 				if (Keyboard::isKeyPressed(Keyboard::Key::W)) {
 					ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[focus]), Scale(SCALE_PLUS));
 				}
-				//if (Keyboard::isKeyPressed(Keyboard::Key::S)) {
-				//	ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[focus]), Scale(SCALE_MINUS));
-				//}
+				if (Keyboard::isKeyPressed(Keyboard::Key::S)) {
+					ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[focus]), Scale(SCALE_MINUS));
+				}
 				if (Keyboard::isKeyPressed(Keyboard::Key::Z)) {
 					ShapeDealer::LegacyCondition(dynamic_cast<IShape*>(shapes[focus]));
 				}
@@ -124,7 +124,6 @@ private:
 		std::replace(string.begin(), string.end(), '_', ' ');
 		std::istringstream ss(string);
 		return std::vector<float>{ std::istream_iterator<float>(ss), {} };
-
 	}
 
 	static std::string NumberCheck(std::string& string) {
@@ -191,21 +190,20 @@ const std::string Const::SET = "Set";
 const std::string Const::CREATE = "Create";
 const std::string Const::POSITION = "Position";
 
-
 int main(void) {
 
-	RenderWindow window{ VideoMode(600, 600), L"Геометрические фигуры" };
+	RenderWindow window{ VideoMode(1000, 1000), L"Геометрические фигуры" };
 
-	std::vector<IShape*> shapes;
-	Clock clock;
-	std::string cmd;
-	unsigned int focus = 0;
-	figureID id = CIRCLE;
+	std::vector<IShape*> shapes; // тут хранятся фигуры
+	Clock clock; // тут тикает время
+	std::string cmd; // тут командная строка
+	unsigned int focus = 0; // тут номер фигуры под фокусом TODO сделать массив фокусируемых фигур
+	figureID id = CIRCLE; // id текущей фигуры
 
 	while (window.isOpen()) {
 
-		auto time = static_cast<float>(clock.getElapsedTime().asMicroseconds());
-		time /= Const::SPEED;
+		auto time = static_cast<float>(clock.getElapsedTime().asMicroseconds()); 
+		time /= Const::SPEED; // обновляем время
 
 		Event event;
 		while (window.pollEvent(event)) {
