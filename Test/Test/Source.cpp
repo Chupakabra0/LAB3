@@ -246,6 +246,9 @@ const std::string Const::CIRCLE = to_string(figureID::CIRCLE);
 
 int main(void) {
 
+	ContextSettings settings;
+	settings.antialiasingLevel = 10;
+
 	RenderWindow window{ VideoMode(1000, 1000), L"Геометрические фигуры" };
 
 	std::vector<IShape*> shapes; // тут хранятся фигуры
