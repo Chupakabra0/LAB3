@@ -140,10 +140,6 @@ private:
 					SetFigureScale(dynamic_cast<IScale*>(shapes[focus]), coordinates);
 				}
 			}
-			//else if (string.find(SCALE, 0) != -1) {
-			//	auto coordinates = Convert(string);
-			//	SetFigureScale(dynamic_cast<IScale*>(shapes[focus]), coordinates);
-			//}
 		}
 		string.erase();
 	}
@@ -159,7 +155,7 @@ private:
 		std::string result;
 		const auto size = string.size();
 		for (auto i = 0; i < size; i++) {
-			if (string[i] == '_' || (string[i] >= '0' && string [i] <= '9')){
+			if (string[i] == '_' || (string[i] >= '0' && string [i] <= '9') || string[i] == '-'){
 				result += string[i];
 			}
 		}
