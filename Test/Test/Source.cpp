@@ -28,13 +28,19 @@ struct Const {
 	constexpr static float SPEED = 800.f;
 	constexpr static float TIME = 2.f;
 	constexpr static float MOVE = 1.f;
-	constexpr static float ANGLE = 0.1f;
+	constexpr static float ROTATE = 0.1f;
 	constexpr static float SCALE_PLUS = 1.f;
 	constexpr static float SCALE_MINUS = -1.f;
 
 	const static std::string SET;
 	const static std::string CREATE;
 	const static std::string POSITION;
+	const static std::string ANGLE;
+	const static std::string COLOR;
+	const static std::string SCALE;
+
+	const static std::string X;
+	const static std::string Y;
 
 	const static std::string CIRCLE;
 
@@ -53,10 +59,10 @@ struct Const {
 				ShapeDealer::Move(dynamic_cast<IMove*>(shapes[focus]), XY(0.f, MOVE));
 			}
 			if (Keyboard::isKeyPressed(Keyboard::Key::E)) {
-				ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[focus]), Angle(-ANGLE));
+				ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[focus]), Angle(-ROTATE));
 			}
 			if (Keyboard::isKeyPressed(Keyboard::Key::Q)) {
-				ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[focus]), Angle(ANGLE));
+				ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[focus]), Angle(ROTATE));
 			}
 			if (Keyboard::isKeyPressed(Keyboard::Key::W)) {
 				ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[focus]), Scale(SCALE_PLUS));
@@ -112,6 +118,32 @@ private:
 				auto coordinates = Convert(string);
 				SetFigurePosition(dynamic_cast<IMove*>(shapes[focus]), coordinates);
 			}
+			else if (string.find(ANGLE, 0) != -1) {
+				auto coordinates = Convert(string);
+				SetFigureAngle(dynamic_cast<IRotate*>(shapes[focus]), coordinates);
+			}
+			else if (string.find(COLOR, 0) != -1) {
+				auto coordinates = Convert(string);
+				SetFigureColor(dynamic_cast<IDraw*>(shapes[focus]), coordinates);
+			}
+			else if (string.find(SCALE, 0) != -1) {
+				if (string.find(X, 0) != -1) {
+					auto coordinates = Convert(string);
+					SetFigureScaleX(dynamic_cast<IScale*>(shapes[focus]), coordinates);
+				}
+				else if (string.find(Y, 0) != -1) {
+					auto coordinates = Convert(string);
+					SetFigureScaleY(dynamic_cast<IScale*>(shapes[focus]), coordinates);
+				}
+				else {
+					auto coordinates = Convert(string);
+					SetFigureScale(dynamic_cast<IScale*>(shapes[focus]), coordinates);
+				}
+			}
+			//else if (string.find(SCALE, 0) != -1) {
+			//	auto coordinates = Convert(string);
+			//	SetFigureScale(dynamic_cast<IScale*>(shapes[focus]), coordinates);
+			//}
 		}
 		string.erase();
 	}
@@ -179,13 +211,40 @@ private:
 	static void SetFigurePosition(IMove* shape, std::vector<float>& coordinates) {
 		if (coordinates.size() > 1) ShapeDealer::SetPosition(shape, XY(coordinates[0], coordinates[1]));
 		else if (coordinates.size() == 1) ShapeDealer::SetPosition(shape, XY(coordinates[0]));
-		else ShapeDealer::SetPosition(shape, XY(0));
+	}
+
+	static void SetFigureAngle(IRotate* shape, std::vector<float>& coordinates) {
+		if (!coordinates.empty()) ShapeDealer::SetAngle(shape, Angle(coordinates[0]));
+	}
+
+	static void SetFigureColor(IDraw* shape, std::vector<float>& coordinates) {
+		if (coordinates.size() > 3) ShapeDealer::SetColor(shape, Color(coordinates[0], coordinates[1], coordinates[2], coordinates[3]));
+		else if (coordinates.size() == 3) ShapeDealer::SetColor(shape, Color(coordinates[0], coordinates[1], coordinates[2]));
+	}
+
+	static void SetFigureScale(IScale* shape, std::vector<float>& coordinates) {
+		if (coordinates.size() > 1) ShapeDealer::SetScale(shape, Scale(XY(coordinates[0], coordinates[1])));
+		else if (coordinates.size() == 1) ShapeDealer::SetScale(shape, Scale(coordinates[0]));
+	}
+
+	static void SetFigureScaleX(IScale* shape, std::vector<float>& coordinates) {
+		if (!coordinates.empty()) ShapeDealer::SetScale(shape, Scale(XY(coordinates[0], 1.f)));
+	}
+
+	static void SetFigureScaleY(IScale* shape, std::vector<float>& coordinates) {
+		if (!coordinates.empty()) ShapeDealer::SetScale(shape, Scale(XY(1.f, coordinates[0])));
 	}
 };
 
 const std::string Const::SET = "Set"; 
 const std::string Const::CREATE = "Create";
 const std::string Const::POSITION = "Position";
+const std::string Const::ANGLE = "Angle";
+const std::string Const::COLOR = "Color";
+const std::string Const::SCALE = "Scale";
+
+const std::string Const::X = "X";
+const std::string Const::Y = "Y";
 
 const std::string Const::CIRCLE = to_string(figureID::CIRCLE);
 
