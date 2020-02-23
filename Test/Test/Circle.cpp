@@ -4,6 +4,8 @@
 
 using namespace sf;
 
+const float highLimit = 50.f;
+
 Circle::Circle(float x, float radius): Circle(x, x, radius) {}
 Circle::Circle(float x, float y, float radius): Circle(x, y, Color(255, 255, 255 , 255), radius) {}
 Circle::Circle(float x, float y, Color color, float radius) : Circle(XY(x, y), color, radius) { }
@@ -14,7 +16,7 @@ Circle::Circle(XY xy, Color color, float radius) : dot(xy), color(color), scale(
 
 void Circle::Draw(RenderWindow& window) {
 	CircleShape dot(this->radius);
-	dot.setPosition(this->dot.getX() , this->dot.getY());
+	dot.setPosition(this->dot.getX() , this->dot.getY() + highLimit);
 	dot.scale(this->scale.GetValueX(), this->scale.GetValueY());
 	dot.rotate(this->angle.GetValue());
 	dot.setFillColor(this->color);

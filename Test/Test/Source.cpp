@@ -6,6 +6,7 @@
 
 #include <string>
 #include <sstream>
+#include <algorithm>
 
 using namespace sf;
 
@@ -47,9 +48,9 @@ struct Const {
 				if (Keyboard::isKeyPressed(Keyboard::Key::W)) {
 					ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[focus]), Scale(SCALE_PLUS));
 				}
-				if (Keyboard::isKeyPressed(Keyboard::Key::S)) {
-					ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[focus]), Scale(SCALE_MINUS));
-				}
+				//if (Keyboard::isKeyPressed(Keyboard::Key::S)) {
+				//	ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[focus]), Scale(SCALE_MINUS));
+				//}
 				if (Keyboard::isKeyPressed(Keyboard::Key::Z)) {
 					ShapeDealer::LegacyCondition(dynamic_cast<IShape*>(shapes[focus]));
 				}
@@ -91,20 +92,30 @@ struct Const {
 
 private:
 	static void Check(std::vector<IShape*>& shapes, std::string& string, unsigned int& focus, unsigned int& id) {
-		if (!string.find("Create")) {
-			if (!string.find(typeid(Circle).name()) + std::string("class ").size()) {
-				string = NumberCheck(string);
-				std::replace(string.begin(), string.end(), '_', ' ');
-				std::istringstream ss(string);
-				std::vector<float> coordinates{ std::istream_iterator<float>(ss), {} };
+		std::string c = "Create";
+		std::string p = "Position";
+		std::string s = "Set";
+		if (string.find(c, 0) != -1) {
+			if (string.find(typeid(Circle).name() + std::string("class ").size(), 0) != -1) {
+				auto coordinates = Convert(string);
 				CreateFigure(shapes, coordinates, focus, id);
 			}
-			
 		}
-		else {
-			
+		else if (string.find(s, 0) != -1) {
+			if (string.find(p, 0) != -1) {
+				auto coordinates = Convert(string);
+				SetFigurePosition(dynamic_cast<IMove*>(shapes[focus]), coordinates);
+			}
 		}
 		string.erase();
+	}
+
+	static std::vector<float> Convert(std::string& string) {
+		string = NumberCheck(string);
+		std::replace(string.begin(), string.end(), '_', ' ');
+		std::istringstream ss(string);
+		return std::vector<float>{ std::istream_iterator<float>(ss), {} };
+
 	}
 
 	static std::string NumberCheck(std::string& string) {
@@ -157,7 +168,13 @@ private:
 		}
 		shapes.push_back(dynamic_cast<IDraw*>(temp));
 		focus = shapes.size() - 1;
-		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
+		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus]));
+	}
+
+	static void SetFigurePosition(IMove* shape, std::vector<float>& coordinates) {
+		if (coordinates.size() > 1) ShapeDealer::SetPosition(shape, XY(coordinates[0], coordinates[1]));
+		else if (coordinates.size() == 1) ShapeDealer::SetPosition(shape, XY(coordinates[0]));
+		else ShapeDealer::SetPosition(shape, XY(0));
 	}
 };
 
@@ -179,7 +196,6 @@ int main(void) {
 		Event event;
 		while (window.pollEvent(event)) {
 			if (event.type == Event::Closed) window.close();
-
 			Const::Key(shapes, event, time, focus, id);
 			Const::Text(shapes, cmd, event, focus, id);
 		}
