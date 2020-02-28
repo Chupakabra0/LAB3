@@ -20,7 +20,7 @@ int main(void) {
 	std::vector<IShape*> shapes; // тут хранятся фигуры
 	Clock clock; // тут тикает время
 	std::string cmd; // тут командная строка
-	unsigned int focus = 0; // тут номер фигуры под фокусом TODO сделать массив фокусируемых фигур
+	unsigned int focus = 0;
 	figureID id = CIRCLE; // id текущей фигуры
 	bool CMDActive = false;
 

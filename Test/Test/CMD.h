@@ -30,6 +30,7 @@ struct CMD {
 	const static std::string COLOR;
 	const static std::string FOCUS;
 	const static std::string SCALE;
+	const static std::string DELETE;
 
 	const static std::string X;
 	const static std::string Y;
@@ -52,5 +53,7 @@ private:
 	static void SetFigureScale(IScale* shape, std::vector<float>& coordinates);
 	static void SetFigureScaleX(IScale* shape, std::vector<float>& coordinates);
 	static void SetFigureScaleY(IScale* shape, std::vector<float>& coordinates);
-	static void SetFigureFocus(std::vector<IShape*>& shapes, unsigned& focus, vector<float>& coordinates);
+	static void SetFigureFocus(std::vector<IShape*>& shapes, vector<float>& coordinates, unsigned& focus);
+	static void DeleteFigure(std::vector<IShape*>& shapes, vector<float>& coordinates, unsigned& focus);
+	static void DeleteFigure(std::vector<IShape*>& shapes, unsigned& focus);
 };

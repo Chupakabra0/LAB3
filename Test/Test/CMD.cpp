@@ -15,6 +15,7 @@ const std::string CMD::ANGLE     = "Angle";
 const std::string CMD::COLOR     = "Color";
 const std::string CMD::SCALE     = "Scale";
 const std::string CMD::FOCUS     = "Focus";
+const std::string CMD::DELETE    = "Delete";
 
 const std::string CMD::X = "X";
 const std::string CMD::Y = "Y";
@@ -130,8 +131,13 @@ void CMD::Check(std::vector<IShape*>& shapes, std::string& string, unsigned& foc
 		}
 		else if (string.find(FOCUS, 0) != -1) {
 			auto coordinates = Convert(string);
-			SetFigureFocus(shapes, focus, coordinates);
+			SetFigureFocus(shapes, coordinates, focus);
 		}
+	}
+	else if (string.find(DELETE, 0) != -1) {
+		auto coordinates = Convert(string);
+		if (coordinates.empty()) DeleteFigure(shapes, focus);
+		else DeleteFigure(shapes, coordinates, focus);
 	}
 	string.erase();
 }
@@ -226,12 +232,40 @@ void CMD::SetFigureScaleY(IScale* shape, std::vector<float>& coordinates) {
 	if (!coordinates.empty()) ShapeDealer::SetScale(shape, Scale(XY(1.f, coordinates[0])));
 }
 
-void CMD::SetFigureFocus(std::vector<IShape*>& shapes, unsigned& focus, vector<float>& coordinates)
-{
+void CMD::SetFigureFocus(std::vector<IShape*>& shapes,  vector<float>& coordinates, unsigned& focus) {
 	if (!coordinates.empty() && shapes.size() > coordinates[0]) {
 		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus]));
 		focus = coordinates[0];
 		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus]));
-		
+	}
+}
+
+void CMD::DeleteFigure(std::vector<IShape*>& shapes, unsigned& focus) {
+	if (!shapes.empty()) {
+		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus]));
+		shapes.erase(shapes.begin() + focus);
+		shapes.shrink_to_fit();
+		if (focus != 0) {
+			focus--;
+			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus]));
+		}
+		else if (!shapes.empty()) focus = shapes.size() - 1;
+	}
+}
+
+void CMD::DeleteFigure(std::vector<IShape*>& shapes, vector<float>& coordinates, unsigned& focus) {
+	if (!coordinates.empty() && shapes.size() > coordinates[0]) {
+		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[coordinates[0]]));
+		shapes.erase(shapes.begin() + coordinates[0]);
+		shapes.shrink_to_fit();
+		if (focus == coordinates[0]) {
+			if (focus != 0) {
+				ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus - 1]));
+			}
+			else if (!shapes.empty()) focus = shapes.size() - 1;
+		}
+		else {
+			focus--;
+		}
 	}
 }
