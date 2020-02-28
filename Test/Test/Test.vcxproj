@@ -124,6 +124,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CMD.cpp" />
     <ClCompile Include="History.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="ShapeDealer.cpp" />
@@ -131,6 +132,7 @@
     <ClCompile Include="XY.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CMD.h" />
     <ClInclude Include="History.h" />
     <ClInclude Include="Interfaces.h" />
     <ClInclude Include="Circle.h" />
