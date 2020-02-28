@@ -17,14 +17,16 @@ Circle::Circle(XY xy, Color color, float radius) : dot(xy), color(color), scale(
 void Circle::Draw(RenderWindow& window) {
 	CircleShape dot(this->radius);
 	dot.setPosition(this->dot.getX() , this->dot.getY() + highLimit);
-	dot.scale(this->scale.GetValueX(), this->scale.GetValueY());
-	dot.rotate(this->angle.GetValue());
-	dot.setFillColor(this->color);
-	dot.setOutlineColor(dot.getFillColor());
 	if (this->isFocused) {
-		dot.setOutlineThickness(1.f);
+		dot.setOutlineThickness(1.f / std::max(this->scale.GetValueX(), this->scale.GetValueY()));
 		dot.setOutlineColor(Color::Green);
 	}
+	else {
+		dot.setOutlineColor(dot.getFillColor());
+	}
+	dot.setFillColor(this->color);
+	dot.rotate(this->angle.GetValue());
+	dot.scale(this->scale.GetValueX(), this->scale.GetValueY());
 	window.draw(dot);
 }
 

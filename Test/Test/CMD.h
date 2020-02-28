@@ -16,18 +16,19 @@ struct CMD {
 	CMD() = delete;
 	~CMD() = delete;
 
-	constexpr static float SPEED = 800.f;
-	constexpr static float TIME = 2.f;
-	constexpr static float MOVE = 1.f;
-	constexpr static float ROTATE = 0.1f;
-	constexpr static float SCALE_PLUS = 1.f;
-	constexpr static float SCALE_MINUS = -1.f;
+	static float SPEED;
+	static float TIME;
+	static float MOVE;
+	static float ROTATE;
+	static float SCALE_PLUS;
+	static float SCALE_MINUS;
 
 	const static std::string SET;
 	const static std::string CREATE;
 	const static std::string POSITION;
 	const static std::string ANGLE;
 	const static std::string COLOR;
+	const static std::string FOCUS;
 	const static std::string SCALE;
 
 	const static std::string X;
@@ -51,4 +52,5 @@ private:
 	static void SetFigureScale(IScale* shape, std::vector<float>& coordinates);
 	static void SetFigureScaleX(IScale* shape, std::vector<float>& coordinates);
 	static void SetFigureScaleY(IScale* shape, std::vector<float>& coordinates);
+	static void SetFigureFocus(std::vector<IShape*>& shapes, unsigned& focus, vector<float>& coordinates);
 };

@@ -1,12 +1,20 @@
 #include "CMD.h"
 #include <sstream>
 
+float CMD::SPEED = 800.f;
+float CMD::TIME = 2.f;
+float CMD::MOVE = 1.f;
+float CMD::ROTATE = 0.1f;
+float CMD::SCALE_PLUS = 1.f;
+float CMD::SCALE_MINUS = -1.f;
+
 const std::string CMD::SET	     = "Set";
 const std::string CMD::CREATE    = "Create";
 const std::string CMD::POSITION  = "Position";
 const std::string CMD::ANGLE     = "Angle";
 const std::string CMD::COLOR     = "Color";
 const std::string CMD::SCALE     = "Scale";
+const std::string CMD::FOCUS     = "Focus";
 
 const std::string CMD::X = "X";
 const std::string CMD::Y = "Y";
@@ -120,6 +128,10 @@ void CMD::Check(std::vector<IShape*>& shapes, std::string& string, unsigned& foc
 				SetFigureScale(dynamic_cast<IScale*>(shapes[focus]), coordinates);
 			}
 		}
+		else if (string.find(FOCUS, 0) != -1) {
+			auto coordinates = Convert(string);
+			SetFigureFocus(shapes, focus, coordinates);
+		}
 	}
 	string.erase();
 }
@@ -212,4 +224,14 @@ void CMD::SetFigureScaleX(IScale* shape, std::vector<float>& coordinates) {
 
 void CMD::SetFigureScaleY(IScale* shape, std::vector<float>& coordinates) {
 	if (!coordinates.empty()) ShapeDealer::SetScale(shape, Scale(XY(1.f, coordinates[0])));
+}
+
+void CMD::SetFigureFocus(std::vector<IShape*>& shapes, unsigned& focus, vector<float>& coordinates)
+{
+	if (!coordinates.empty() && shapes.size() > coordinates[0]) {
+		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus]));
+		focus = coordinates[0];
+		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus]));
+		
+	}
 }
