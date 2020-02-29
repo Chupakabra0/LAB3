@@ -15,14 +15,14 @@ int main(void) {
 	ContextSettings settings;
 	settings.antialiasingLevel = 10;
 
-	RenderWindow window{ VideoMode(1000, 1000), L"Геометрические фигуры" };
+	RenderWindow window{ VideoMode(1920, 1080), L"Геометрические фигуры" };
 
 	std::vector<IShape*> shapes; // тут хранятся фигуры
 	Clock clock; // тут тикает время
 	std::string cmd; // тут командная строка
 	unsigned int focus = 0;
 	figureID id = CIRCLE; // id текущей фигуры
-	bool CMDActive = false;
+	bool cmdActive = false;
 
 	while (window.isOpen()) {
 
@@ -35,12 +35,12 @@ int main(void) {
 
 			if (event.type == Event::Closed) window.close();
 
-			if (!CMDActive) CMD::Key(shapes, event, focus, id);
+			if (!cmdActive) CMD::Key(shapes, event, focus, id);
 			else CMD::Text(shapes, cmd, event, focus, id);
 
 			if (Keyboard::isKeyPressed(Keyboard::Key::Tilde))
 				if (time >= CMD::TIME) {
-					CMDActive = !CMDActive;
+					cmdActive = !cmdActive;
 					cmd.erase();
 					time = 0.f;
 				}
@@ -53,14 +53,27 @@ int main(void) {
 		}
 
 		//
-		Text text;
+		Text cmdText;
 		Font font;
 		font.loadFromFile("BAUHS93.ttf");
-		text.setString(cmd);
-		text.setFont(font);
-		window.draw(text);
-		//
+		cmdText.setString(cmd);
+		cmdText.setFont(font);
+		window.draw(cmdText);
 
+		Text cmdActiveText;
+		cmdActiveText.setFont(font);
+		if (cmdActive) {
+			cmdActiveText.setString("CMD mode");
+			cmdActiveText.setFillColor(Color::Green);
+		}
+		else {
+			cmdActiveText.setString("Manual mode");
+			cmdActiveText.setFillColor(Color::Red);
+		}
+		cmdActiveText.setPosition(1700.f, 0.f);
+		window.draw(cmdActiveText);
+
+		//
 
 		window.display();
 	}

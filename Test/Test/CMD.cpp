@@ -1,12 +1,12 @@
 #include "CMD.h"
 #include <sstream>
 
-float CMD::SPEED = 800.f;
-float CMD::TIME = 2.f;
-float CMD::MOVE = 1.f;
-float CMD::ROTATE = 0.1f;
-float CMD::SCALE_PLUS = 1.f;
-float CMD::SCALE_MINUS = -1.f;
+float CMD::SPEED                 = 800.f;
+float CMD::TIME                  = 2.f;
+float CMD::MOVE                  = 1.f;
+float CMD::ROTATE                = 0.1f;
+float CMD::SCALE_PLUS            = 1.f;
+float CMD::SCALE_MINUS           = -1.f;
 
 const std::string CMD::SET	     = "Set";
 const std::string CMD::CREATE    = "Create";
@@ -17,10 +17,10 @@ const std::string CMD::SCALE     = "Scale";
 const std::string CMD::FOCUS     = "Focus";
 const std::string CMD::DELETE    = "Delete";
 
-const std::string CMD::X = "X";
-const std::string CMD::Y = "Y";
+const std::string CMD::X         = "X";
+const std::string CMD::Y         = "Y";
 
-const std::string CMD::CIRCLE = to_string(figureID::CIRCLE);
+const std::string CMD::CIRCLE    = to_string(figureID::CIRCLE);
 
 std::string to_string(figureID id) {
 	switch (id) {
@@ -60,7 +60,7 @@ void CMD::Key(std::vector<IShape*>& shapes, Event& event, unsigned& focus, figur
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::X)) {
 			ShapeDealer::FirstCondition(dynamic_cast<IShape*>(shapes[focus]));
-		}
+		}		
 		if (Keyboard::isKeyPressed(Keyboard::Key::PageDown)) {
 			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
 			if (focus != 0) focus--;
@@ -78,6 +78,9 @@ void CMD::Key(std::vector<IShape*>& shapes, Event& event, unsigned& focus, figur
 		if (event.key.code == Keyboard::Key::Add) {
 			std::vector<float> coordinates;
 			CreateFigure(shapes, coordinates, focus, id);
+		}
+		if (event.key.code == Keyboard::Key::Subtract) {
+			DeleteFigure(shapes, focus);
 		}
 	}
 }
