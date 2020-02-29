@@ -32,6 +32,7 @@ struct CMD {
 	const static std::string SCALE;
 	const static std::string DELETE;
 	const static std::string VISIBLE;
+	const static std::string TRACE;
 	const static std::string ALL;
 
 	const static std::string X;
@@ -66,4 +67,8 @@ private:
 
 	static void SetFigureVisible(std::vector<Figure*>& shapes, vector<float>& coordinates);
 	static void SetFigureVisible(std::vector<Figure*>& shapes, unsigned& focus);
+
+	static void SetFigureTrace(std::vector<Figure*>& shapes, vector<float>& coordinates);
+	static void SetFigureTrace(std::vector<Figure*>& shapes, unsigned& focus);
+	static void SetFigureTrace(std::vector<Figure*>& shapes);
 };

@@ -17,6 +17,7 @@ const std::string CMD::SCALE     = "Scale";
 const std::string CMD::FOCUS     = "Focus";
 const std::string CMD::DELETE    = "Delete";
 const std::string CMD::VISIBLE   = "Visible";
+const std::string CMD::TRACE     = "Trace";
 const std::string CMD::ALL       = "All";
 
 const std::string CMD::X         = "X";
@@ -65,6 +66,9 @@ void CMD::Key(std::vector<Figure*>& shapes, Event& event, unsigned& focus, figur
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::V)) {
 			ShapeDealer::SwitchVisible(dynamic_cast<Figure*>(shapes[focus]));
+		}
+		if (Keyboard::isKeyPressed(Keyboard::Key::C)) {
+			ShapeDealer::SwitchTrace(dynamic_cast<Figure*>(shapes[focus]));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::PageDown)) {
 			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
@@ -146,6 +150,16 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, unsigned& foc
 				auto coordinates = Convert(string);
 				if (!coordinates.empty()) SetFigureVisible(shapes, coordinates);
 				else SetFigureVisible(shapes, focus);
+			}
+			else if (string.find(TRACE, 0) != -1) {
+				if (string.find(ALL) != -1) {
+					SetFigureTrace(shapes);
+				}
+				else {
+					auto coordinates = Convert(string);
+					if (coordinates.empty()) SetFigureTrace(shapes, focus);
+					else SetFigureTrace(shapes, coordinates);
+				}
 			}
 		}
 	}
@@ -301,4 +315,19 @@ void CMD::SetFigureVisible(std::vector<Figure*>& shapes, vector<float>& coordina
 
 void CMD::SetFigureVisible(std::vector<Figure*>& shapes, unsigned& focus) {
 	if (!shapes.empty()) ShapeDealer::SwitchVisible(shapes[focus]);
+}
+
+void CMD::SetFigureTrace(std::vector<Figure*>& shapes, vector<float>& coordinates) {
+	if (!coordinates.empty() && shapes.size() > coordinates[0]) ShapeDealer::SwitchTrace(shapes[coordinates[0]]);
+}
+
+void CMD::SetFigureTrace(std::vector<Figure*>& shapes, unsigned& focus) {
+	if (!shapes.empty()) ShapeDealer::SwitchTrace(shapes[focus]);
+}
+
+void CMD::SetFigureTrace(std::vector<Figure*>& shapes) {
+	const auto size = shapes.size();
+	for (unsigned i = 0; i < size; i++) {
+		SetFigureTrace(shapes, i);
+	}
 }
