@@ -31,6 +31,8 @@ struct CMD {
 	const static std::string FOCUS;
 	const static std::string SCALE;
 	const static std::string DELETE;
+	const static std::string VISIBLE;
+	const static std::string ALL;
 
 	const static std::string X;
 	const static std::string Y;
@@ -38,22 +40,30 @@ struct CMD {
 	const static std::string CIRCLE;
 
 	static void Key(std::vector<Figure*>& shapes, Event& event, unsigned int& focus, figureID& id);
-	static void Text(std::vector<Figure*>& shapes, std::string& string, const Event& event, unsigned int& focus,
-					figureID& id);
+	static void Text(std::vector<Figure*>& shapes, std::string& string, const Event& event, unsigned int& focus, figureID& id);
 private:
 	static void Check(std::vector<Figure*>& shapes, std::string& string, unsigned int& focus, figureID& id);
 	static std::vector<float> Convert(std::string& string);
-
 	static std::string NumberCheck(std::string& string);
-	static void CreateFigure(std::vector<Figure*>& shapes, std::vector<float>& coordinates, unsigned int& focus,
-							figureID& id);
+
+	static void CreateFigure(std::vector<Figure*>& shapes, std::vector<float>& coordinates, unsigned int& focus, figureID& id);
+
 	static void SetFigurePosition(IMove* shape, std::vector<float>& coordinates);
+
 	static void SetFigureAngle(IRotate* shape, std::vector<float>& coordinates);
+
 	static void SetFigureColor(IDraw* shape, std::vector<float>& coordinates);
+
 	static void SetFigureScale(IScale* shape, std::vector<float>& coordinates);
 	static void SetFigureScaleX(IScale* shape, std::vector<float>& coordinates);
 	static void SetFigureScaleY(IScale* shape, std::vector<float>& coordinates);
+
 	static void SetFigureFocus(std::vector<Figure*>& shapes, vector<float>& coordinates, unsigned& focus);
+
+	static void DeleteFigure(std::vector<Figure*>& shapes);
 	static void DeleteFigure(std::vector<Figure*>& shapes, vector<float>& coordinates, unsigned& focus);
 	static void DeleteFigure(std::vector<Figure*>& shapes, unsigned& focus);
+
+	static void SetFigureVisible(std::vector<Figure*>& shapes, vector<float>& coordinates);
+	static void SetFigureVisible(std::vector<Figure*>& shapes, unsigned& focus);
 };

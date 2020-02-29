@@ -47,4 +47,7 @@ struct ShapeDealer
 	static void SwitchFocus(Figure* figure) {
 		figure->setFocus(!figure->getFocus());
 	}
+	static void SwitchVisible(Figure* figure) {
+		figure->setVisible(!figure->getVisible());
+	}
 };

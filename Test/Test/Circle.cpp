@@ -24,7 +24,12 @@ void Circle::Draw(RenderWindow& window) {
 	else {
 		dot.setOutlineColor(dot.getFillColor());
 	}
-	dot.setFillColor(this->color);
+	if (this->getVisible()) {
+		dot.setFillColor(this->color);
+	}
+	else {
+		dot.setFillColor(Color::Black);
+	}
 	dot.rotate(this->angle.GetValue());
 	dot.scale(this->scale.GetValueX(), this->scale.GetValueY());
 	window.draw(dot);

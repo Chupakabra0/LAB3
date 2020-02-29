@@ -16,6 +16,8 @@ const std::string CMD::COLOR     = "Color";
 const std::string CMD::SCALE     = "Scale";
 const std::string CMD::FOCUS     = "Focus";
 const std::string CMD::DELETE    = "Delete";
+const std::string CMD::VISIBLE   = "Visible";
+const std::string CMD::ALL       = "All";
 
 const std::string CMD::X         = "X";
 const std::string CMD::Y         = "Y";
@@ -60,7 +62,10 @@ void CMD::Key(std::vector<Figure*>& shapes, Event& event, unsigned& focus, figur
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::X)) {
 			ShapeDealer::FirstCondition(dynamic_cast<IMove*>(shapes[focus]));
-		}		
+		}
+		if (Keyboard::isKeyPressed(Keyboard::Key::V)) {
+			ShapeDealer::SwitchVisible(dynamic_cast<Figure*>(shapes[focus]));
+		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::PageDown)) {
 			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
 			if (focus != 0) focus--;
@@ -106,41 +111,54 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, unsigned& foc
 		}
 	}
 	else if (string.find(SET, 0) != -1) {
-		if (string.find(POSITION, 0) != -1) {
-			auto coordinates = Convert(string);
-			SetFigurePosition(dynamic_cast<IMove*>(shapes[focus]), coordinates);
-		}
-		else if (string.find(ANGLE, 0) != -1) {
-			auto coordinates = Convert(string);
-			SetFigureAngle(dynamic_cast<IRotate*>(shapes[focus]), coordinates);
-		}
-		else if (string.find(COLOR, 0) != -1) {
-			auto coordinates = Convert(string);
-			SetFigureColor(dynamic_cast<IDraw*>(shapes[focus]), coordinates);
-		}
-		else if (string.find(SCALE, 0) != -1) {
-			if (string.find(X, 0) != -1) {
+		if (!shapes.empty()) {
+			if (string.find(POSITION, 0) != -1) {
 				auto coordinates = Convert(string);
-				SetFigureScaleX(dynamic_cast<IScale*>(shapes[focus]), coordinates);
+				SetFigurePosition(dynamic_cast<IMove*>(shapes[focus]), coordinates);
 			}
-			else if (string.find(Y, 0) != -1) {
+			else if (string.find(ANGLE, 0) != -1) {
 				auto coordinates = Convert(string);
-				SetFigureScaleY(dynamic_cast<IScale*>(shapes[focus]), coordinates);
+				SetFigureAngle(dynamic_cast<IRotate*>(shapes[focus]), coordinates);
 			}
-			else {
+			else if (string.find(COLOR, 0) != -1) {
 				auto coordinates = Convert(string);
-				SetFigureScale(dynamic_cast<IScale*>(shapes[focus]), coordinates);
+				SetFigureColor(dynamic_cast<IDraw*>(shapes[focus]), coordinates);
 			}
-		}
-		else if (string.find(FOCUS, 0) != -1) {
-			auto coordinates = Convert(string);
-			SetFigureFocus(shapes, coordinates, focus);
+			else if (string.find(SCALE, 0) != -1) {
+				if (string.find(X, 0) != -1) {
+					auto coordinates = Convert(string);
+					SetFigureScaleX(dynamic_cast<IScale*>(shapes[focus]), coordinates);
+				}
+				else if (string.find(Y, 0) != -1) {
+					auto coordinates = Convert(string);
+					SetFigureScaleY(dynamic_cast<IScale*>(shapes[focus]), coordinates);
+				}
+				else {
+					auto coordinates = Convert(string);
+					SetFigureScale(dynamic_cast<IScale*>(shapes[focus]), coordinates);
+				}
+			}
+			else if (string.find(FOCUS, 0) != -1) {
+				auto coordinates = Convert(string);
+				SetFigureFocus(shapes, coordinates, focus);
+			}
+			else if (string.find(VISIBLE, 0) != -1) {
+				auto coordinates = Convert(string);
+				if (!coordinates.empty()) SetFigureVisible(shapes, coordinates);
+				else SetFigureVisible(shapes, focus);
+			}
 		}
 	}
 	else if (string.find(DELETE, 0) != -1) {
-		auto coordinates = Convert(string);
-		if (coordinates.empty()) DeleteFigure(shapes, focus);
-		else DeleteFigure(shapes, coordinates, focus);
+		if (string.find(ALL, 0) != -1) {
+			DeleteFigure(shapes);
+			focus = 0;
+		}
+		else {
+			auto coordinates = Convert(string);
+			if (coordinates.empty()) DeleteFigure(shapes, focus);
+			else DeleteFigure(shapes, coordinates, focus);
+		}
 	}
 	string.erase();
 }
@@ -243,6 +261,10 @@ void CMD::SetFigureFocus(std::vector<Figure*>& shapes,  vector<float>& coordinat
 	}
 }
 
+void CMD::DeleteFigure(std::vector<Figure*>& shapes) {
+	shapes.erase(shapes.begin(), shapes.end());
+}
+
 void CMD::DeleteFigure(std::vector<Figure*>& shapes, unsigned& focus) {
 	if (!shapes.empty()) {
 		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus]));
@@ -271,4 +293,12 @@ void CMD::DeleteFigure(std::vector<Figure*>& shapes, vector<float>& coordinates,
 			focus--;
 		}
 	}
+}
+
+void CMD::SetFigureVisible(std::vector<Figure*>& shapes, vector<float>& coordinates) {
+	if (!coordinates.empty() && shapes.size() > coordinates[0]) ShapeDealer::SwitchVisible(shapes[coordinates[0]]);
+}
+
+void CMD::SetFigureVisible(std::vector<Figure*>& shapes, unsigned& focus) {
+	if (!shapes.empty()) ShapeDealer::SwitchVisible(shapes[focus]);
 }

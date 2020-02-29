@@ -6,16 +6,30 @@
 struct Figure : IMove, IScale, IDraw, IRotate {
 	Figure() {
 		this->setFocus(false);
+		this->setVisible(true);
 	}
 	virtual ~Figure() = default;
+
 	bool getFocus() const {
 		return this->isFocused;
 	}
 	void setFocus(bool focus) {
-		if (this->isFocused != focus) this->isFocused = focus;
+		set(this->isFocused, focus);
+	}
+
+	bool getVisible() const {
+		return this->isVisible;
+	}
+	void setVisible(bool visible) {
+		set(this->isVisible, visible);
 	}
 protected:
 	bool isFocused;
+	bool isVisible;
+private:
+	static void set(bool& first, const bool& second) {
+		if (first != second) first = second;
+	}
 };
 
 class Circle : public Figure
