@@ -51,7 +51,6 @@ struct ShapeDealer
 		figure->setVisible(!figure->getVisible());
 	}
 	static void SwitchTrace(Figure* figure) {
-		//figure->setTraceNum(figure->getHistory().size() - 1);
 		figure->setTrace(!figure->getTrace());
 	}
 };

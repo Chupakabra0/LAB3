@@ -38,16 +38,11 @@ struct Figure : IMove, IScale, IDraw, IRotate {
 	void setTraceNum(size_t trace) {
 		this->trace = trace;
 	}
-
-	std::vector<History> getHistory() const {
-		return this->history;
-	}
 protected:
 	bool isFocused;
 	bool isVisible;
 	bool isTraced;
 	size_t trace;
-	std::vector<History> history;
 private:
 	static void set(bool& first, const bool& second) {
 		if (first != second) first = second;
@@ -90,4 +85,5 @@ protected:
 	XY dot;
 	float radius;
 	sf::Color color;
+	std::vector<History> history;
 };
