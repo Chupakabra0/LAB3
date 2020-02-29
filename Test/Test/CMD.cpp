@@ -29,7 +29,7 @@ std::string to_string(figureID id) {
 	}
 }
 
-void CMD::Key(std::vector<IShape*>& shapes, Event& event, unsigned& focus, figureID& id) {
+void CMD::Key(std::vector<Figure*>& shapes, Event& event, unsigned& focus, figureID& id) {
 	if (!shapes.empty() && event.type == Event::KeyPressed) {
 		if (Keyboard::isKeyPressed(Keyboard::Key::Left)) {
 			ShapeDealer::Move(dynamic_cast<IMove*>(shapes[focus]), XY(-MOVE, 0.f));
@@ -56,10 +56,10 @@ void CMD::Key(std::vector<IShape*>& shapes, Event& event, unsigned& focus, figur
 			ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[focus]), Scale(SCALE_MINUS));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Z)) {
-			ShapeDealer::LegacyCondition(dynamic_cast<IShape*>(shapes[focus]));
+			ShapeDealer::LegacyCondition(dynamic_cast<IMove*>(shapes[focus]));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::X)) {
-			ShapeDealer::FirstCondition(dynamic_cast<IShape*>(shapes[focus]));
+			ShapeDealer::FirstCondition(dynamic_cast<IMove*>(shapes[focus]));
 		}		
 		if (Keyboard::isKeyPressed(Keyboard::Key::PageDown)) {
 			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
@@ -85,7 +85,7 @@ void CMD::Key(std::vector<IShape*>& shapes, Event& event, unsigned& focus, figur
 	}
 }
 
-void CMD::Text(std::vector<IShape*>& shapes, std::string& string, const Event& event, unsigned& focus,
+void CMD::Text(std::vector<Figure*>& shapes, std::string& string, const Event& event, unsigned& focus,
 				figureID& id) {
 	if (event.type == sf::Event::TextEntered) {
 		if (event.text.unicode == '\b') {
@@ -98,7 +98,7 @@ void CMD::Text(std::vector<IShape*>& shapes, std::string& string, const Event& e
 	}
 }
 
-void CMD::Check(std::vector<IShape*>& shapes, std::string& string, unsigned& focus, figureID& id) {
+void CMD::Check(std::vector<Figure*>& shapes, std::string& string, unsigned& focus, figureID& id) {
 	if (string.find(CREATE, 0) != -1) {
 		if (string.find(CIRCLE, 0) != -1) {
 			auto coordinates = Convert(string);
@@ -163,7 +163,7 @@ std::string CMD::NumberCheck(std::string& string) {
 	return result;
 }
 
-void CMD::CreateFigure(std::vector<IShape*>& shapes, std::vector<float>& coordinates, unsigned& focus,
+void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<float>& coordinates, unsigned& focus,
 						figureID& id) {
 	if (!shapes.empty()) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
 	Figure* temp = nullptr;
@@ -201,7 +201,7 @@ void CMD::CreateFigure(std::vector<IShape*>& shapes, std::vector<float>& coordin
 		break;
 	}
 	}
-	shapes.push_back(dynamic_cast<IDraw*>(temp));
+	shapes.push_back(temp);
 	focus = shapes.size() - 1;
 	ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus]));
 }
@@ -235,7 +235,7 @@ void CMD::SetFigureScaleY(IScale* shape, std::vector<float>& coordinates) {
 	if (!coordinates.empty()) ShapeDealer::SetScale(shape, Scale(XY(1.f, coordinates[0])));
 }
 
-void CMD::SetFigureFocus(std::vector<IShape*>& shapes,  vector<float>& coordinates, unsigned& focus) {
+void CMD::SetFigureFocus(std::vector<Figure*>& shapes,  vector<float>& coordinates, unsigned& focus) {
 	if (!coordinates.empty() && shapes.size() > coordinates[0]) {
 		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus]));
 		focus = coordinates[0];
@@ -243,7 +243,7 @@ void CMD::SetFigureFocus(std::vector<IShape*>& shapes,  vector<float>& coordinat
 	}
 }
 
-void CMD::DeleteFigure(std::vector<IShape*>& shapes, unsigned& focus) {
+void CMD::DeleteFigure(std::vector<Figure*>& shapes, unsigned& focus) {
 	if (!shapes.empty()) {
 		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus]));
 		shapes.erase(shapes.begin() + focus);
@@ -256,7 +256,7 @@ void CMD::DeleteFigure(std::vector<IShape*>& shapes, unsigned& focus) {
 	}
 }
 
-void CMD::DeleteFigure(std::vector<IShape*>& shapes, vector<float>& coordinates, unsigned& focus) {
+void CMD::DeleteFigure(std::vector<Figure*>& shapes, vector<float>& coordinates, unsigned& focus) {
 	if (!coordinates.empty() && shapes.size() > coordinates[0]) {
 		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[coordinates[0]]));
 		shapes.erase(shapes.begin() + coordinates[0]);

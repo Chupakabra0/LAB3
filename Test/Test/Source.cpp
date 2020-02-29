@@ -17,7 +17,7 @@ int main(void) {
 
 	RenderWindow window{ VideoMode(1920, 1080), L"Геометрические фигуры" };
 
-	std::vector<IShape*> shapes; // тут хранятся фигуры
+	std::vector<Figure*> shapes; // тут хранятся фигуры
 	Clock clock; // тут тикает время
 	std::string cmd; // тут командная строка
 	unsigned int focus = 0;

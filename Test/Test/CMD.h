@@ -37,15 +37,15 @@ struct CMD {
 
 	const static std::string CIRCLE;
 
-	static void Key(std::vector<IShape*>& shapes, Event& event, unsigned int& focus, figureID& id);
-	static void Text(std::vector<IShape*>& shapes, std::string& string, const Event& event, unsigned int& focus,
+	static void Key(std::vector<Figure*>& shapes, Event& event, unsigned int& focus, figureID& id);
+	static void Text(std::vector<Figure*>& shapes, std::string& string, const Event& event, unsigned int& focus,
 					figureID& id);
 private:
-	static void Check(std::vector<IShape*>& shapes, std::string& string, unsigned int& focus, figureID& id);
+	static void Check(std::vector<Figure*>& shapes, std::string& string, unsigned int& focus, figureID& id);
 	static std::vector<float> Convert(std::string& string);
 
 	static std::string NumberCheck(std::string& string);
-	static void CreateFigure(std::vector<IShape*>& shapes, std::vector<float>& coordinates, unsigned int& focus,
+	static void CreateFigure(std::vector<Figure*>& shapes, std::vector<float>& coordinates, unsigned int& focus,
 							figureID& id);
 	static void SetFigurePosition(IMove* shape, std::vector<float>& coordinates);
 	static void SetFigureAngle(IRotate* shape, std::vector<float>& coordinates);
@@ -53,7 +53,7 @@ private:
 	static void SetFigureScale(IScale* shape, std::vector<float>& coordinates);
 	static void SetFigureScaleX(IScale* shape, std::vector<float>& coordinates);
 	static void SetFigureScaleY(IScale* shape, std::vector<float>& coordinates);
-	static void SetFigureFocus(std::vector<IShape*>& shapes, vector<float>& coordinates, unsigned& focus);
-	static void DeleteFigure(std::vector<IShape*>& shapes, vector<float>& coordinates, unsigned& focus);
-	static void DeleteFigure(std::vector<IShape*>& shapes, unsigned& focus);
+	static void SetFigureFocus(std::vector<Figure*>& shapes, vector<float>& coordinates, unsigned& focus);
+	static void DeleteFigure(std::vector<Figure*>& shapes, vector<float>& coordinates, unsigned& focus);
+	static void DeleteFigure(std::vector<Figure*>& shapes, unsigned& focus);
 };
