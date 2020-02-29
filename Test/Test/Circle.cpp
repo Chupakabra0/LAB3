@@ -10,7 +10,7 @@ Circle::Circle(float x, float radius): Circle(x, x, radius) {}
 Circle::Circle(float x, float y, float radius): Circle(x, y, Color(255, 255, 255 , 255), radius) {}
 Circle::Circle(float x, float y, Color color, float radius) : Circle(XY(x, y), color, radius) { }
 
-Circle::Circle(XY xy, Color color, float radius) : dot(xy), color(color), scale(1.f), radius(radius) {
+Circle::Circle(XY xy, Color color, float radius) : dot(xy), color(color), scale(1.f), angle(0.f), radius(radius) {
 	this->Circle::RememberCondition();
 }
 
@@ -27,7 +27,7 @@ void Circle::Draw(RenderWindow& window) {
 
 	if (this->getTrace()) {
 		const auto size = this->history.size();
-		for (auto i = 0; i < size - 1; i++) {
+		for (auto i = this->getTraceNum(); i < size - 1; i++) {
 			dot.setPosition(this->history[i].GetDot().getX(), this->history[i].GetDot().getY() + highLimit);
 			window.draw(dot);
 		}
