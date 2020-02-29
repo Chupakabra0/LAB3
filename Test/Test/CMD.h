@@ -16,8 +16,9 @@ struct CMD {
 	CMD() = delete;
 	~CMD() = delete;
 
+	constexpr static float TIME = 2.f;;
+
 	static float SPEED;
-	static float TIME;
 	static float MOVE;
 	static float ROTATE;
 	static float SCALE_PLUS;
@@ -25,6 +26,7 @@ struct CMD {
 
 	const static std::string SET;
 	const static std::string CREATE;
+	const static std::string SWITCH;
 	const static std::string POSITION;
 	const static std::string ANGLE;
 	const static std::string COLOR;
@@ -34,6 +36,12 @@ struct CMD {
 	const static std::string VISIBLE;
 	const static std::string TRACE;
 	const static std::string ALL;
+
+	const static std::string SPEED_TEXT;
+	const static std::string MOVE_TEXT;
+	const static std::string ROTATE_TEXT;
+	const static std::string SCALE_TEXT;
+
 
 	const static std::string X;
 	const static std::string Y;
@@ -71,4 +79,6 @@ private:
 	static void SetFigureTrace(std::vector<Figure*>& shapes, vector<float>& coordinates);
 	static void SetFigureTrace(std::vector<Figure*>& shapes, unsigned& focus);
 	static void SetFigureTrace(std::vector<Figure*>& shapes);
+
+	static void ConstantSetter(float& value, const float& coordinates);
 };

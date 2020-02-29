@@ -2,23 +2,28 @@
 #include <sstream>
 
 float CMD::SPEED                 = 800.f;
-float CMD::TIME                  = 2.f;
 float CMD::MOVE                  = 1.f;
 float CMD::ROTATE                = 0.1f;
 float CMD::SCALE_PLUS            = 1.f;
-float CMD::SCALE_MINUS           = -1.f;
+float CMD::SCALE_MINUS           = -SCALE_PLUS;
 
-const std::string CMD::SET	     = "Set";
-const std::string CMD::CREATE    = "Create";
-const std::string CMD::POSITION  = "Position";
-const std::string CMD::ANGLE     = "Angle";
-const std::string CMD::COLOR     = "Color";
-const std::string CMD::SCALE     = "Scale";
-const std::string CMD::FOCUS     = "Focus";
-const std::string CMD::DELETE    = "Delete";
-const std::string CMD::VISIBLE   = "Visible";
-const std::string CMD::TRACE     = "Trace";
-const std::string CMD::ALL       = "All";
+const std::string CMD::SET	      = "Set";
+const std::string CMD::CREATE     = "Create";
+const std::string CMD::SWITCH     = "Switch";
+const std::string CMD::POSITION   = "Position";
+const std::string CMD::ANGLE      = "Angle";
+const std::string CMD::COLOR      = "Color";
+const std::string CMD::SCALE      = "Scale";
+const std::string CMD::FOCUS      = "Focus";
+const std::string CMD::DELETE     = "Delete";
+const std::string CMD::VISIBLE    = "Visible";
+const std::string CMD::TRACE      = "Trace";
+const std::string CMD::ALL        = "All";
+
+const std::string CMD::SPEED_TEXT = "Speed";
+const std::string CMD::MOVE_TEXT       = "Move";
+const std::string CMD::ROTATE_TEXT     = "Rotate";
+const std::string CMD::SCALE_TEXT      = "Scale";
 
 const std::string CMD::X         = "X";
 const std::string CMD::Y         = "Y";
@@ -146,20 +151,25 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, unsigned& foc
 				auto coordinates = Convert(string);
 				SetFigureFocus(shapes, coordinates, focus);
 			}
-			else if (string.find(VISIBLE, 0) != -1) {
-				auto coordinates = Convert(string);
-				if (!coordinates.empty()) SetFigureVisible(shapes, coordinates);
-				else SetFigureVisible(shapes, focus);
-			}
-			else if (string.find(TRACE, 0) != -1) {
-				if (string.find(ALL) != -1) {
-					SetFigureTrace(shapes);
-				}
-				else {
-					auto coordinates = Convert(string);
-					if (coordinates.empty()) SetFigureTrace(shapes, focus);
-					else SetFigureTrace(shapes, coordinates);
-				}
+		}
+
+		if (string.find(SPEED_TEXT, 0) != -1) {
+			auto coordinates = Convert(string);
+			if (!coordinates.empty()) ConstantSetter(SPEED, coordinates[0]);
+		}
+		else if (string.find(MOVE_TEXT, 0) != -1) {
+			auto coordinates = Convert(string);
+			if (!coordinates.empty()) ConstantSetter(MOVE, coordinates[0]);
+		}
+		else if (string.find(ROTATE_TEXT, 0) != -1) {
+			auto coordinates = Convert(string);
+			if (!coordinates.empty()) ConstantSetter(ROTATE, coordinates[0]);
+		}
+		else if (string.find(SCALE_TEXT, 0) != -1) {
+			auto coordinates = Convert(string);
+			if (!coordinates.empty()) {
+				ConstantSetter(SCALE_PLUS, coordinates[0]);
+				ConstantSetter(SCALE_MINUS, -SCALE_PLUS);
 			}
 		}
 	}
@@ -172,6 +182,25 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, unsigned& foc
 			auto coordinates = Convert(string);
 			if (coordinates.empty()) DeleteFigure(shapes, focus);
 			else DeleteFigure(shapes, coordinates, focus);
+		}
+	}
+	else if (string.find(SWITCH, 0) != - 1) {
+		if (!shapes.empty()) {
+			if (string.find(TRACE, 0) != -1) {
+				if (string.find(ALL) != -1) {
+					SetFigureTrace(shapes);
+				}
+				else {
+					auto coordinates = Convert(string);
+					if (coordinates.empty()) SetFigureTrace(shapes, focus);
+					else SetFigureTrace(shapes, coordinates);
+				}
+			}
+			else if (string.find(VISIBLE, 0) != -1) {
+				auto coordinates = Convert(string);
+				if (!coordinates.empty()) SetFigureVisible(shapes, coordinates);
+				else SetFigureVisible(shapes, focus);
+			}
 		}
 	}
 	string.erase();
@@ -330,4 +359,8 @@ void CMD::SetFigureTrace(std::vector<Figure*>& shapes) {
 	for (unsigned i = 0; i < size; i++) {
 		SetFigureTrace(shapes, i);
 	}
+}
+
+void CMD::ConstantSetter(float& value, const float& coordinates) {
+	value = coordinates;
 }
