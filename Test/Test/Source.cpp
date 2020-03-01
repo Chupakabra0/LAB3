@@ -20,7 +20,7 @@ int main(void) {
 	std::vector<Figure*> shapes; // тут хранятся фигуры
 	Clock clock; // тут тикает время
 	std::string cmd; // тут командная строка
-	unsigned int focus = 0;
+	std::vector<unsigned> focus = { 0 };
 	figureID id = CIRCLE; // id текущей фигуры
 	bool cmdActive = false;
 
@@ -47,10 +47,11 @@ int main(void) {
 		}
 
 		window.clear();
-		for (auto i = 0; i < shapes.size(); i++) {
-			std::cout << i + 1 << std::endl;
-			ShapeDealer::Draw(dynamic_cast<IDraw*>(shapes[i]), window);
+		for (auto& shape : shapes) {
+			ShapeDealer::Draw(dynamic_cast<IDraw*>(shape), window);
 		}
+		for (auto i : focus) std::cout << i;
+		cout << endl;
 
 		//
 		Text cmdText;

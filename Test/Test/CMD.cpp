@@ -37,55 +37,61 @@ std::string to_string(figureID id) {
 	}
 }
 
-void CMD::Key(std::vector<Figure*>& shapes, Event& event, unsigned& focus, figureID& id) {
+void CMD::Key(std::vector<Figure*>& shapes, Event& event, std::vector<unsigned>& focus, figureID& id) {
 	if (!shapes.empty() && event.type == Event::KeyPressed) {
 		if (Keyboard::isKeyPressed(Keyboard::Key::Left)) {
-			ShapeDealer::Move(dynamic_cast<IMove*>(shapes[focus]), XY(-MOVE, 0.f));
+			for (auto element : focus) ShapeDealer::Move(dynamic_cast<IMove*>(shapes[element]), XY(-MOVE, 0.f));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Right)) {
-			ShapeDealer::Move(dynamic_cast<IMove*>(shapes[focus]), XY(MOVE, 0.f));
+			for (auto element : focus) ShapeDealer::Move(dynamic_cast<IMove*>(shapes[element]), XY(MOVE, 0.f));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Up)) {
-			ShapeDealer::Move(dynamic_cast<IMove*>(shapes[focus]), XY(0.f, -MOVE));
+			for (auto element : focus) ShapeDealer::Move(dynamic_cast<IMove*>(shapes[element]), XY(0.f, -MOVE));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Down)) {
-			ShapeDealer::Move(dynamic_cast<IMove*>(shapes[focus]), XY(0.f, MOVE));
+			for (auto element : focus) ShapeDealer::Move(dynamic_cast<IMove*>(shapes[element]), XY(0.f, MOVE));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::E)) {
-			ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[focus]), Angle(-ROTATE));
+			for (auto element : focus) ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[element]), Angle(-ROTATE));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Q)) {
-			ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[focus]), Angle(ROTATE));
+			for (auto element : focus) ShapeDealer::Rotate(dynamic_cast<IRotate*>(shapes[element]), Angle(ROTATE));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::W)) {
-			ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[focus]), Scale(SCALE_PLUS));
+			for (auto element : focus) ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[element]), Scale(SCALE_PLUS));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::S)) {
-			ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[focus]), Scale(SCALE_MINUS));
+			for (auto element : focus) ShapeDealer::Zoom(dynamic_cast<IScale*>(shapes[element]), Scale(SCALE_MINUS));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Z)) {
-			ShapeDealer::LegacyCondition(dynamic_cast<IMove*>(shapes[focus]));
+			for (auto element : focus) ShapeDealer::LegacyCondition(dynamic_cast<IMove*>(shapes[element]));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::X)) {
-			ShapeDealer::FirstCondition(dynamic_cast<IMove*>(shapes[focus]));
+			for (auto element : focus) ShapeDealer::FirstCondition(dynamic_cast<IMove*>(shapes[element]));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::V)) {
-			ShapeDealer::SwitchVisible(dynamic_cast<Figure*>(shapes[focus]));
+			for (auto element : focus) ShapeDealer::SwitchVisible(dynamic_cast<Figure*>(shapes[element]));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::C)) {
-			ShapeDealer::SwitchTrace(dynamic_cast<Figure*>(shapes[focus]));
+			for (auto element : focus) ShapeDealer::SwitchTrace(dynamic_cast<Figure*>(shapes[element]));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::PageDown)) {
-			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
-			if (focus != 0) focus--;
-			else focus = shapes.size() - 1;
-			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
+			for (auto element : focus) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[element]));
+
+			if (focus.size() > 1) focus.erase(focus.begin() + 1, focus.end());
+
+			if (focus[0] != 0) focus[0]--;
+			else focus[0] = shapes.size() - 1;
+			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus[0]]));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::PageUp)) {
-			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
-			if (focus != shapes.size() - 1) focus++;
-			else focus = 0;
-			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
+			for (auto element : focus) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[element]));
+
+			if (focus.size() > 1) focus.erase(focus.begin() + 1, focus.end());
+
+			if (focus[0] != shapes.size() - 1) focus[0]++;
+			else focus[0] = 0;
+			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus[0]]));
 		}
 	}
 	else if (event.type == Event::KeyReleased) {
@@ -99,7 +105,7 @@ void CMD::Key(std::vector<Figure*>& shapes, Event& event, unsigned& focus, figur
 	}
 }
 
-void CMD::Text(std::vector<Figure*>& shapes, std::string& string, const Event& event, unsigned& focus,
+void CMD::Text(std::vector<Figure*>& shapes, std::string& string, const Event& event, std::vector<unsigned>& focus,
 				figureID& id) {
 	if (event.type == sf::Event::TextEntered) {
 		if (event.text.unicode == '\b') {
@@ -112,7 +118,7 @@ void CMD::Text(std::vector<Figure*>& shapes, std::string& string, const Event& e
 	}
 }
 
-void CMD::Check(std::vector<Figure*>& shapes, std::string& string, unsigned& focus, figureID& id) {
+void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<unsigned>& focus, figureID& id) {
 	if (string.find(CREATE, 0) != -1) {
 		if (string.find(CIRCLE, 0) != -1) {
 			auto coordinates = Convert(string);
@@ -123,28 +129,28 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, unsigned& foc
 		if (!shapes.empty()) {
 			if (string.find(POSITION, 0) != -1) {
 				auto coordinates = Convert(string);
-				SetFigurePosition(dynamic_cast<IMove*>(shapes[focus]), coordinates);
+				for (auto element : focus) SetFigurePosition(dynamic_cast<IMove*>(shapes[element]), coordinates);
 			}
 			else if (string.find(ANGLE, 0) != -1) {
 				auto coordinates = Convert(string);
-				SetFigureAngle(dynamic_cast<IRotate*>(shapes[focus]), coordinates);
+				for (auto element : focus) SetFigureAngle(dynamic_cast<IRotate*>(shapes[element]), coordinates);
 			}
 			else if (string.find(COLOR, 0) != -1) {
 				auto coordinates = Convert(string);
-				SetFigureColor(dynamic_cast<IDraw*>(shapes[focus]), coordinates);
+				for (auto element : focus) SetFigureColor(dynamic_cast<IDraw*>(shapes[element]), coordinates);
 			}
 			else if (string.find(SCALE, 0) != -1) {
 				if (string.find(X, 0) != -1) {
 					auto coordinates = Convert(string);
-					SetFigureScaleX(dynamic_cast<IScale*>(shapes[focus]), coordinates);
+					for (auto element : focus) SetFigureScaleX(dynamic_cast<IScale*>(shapes[element]), coordinates);
 				}
 				else if (string.find(Y, 0) != -1) {
 					auto coordinates = Convert(string);
-					SetFigureScaleY(dynamic_cast<IScale*>(shapes[focus]), coordinates);
+					for (auto element : focus) SetFigureScaleY(dynamic_cast<IScale*>(shapes[element]), coordinates);
 				}
 				else {
 					auto coordinates = Convert(string);
-					SetFigureScale(dynamic_cast<IScale*>(shapes[focus]), coordinates);
+					for (auto element : focus) SetFigureScale(dynamic_cast<IScale*>(shapes[element]), coordinates);
 				}
 			}
 			else if (string.find(FOCUS, 0) != -1) {
@@ -176,7 +182,8 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, unsigned& foc
 	else if (string.find(DELETE, 0) != -1) {
 		if (string.find(ALL, 0) != -1) {
 			DeleteFigure(shapes);
-			focus = 0;
+			focus.erase(focus.begin(), focus.end());
+			focus.push_back(0);
 		}
 		else {
 			auto coordinates = Convert(string);
@@ -192,14 +199,16 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, unsigned& foc
 				}
 				else {
 					auto coordinates = Convert(string);
-					if (coordinates.empty()) SetFigureTrace(shapes, focus);
+					if (coordinates.empty()) {
+						for (auto element : focus) SetFigureTrace(shapes, element);
+					}
 					else SetFigureTrace(shapes, coordinates);
 				}
 			}
 			else if (string.find(VISIBLE, 0) != -1) {
 				auto coordinates = Convert(string);
 				if (!coordinates.empty()) SetFigureVisible(shapes, coordinates);
-				else SetFigureVisible(shapes, focus);
+				else for (auto element : focus) SetFigureVisible(shapes, element);
 			}
 		}
 	}
@@ -224,9 +233,13 @@ std::string CMD::NumberCheck(std::string& string) {
 	return result;
 }
 
-void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<float>& coordinates, unsigned& focus,
+void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<float>& coordinates, std::vector<unsigned>& focus,
 						figureID& id) {
-	if (!shapes.empty()) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>((shapes[focus])));
+	if (!shapes.empty()) {
+		for (auto element : focus) {
+			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[element]));
+		}
+	}
 	Figure* temp = nullptr;
 	switch (id) {
 	case figureID::CIRCLE: {
@@ -263,8 +276,8 @@ void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<float>& coordin
 	}
 	}
 	shapes.push_back(temp);
-	focus = shapes.size() - 1;
-	ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus]));
+	focus[0] = shapes.size() - 1;
+	ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus[0]]));
 }
 
 void CMD::SetFigurePosition(IMove* shape, std::vector<float>& coordinates) {
@@ -296,11 +309,20 @@ void CMD::SetFigureScaleY(IScale* shape, std::vector<float>& coordinates) {
 	if (!coordinates.empty()) ShapeDealer::SetScale(shape, Scale(XY(1.f, coordinates[0])));
 }
 
-void CMD::SetFigureFocus(std::vector<Figure*>& shapes,  vector<float>& coordinates, unsigned& focus) {
-	if (!coordinates.empty() && shapes.size() > coordinates[0]) {
-		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus]));
-		focus = coordinates[0];
-		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus]));
+void CMD::SetFigureFocus(std::vector<Figure*>& shapes,  vector<float>& coordinates, std::vector<unsigned>& focus) {
+	if (!coordinates.empty()) {
+		for (auto element : focus) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[element]));
+		focus.erase(focus.begin(), focus.end());
+		for (auto element : coordinates) {
+			if (shapes.size() > element) {
+				focus.push_back(element);
+				ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[element]));
+			}
+		}
+		if (focus.empty()) {
+			focus.push_back(0);
+			if (!shapes.empty()) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[0]));
+		}
 	}
 }
 
@@ -308,33 +330,36 @@ void CMD::DeleteFigure(std::vector<Figure*>& shapes) {
 	shapes.erase(shapes.begin(), shapes.end());
 }
 
-void CMD::DeleteFigure(std::vector<Figure*>& shapes, unsigned& focus) {
+void CMD::DeleteFigure(std::vector<Figure*>& shapes, std::vector<unsigned>& focus) {
 	if (!shapes.empty()) {
-		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus]));
-		shapes.erase(shapes.begin() + focus);
-		shapes.shrink_to_fit();
-		if (focus != 0) {
-			focus--;
-			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus]));
+		for (auto element : focus) {
+			shapes[element] = nullptr;
 		}
-		else if (!shapes.empty()) focus = shapes.size() - 1;
+		for (auto i = 0; i < shapes.size(); ) {
+			if (shapes[i] == nullptr) shapes.erase(shapes.begin() + i);
+			else i++;
+		}
+		focus[0] = 0;
+		if (!shapes.empty()) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus[0]]));
+		focus.erase(focus.begin() + 1, focus.end());
 	}
 }
 
-void CMD::DeleteFigure(std::vector<Figure*>& shapes, vector<float>& coordinates, unsigned& focus) {
+void CMD::DeleteFigure(std::vector<Figure*>& shapes, vector<float>& coordinates, std::vector<unsigned>& focus) {
 	if (!coordinates.empty() && shapes.size() > coordinates[0]) {
 		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[coordinates[0]]));
 		shapes.erase(shapes.begin() + coordinates[0]);
 		shapes.shrink_to_fit();
-		if (focus == coordinates[0]) {
-			if (focus != 0) {
-				ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus - 1]));
+		if (focus[0] == coordinates[0]) {
+			if (focus[0] != 0) {
+				ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus[0] - 1]));
 			}
-			else if (!shapes.empty()) focus = shapes.size() - 1;
+			else if (!shapes.empty()) focus[0] = shapes.size() - 1;
 		}
 		else {
-			focus--;
+			focus[0]--;
 		}
+		focus.erase(focus.begin() + 1, focus.end());
 	}
 }
 
