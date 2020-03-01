@@ -1,34 +1,34 @@
 #include "CMD.h"
 #include <sstream>
 
-float CMD::SPEED                 = 800.f;
-float CMD::MOVE                  = 1.f;
-float CMD::ROTATE                = 0.1f;
-float CMD::SCALE_PLUS            = 1.f;
-float CMD::SCALE_MINUS           = -SCALE_PLUS;
+float CMD::SPEED                   = 800.f;
+float CMD::MOVE                    = 1.f;
+float CMD::ROTATE                  = 0.1f;
+float CMD::SCALE_PLUS              = 1.f;
+float CMD::SCALE_MINUS             = -SCALE_PLUS;
+								   
+const std::string CMD::SET	       = "Set";
+const std::string CMD::CREATE      = "Create";
+const std::string CMD::SWITCH      = "Switch";
+const std::string CMD::POSITION    = "Position";
+const std::string CMD::ANGLE       = "Angle";
+const std::string CMD::COLOR       = "Color";
+const std::string CMD::SCALE       = "Scale";
+const std::string CMD::FOCUS       = "Focus";
+const std::string CMD::DELETE      = "Delete";
+const std::string CMD::VISIBLE     = "Visible";
+const std::string CMD::TRACE       = "Trace";
+const std::string CMD::ALL         = "All";
 
-const std::string CMD::SET	      = "Set";
-const std::string CMD::CREATE     = "Create";
-const std::string CMD::SWITCH     = "Switch";
-const std::string CMD::POSITION   = "Position";
-const std::string CMD::ANGLE      = "Angle";
-const std::string CMD::COLOR      = "Color";
-const std::string CMD::SCALE      = "Scale";
-const std::string CMD::FOCUS      = "Focus";
-const std::string CMD::DELETE     = "Delete";
-const std::string CMD::VISIBLE    = "Visible";
-const std::string CMD::TRACE      = "Trace";
-const std::string CMD::ALL        = "All";
+const std::string CMD::SPEED_TEXT  = "Speed";
+const std::string CMD::MOVE_TEXT   = "Move";
+const std::string CMD::ROTATE_TEXT = "Rotate";
+const std::string CMD::SCALE_TEXT  = "Scale";
 
-const std::string CMD::SPEED_TEXT = "Speed";
-const std::string CMD::MOVE_TEXT       = "Move";
-const std::string CMD::ROTATE_TEXT     = "Rotate";
-const std::string CMD::SCALE_TEXT      = "Scale";
+const std::string CMD::X           = "X";
+const std::string CMD::Y           = "Y";
 
-const std::string CMD::X         = "X";
-const std::string CMD::Y         = "Y";
-
-const std::string CMD::CIRCLE    = to_string(figureID::CIRCLE);
+const std::string CMD::CIRCLE      = to_string(figureID::CIRCLE);
 
 std::string to_string(figureID id) {
 	switch (id) {
