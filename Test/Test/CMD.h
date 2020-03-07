@@ -35,7 +35,6 @@ struct CMD {
 	const static std::string DELETE;
 	const static std::string VISIBLE;
 	const static std::string TRACE;
-	static const std::string RECORD;
 	const static std::string ALL;
 
 	const static std::string SPEED_TEXT;
