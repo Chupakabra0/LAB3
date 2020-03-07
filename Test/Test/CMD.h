@@ -7,6 +7,7 @@ using namespace std;
 using namespace sf;
 
 enum figureID {
+	AGREGAT,
 	CIRCLE
 };
 
@@ -46,37 +47,38 @@ struct CMD {
 	const static std::string X;
 	const static std::string Y;
 
+	const static std::string AGREGAT;
 	const static std::string CIRCLE;
 
 	static void Key(std::vector<Figure*>& shapes, Event& event, std::vector<unsigned>& focus, figureID& id);
-	static void Text(std::vector<Figure*>& shapes, std::string& string, const Event& event, std::vector<unsigned>& focus, figureID& id);
+	static void Text(std::vector<Figure*>& shapes, std::string& string, const Event& event, std::vector<unsigned>& focus);
 private:
-	static void Check(std::vector<Figure*>& shapes, std::string& string, std::vector<unsigned>& focus, figureID& id);
-	static std::vector<float> Convert(std::string& string);
+	static void Check(std::vector<Figure*>& shapes, std::string& string, std::vector<unsigned>& focus);
+	static std::vector<unsigned> Convert(std::string& string);
 	static std::string NumberCheck(std::string& string);
 
-	static void CreateFigure(std::vector<Figure*>& shapes, std::vector<float>& coordinates, std::vector<unsigned>& focus, figureID& id);
+	static void CreateFigure(std::vector<Figure*>& shapes, std::vector<unsigned>& coordinates, std::vector<unsigned>& focus, figureID id);
 
-	static void SetFigurePosition(IMove* shape, std::vector<float>& coordinates);
+	static void SetFigurePosition(IMove* shape, std::vector<unsigned>& coordinates);
 
-	static void SetFigureAngle(IRotate* shape, std::vector<float>& coordinates);
+	static void SetFigureAngle(IRotate* shape, std::vector<unsigned>& coordinates);
 
-	static void SetFigureColor(IDraw* shape, std::vector<float>& coordinates);
+	static void SetFigureColor(IDraw* shape, std::vector<unsigned>& coordinates);
 
-	static void SetFigureScale(IScale* shape, std::vector<float>& coordinates);
-	static void SetFigureScaleX(IScale* shape, std::vector<float>& coordinates);
-	static void SetFigureScaleY(IScale* shape, std::vector<float>& coordinates);
+	static void SetFigureScale(IScale* shape, std::vector<unsigned>& coordinates);
+	static void SetFigureScaleX(IScale* shape, std::vector<unsigned>& coordinates);
+	static void SetFigureScaleY(IScale* shape, std::vector<unsigned>& coordinates);
 
-	static void SetFigureFocus(std::vector<Figure*>& shapes, vector<float>& coordinates, std::vector<unsigned>& focus);
+	static void SetFigureFocus(std::vector<Figure*>& shapes, vector<unsigned>& coordinates, std::vector<unsigned>& focus);
 
 	static void DeleteFigure(std::vector<Figure*>& shapes);
-	static void DeleteFigure(std::vector<Figure*>& shapes, vector<float>& coordinates, std::vector<unsigned>& focus);
+	static void DeleteFigure(std::vector<Figure*>& shapes, std::vector<unsigned>& coordinates, std::vector<unsigned>& focus);
 	static void DeleteFigure(std::vector<Figure*>& shapes, std::vector<unsigned>& focus);
 
-	static void SetFigureVisible(std::vector<Figure*>& shapes, vector<float>& coordinates);
+	static void SetFigureVisible(std::vector<Figure*>& shapes, std::vector<unsigned>& coordinates);
 	static void SetFigureVisible(std::vector<Figure*>& shapes, unsigned& focus);
 
-	static void SetFigureTrace(std::vector<Figure*>& shapes, vector<float>& coordinates);
+	static void SetFigureTrace(std::vector<Figure*>& shapes, vector<unsigned>& coordinates);
 	static void SetFigureTrace(std::vector<Figure*>& shapes, unsigned& focus);
 	static void SetFigureTrace(std::vector<Figure*>& shapes);
 

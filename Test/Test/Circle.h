@@ -3,8 +3,9 @@
 #include <vector>															 														 
 #include "History.h"
 
-struct Figure : IMove, IScale, IDraw, IRotate {
-	Figure() : trace(0) {
+struct Figure : virtual IMove, virtual IScale, virtual IDraw, virtual IRotate {
+	Figure() : Figure(XY(0)) {}
+	Figure(XY xy) : trace(0), dot(xy), scale(1.f), angle(0.f) {
 		this->setFocus(false);
 		this->setTrace(false);
 		this->setVisible(true);
@@ -48,6 +49,9 @@ protected:
 	bool isTraced;
 	size_t trace;
 	std::vector<History> history;
+	XY dot;
+	Scale scale;
+	Angle angle;
 private:
 	static void set(bool& first, const bool& second) {
 		if (first != second) first = second;
@@ -90,10 +94,7 @@ protected:
 	void RememberCondition() override;
 	void FirstCondition() override;
 	//---------------------------------------------------------------------
-	Scale scale;
-	Angle angle;
 	sf::CircleShape pic;
-	XY dot;
 	float radius;
 	sf::Color color;
 };

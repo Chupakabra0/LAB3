@@ -3,6 +3,7 @@
 #include "ShapeDealer.h"
 #include <iostream>
 #include "Circle.h"
+#include <vector>
 
 #include <string>
 #include <algorithm>
@@ -36,7 +37,7 @@ int main(void) {
 			if (event.type == Event::Closed) window.close();
 
 			if (!cmdActive) CMD::Key(shapes, event, focus, id);
-			else CMD::Text(shapes, cmd, event, focus, id);
+			else CMD::Text(shapes, cmd, event, focus);
 
 			if (Keyboard::isKeyPressed(Keyboard::Key::Tilde))
 				if (time >= CMD::TIME) {

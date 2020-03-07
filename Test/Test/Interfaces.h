@@ -47,29 +47,29 @@ protected:
 	}
 };
 
-__interface IShape {  //интерфейс ведения истории
-	void PreviousCondition();
-	void RememberCondition();
-	void FirstCondition();
+struct IShape {  //интерфейс ведения истории
+	virtual void PreviousCondition() abstract;
+	virtual void RememberCondition() abstract;
+	virtual void FirstCondition() abstract;
 };
 
-__interface IMove : IShape { //интерфейс передвижения
-	XY GetPosition();
-	void SetPosition(XY xy);
-	void ChangePosition(XY xy);
+struct IMove : virtual IShape { //интерфейс передвижения
+	virtual XY GetPosition() abstract;
+	virtual void SetPosition(XY xy) abstract;
+	virtual void ChangePosition(XY xy) abstract;
 };
 
-__interface IRotate : IShape { //интерфейс поворота 
-	void SetAngle(Angle angle);
-	void ChangeAngle(Angle angle);
+struct IRotate : virtual IShape { //интерфейс поворота 
+	virtual void SetAngle(Angle angle) abstract;
+	virtual void ChangeAngle(Angle angle) abstract;
 };
 
-__interface IDraw : IShape { //интерфейс рисования
-	void Draw(sf::RenderWindow& window, std::vector<Figure*>& shapes);
-	void SetColor(sf::Color rgba);
+struct IDraw : virtual IShape { //интерфейс рисования
+	virtual void Draw(sf::RenderWindow& window, std::vector<Figure*>& shapes) abstract;
+	virtual void SetColor(sf::Color rgba) abstract;
 };
 
-__interface IScale : IShape { //интерфейс масштабирования
-	void SetScale(Scale scale);
-	void ChangeScale(Scale scale);
+struct IScale : virtual IShape { //интерфейс масштабирования
+	virtual void SetScale(Scale scale) abstract;
+	virtual void ChangeScale(Scale scale) abstract;
 };

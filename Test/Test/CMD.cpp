@@ -1,5 +1,7 @@
 #include "CMD.h"
 #include <sstream>
+#include <algorithm>
+#include "Agregat.h"
 
 float CMD::SPEED                   = 800.f;
 float CMD::MOVE                    = 1.f;
@@ -28,11 +30,13 @@ const std::string CMD::SCALE_TEXT  = "Scale";
 const std::string CMD::X           = "X";
 const std::string CMD::Y           = "Y";
 
+const std::string CMD::AGREGAT     = to_string(figureID::AGREGAT);
 const std::string CMD::CIRCLE      = to_string(figureID::CIRCLE);
 
 std::string to_string(figureID id) {
 	switch (id) {
 	case CIRCLE: return typeid(Circle).name() + std::string("class ").size();
+	case AGREGAT : return typeid(Agregat).name() + std::string("class ").size();
 	default: return "unknown";
 	}
 }
@@ -96,7 +100,7 @@ void CMD::Key(std::vector<Figure*>& shapes, Event& event, std::vector<unsigned>&
 	}
 	else if (event.type == Event::KeyReleased) {
 		if (event.key.code == Keyboard::Key::Add) {
-			std::vector<float> coordinates;
+			std::vector<unsigned> coordinates;
 			CreateFigure(shapes, coordinates, focus, id);
 		}
 		if (event.key.code == Keyboard::Key::Subtract) {
@@ -105,24 +109,27 @@ void CMD::Key(std::vector<Figure*>& shapes, Event& event, std::vector<unsigned>&
 	}
 }
 
-void CMD::Text(std::vector<Figure*>& shapes, std::string& string, const Event& event, std::vector<unsigned>& focus,
-				figureID& id) {
+void CMD::Text(std::vector<Figure*>& shapes, std::string& string, const Event& event, std::vector<unsigned>& focus) {
 	if (event.type == sf::Event::TextEntered) {
 		if (event.text.unicode == '\b') {
 			if (!string.empty()) string.erase(string.cend() - 1);
 		}
-		else if (event.text.unicode == 13) Check(shapes, string, focus, id);
+		else if (event.text.unicode == 13) Check(shapes, string, focus);
 		else if (event.text.unicode != 43 && event.text.unicode != 96 && event.text.unicode != 1105) string += {
 			static_cast<char>(event.text.unicode)
 		};
 	}
 }
 
-void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<unsigned>& focus, figureID& id) {
+void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<unsigned>& focus) {
 	if (string.find(CREATE, 0) != -1) {
 		if (string.find(CIRCLE, 0) != -1) {
 			auto coordinates = Convert(string);
-			CreateFigure(shapes, coordinates, focus, id);
+			CreateFigure(shapes, coordinates, focus, figureID::CIRCLE);
+		}
+		else if (string.find(AGREGAT, 0) != -1) {
+			auto coordinates = Convert(string);
+			CreateFigure(shapes, coordinates, focus, figureID::AGREGAT);
 		}
 	}
 	else if (string.find(SET, 0) != -1) {
@@ -215,11 +222,11 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<u
 	string.erase();
 }
 
-std::vector<float> CMD::Convert(std::string& string) {
+std::vector<unsigned> CMD::Convert(std::string& string) {
 	string = NumberCheck(string);
 	std::replace(string.begin(), string.end(), '_', ' ');
 	std::istringstream ss(string);
-	return std::vector<float>{std::istream_iterator<float>(ss), {}};
+	return std::vector<unsigned>{std::istream_iterator<unsigned>(ss), {}};
 }
 
 std::string CMD::NumberCheck(std::string& string) {
@@ -233,8 +240,8 @@ std::string CMD::NumberCheck(std::string& string) {
 	return result;
 }
 
-void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<float>& coordinates, std::vector<unsigned>& focus,
-						figureID& id) {
+void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<unsigned>& coordinates, std::vector<unsigned>& focus,
+						figureID id) {
 	if (!shapes.empty()) {
 		for (auto element : focus) {
 			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[element]));
@@ -242,6 +249,31 @@ void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<float>& coordin
 	}
 	Figure* temp = nullptr;
 	switch (id) {
+	case figureID::AGREGAT: {
+		vector<Figure*> vect;
+		if (coordinates.empty()) {
+			for (auto i = 0; i < shapes.size(); i++) {
+				for (auto element : focus) {
+					if (element == i) {
+						vect.push_back(shapes[i]);
+						break;
+					}
+				}
+			}
+		}
+		else {
+			for (auto i = 0; i < shapes.size(); i++) {
+				for (auto coordinate : coordinates) {
+					if (coordinate == i) {
+						vect.push_back(shapes[i]);
+						break;
+					}
+				}
+			}
+		}
+		temp = new Agregat(vect);
+		break;
+	}
 	case figureID::CIRCLE: {
 		XY xy;
 		Color color;
@@ -280,36 +312,36 @@ void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<float>& coordin
 	ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus[0]]));
 }
 
-void CMD::SetFigurePosition(IMove* shape, std::vector<float>& coordinates) {
+void CMD::SetFigurePosition(IMove* shape, std::vector<unsigned>& coordinates) {
 	if (coordinates.size() > 1) ShapeDealer::SetPosition(shape, XY(coordinates[0], coordinates[1]));
 	else if (coordinates.size() == 1) ShapeDealer::SetPosition(shape, XY(coordinates[0]));
 }
 
-void CMD::SetFigureAngle(IRotate* shape, std::vector<float>& coordinates) {
+void CMD::SetFigureAngle(IRotate* shape, std::vector<unsigned>& coordinates) {
 	if (!coordinates.empty()) ShapeDealer::SetAngle(shape, Angle(coordinates[0]));
 }
 
-void CMD::SetFigureColor(IDraw* shape, std::vector<float>& coordinates) {
+void CMD::SetFigureColor(IDraw* shape, std::vector<unsigned>& coordinates) {
 	if (coordinates.size() > 3) ShapeDealer::SetColor(
 		shape, Color(coordinates[0], coordinates[1], coordinates[2], coordinates[3]));
 	else if (coordinates.size() == 3) ShapeDealer::SetColor(
 		shape, Color(coordinates[0], coordinates[1], coordinates[2]));
 }
 
-void CMD::SetFigureScale(IScale* shape, std::vector<float>& coordinates) {
+void CMD::SetFigureScale(IScale* shape, std::vector<unsigned>& coordinates) {
 	if (coordinates.size() > 1) ShapeDealer::SetScale(shape, Scale(XY(coordinates[0], coordinates[1])));
 	else if (coordinates.size() == 1) ShapeDealer::SetScale(shape, Scale(coordinates[0]));
 }
 
-void CMD::SetFigureScaleX(IScale* shape, std::vector<float>& coordinates) {
+void CMD::SetFigureScaleX(IScale* shape, std::vector<unsigned>& coordinates) {
 	if (!coordinates.empty()) ShapeDealer::SetScale(shape, Scale(XY(coordinates[0], 1.f)));
 }
 
-void CMD::SetFigureScaleY(IScale* shape, std::vector<float>& coordinates) {
+void CMD::SetFigureScaleY(IScale* shape, std::vector<unsigned>& coordinates) {
 	if (!coordinates.empty()) ShapeDealer::SetScale(shape, Scale(XY(1.f, coordinates[0])));
 }
 
-void CMD::SetFigureFocus(std::vector<Figure*>& shapes,  vector<float>& coordinates, std::vector<unsigned>& focus) {
+void CMD::SetFigureFocus(std::vector<Figure*>& shapes,  vector<unsigned>& coordinates, std::vector<unsigned>& focus) {
 	if (!coordinates.empty()) {
 		for (auto element : focus) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[element]));
 		focus.erase(focus.begin(), focus.end());
@@ -345,7 +377,7 @@ void CMD::DeleteFigure(std::vector<Figure*>& shapes, std::vector<unsigned>& focu
 	}
 }
 
-void CMD::DeleteFigure(std::vector<Figure*>& shapes, vector<float>& coordinates, std::vector<unsigned>& focus) {
+void CMD::DeleteFigure(std::vector<Figure*>& shapes, vector<unsigned>& coordinates, std::vector<unsigned>& focus) {
 	if (!coordinates.empty() && shapes.size() > coordinates[0]) {
 		ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[coordinates[0]]));
 		shapes.erase(shapes.begin() + coordinates[0]);
@@ -363,7 +395,7 @@ void CMD::DeleteFigure(std::vector<Figure*>& shapes, vector<float>& coordinates,
 	}
 }
 
-void CMD::SetFigureVisible(std::vector<Figure*>& shapes, vector<float>& coordinates) {
+void CMD::SetFigureVisible(std::vector<Figure*>& shapes, vector<unsigned>& coordinates) {
 	if (!coordinates.empty() && shapes.size() > coordinates[0]) ShapeDealer::SwitchVisible(shapes[coordinates[0]]);
 }
 
@@ -371,7 +403,7 @@ void CMD::SetFigureVisible(std::vector<Figure*>& shapes, unsigned& focus) {
 	if (!shapes.empty()) ShapeDealer::SwitchVisible(shapes[focus]);
 }
 
-void CMD::SetFigureTrace(std::vector<Figure*>& shapes, vector<float>& coordinates) {
+void CMD::SetFigureTrace(std::vector<Figure*>& shapes, vector<unsigned>& coordinates) {
 	if (!coordinates.empty() && shapes.size() > coordinates[0]) ShapeDealer::SwitchTrace(shapes[coordinates[0]]);
 }
 
