@@ -7,8 +7,8 @@ struct ShapeDealer
 	ShapeDealer() = delete;
 	~ShapeDealer() = delete;
 	//---------------------------------------------------------------------
-	static void Draw(IDraw* draw, sf::RenderWindow& window) {
-		draw->Draw(window);
+	static void Draw(IDraw* draw, sf::RenderWindow& window, std::vector<Figure*>& shapes) {
+		draw->Draw(window, shapes);
 	}
 	static void Move(IMove* move, XY xy) {
 		move->ChangePosition(xy);

@@ -14,34 +14,42 @@ Circle::Circle(XY xy, Color color, float radius) : dot(xy), color(color), scale(
 	this->Circle::RememberCondition();
 }
 
-void Circle::Draw(RenderWindow& window) {
-	CircleShape dot(this->radius);
+void Circle::Draw(RenderWindow& window, std::vector<Figure*>& shapes) {
+	this->pic.setRadius(this->radius);
 	if (this->getVisible()) {
-		dot.setFillColor(this->color);
+		this->pic.setFillColor(this->color);
 	}
 	else {
-		dot.setFillColor(Color::Black);
+		this->pic.setFillColor(Color::Black);
 	}
-	dot.rotate(this->angle.GetValue());
-	dot.scale(this->scale.GetValueX(), this->scale.GetValueY());
+
+	this->pic.rotate(this->angle.GetValue());
+	this->pic.scale(this->scale.GetValueX(), this->scale.GetValueY());
+
+	for (auto element : shapes) {
+		//if (this->pic.getGlobalBounds().intersects()) {
+		//	this->pic.setScale(this->scale.GetValueX() + 25.f, this->scale.GetValueY());
+		//	break;
+		//}
+	}
 
 	if (this->getTrace()) {
 		const auto size = this->history.size();
 		for (auto i = this->getTraceNum(); i < size - 1; i++) {
-			dot.setPosition(this->history[i].GetDot().getX(), this->history[i].GetDot().getY() + highLimit);
-			window.draw(dot);
+			this->pic.setPosition(this->history[i].GetDot().getX(), this->history[i].GetDot().getY() + highLimit);
+			window.draw(this->pic);
 		}
 	}
 
-	dot.setPosition(this->dot.getX(), this->dot.getY() + highLimit);
+	this->pic.setPosition(this->dot.getX(), this->dot.getY() + highLimit);
 	if (this->isFocused) {
-		dot.setOutlineThickness(1.f / std::max(this->scale.GetValueX(), this->scale.GetValueY()));
-		dot.setOutlineColor(Color::Green);
+		this->pic.setOutlineThickness(1.f / std::max(this->scale.GetValueX(), this->scale.GetValueY()));
+		this->pic.setOutlineColor(Color::Green);
 	}
 	else {
-		dot.setOutlineColor(dot.getFillColor());
+		this->pic.setOutlineColor(this->pic.getFillColor());
 	}
-	window.draw(dot);
+	window.draw(this->pic);
 }
 
 void Circle::SetPosition(XY xy) {

@@ -64,7 +64,7 @@ public:
 	Circle(XY xy, sf::Color color, float radius);
 	virtual ~Circle();
 protected:
-	void Draw(sf::RenderWindow& window) override;
+	void Draw(sf::RenderWindow& window, std::vector<Figure*>& shapes) override;
 	//---------------------------------------------------------------------
 	void SetPosition(XY xy) override;
 	void ChangePosition(XY xy) override;
@@ -81,12 +81,17 @@ protected:
 		this->SetAngle(Angle(this->angle.GetValue() + angle.GetValue()));
 	}
 	//---------------------------------------------------------------------
+	sf::CircleShape getPicture() const {
+		return this->pic;
+	}
+	//---------------------------------------------------------------------
 	void PreviousCondition() override;
 	void RememberCondition() override;
 	void FirstCondition() override;
 	//---------------------------------------------------------------------
 	Scale scale;
 	Angle angle;
+	sf::CircleShape pic;
 	XY dot;
 	float radius;
 	sf::Color color;

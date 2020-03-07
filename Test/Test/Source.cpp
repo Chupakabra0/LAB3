@@ -48,7 +48,7 @@ int main(void) {
 
 		window.clear();
 		for (auto& shape : shapes) {
-			ShapeDealer::Draw(dynamic_cast<IDraw*>(shape), window);
+			ShapeDealer::Draw(dynamic_cast<IDraw*>(shape), window, shapes);
 		}
 		for (auto i : focus) std::cout << i;
 		cout << endl;

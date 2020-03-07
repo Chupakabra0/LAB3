@@ -2,6 +2,8 @@
 #include "XY.h"
 #include <SFML/Graphics.hpp>
 
+class Figure;
+
 class Angle {
 public:
 	explicit Angle() = default;
@@ -62,7 +64,7 @@ __interface IRotate : IShape { //интерфейс поворота
 };
 
 __interface IDraw : IShape { //интерфейс рисования
-	virtual void Draw(sf::RenderWindow& window) abstract;
+	virtual void Draw(sf::RenderWindow& window, std::vector<Figure*>& shapes) abstract;
 	virtual void SetColor(sf::Color rgba) abstract;
 };
 
