@@ -18,6 +18,7 @@ const std::string CMD::FOCUS       = "Focus";
 const std::string CMD::DELETE      = "Delete";
 const std::string CMD::VISIBLE     = "Visible";
 const std::string CMD::TRACE       = "Trace";
+const std::string CMD::RECORD      = "Record";
 const std::string CMD::ALL         = "All";
 
 const std::string CMD::SPEED_TEXT  = "Speed";
@@ -209,6 +210,10 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<u
 				auto coordinates = Convert(string);
 				if (!coordinates.empty()) SetFigureVisible(shapes, coordinates);
 				else for (auto element : focus) SetFigureVisible(shapes, element);
+			}
+			else if (string.find(RECORD, 0) != -1) {
+				auto coordinates = Convert(string);
+				
 			}
 		}
 	}

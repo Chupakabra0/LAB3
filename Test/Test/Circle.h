@@ -4,10 +4,11 @@
 #include "History.h"
 
 struct Figure : IMove, IScale, IDraw, IRotate {
-	Figure() : trace(0) {
+	Figure() : indexTrace(0), indexRecord(0) {
 		this->setFocus(false);
 		this->setTrace(false);
 		this->setVisible(true);
+		this->setRecord(false);
 	}
 	virtual ~Figure() = default;
 
@@ -32,11 +33,25 @@ struct Figure : IMove, IScale, IDraw, IRotate {
 		set(this->isTraced, trace);
 	}
 
+	bool getRecord() const {
+		return this->indexRecord;
+	}
+	void setRecord(bool record) {
+		set(this->isRecord, record);
+	}
+
 	size_t getTraceNum() const {
-		return this->trace;
+		return this->indexTrace;
 	}
 	void setTraceNum(size_t trace) {
-		this->trace = trace;
+		this->indexTrace = trace;
+	}
+
+	size_t getRecordNum() const {
+		return this->indexRecord;
+	}
+	void setRecordNum(size_t record) {
+		this->indexRecord = record;
 	}
 
 	std::vector<History> getHistory() const {
@@ -46,7 +61,9 @@ protected:
 	bool isFocused;
 	bool isVisible;
 	bool isTraced;
-	size_t trace;
+	bool isRecord;
+	size_t indexTrace;
+	size_t indexRecord;
 	std::vector<History> history;
 private:
 	static void set(bool& first, const bool& second) {
