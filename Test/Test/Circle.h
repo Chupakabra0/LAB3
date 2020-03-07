@@ -43,6 +43,8 @@ struct Figure : virtual IMove, virtual IScale, virtual IDraw, virtual IRotate {
 	std::vector<History> getHistory() const {
 		return this->history;
 	}
+
+	virtual Figure* Copy() abstract;
 protected:
 	bool isFocused;
 	bool isVisible;
@@ -93,6 +95,10 @@ protected:
 	void PreviousCondition() override;
 	void RememberCondition() override;
 	void FirstCondition() override;
+	//---------------------------------------------------------------------
+	Figure* Copy() override {
+		return new Circle(*this);
+	}
 	//---------------------------------------------------------------------
 	sf::CircleShape pic;
 	float radius;

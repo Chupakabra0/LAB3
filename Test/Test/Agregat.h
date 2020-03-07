@@ -3,6 +3,7 @@
 #include "Circle.h"
 #include <utility>
 #include <vector>
+#include "ShapeDealer.h"
 
 class Agregat : public Figure {
 public:
@@ -13,6 +14,8 @@ public:
 protected:
 	void Draw(sf::RenderWindow& window, std::vector<Figure*>& shapes) override {
 		for (auto& element : this->figures) {
+			if (this->isFocused && !element->getFocus()) ShapeDealer::SwitchFocus(element);
+			else if (!this->isFocused && element->getFocus()) ShapeDealer::SwitchFocus(element);
 			element->Draw(window, shapes);
 		}
 	}
@@ -73,6 +76,10 @@ protected:
 		for (auto& element : this->figures) {
 			element->SetColor(rgba);
 		}
+	}
+
+	Figure* Copy() override {
+		return new Agregat(*this);
 	}
 private:
 	std::vector<Figure*> figures;

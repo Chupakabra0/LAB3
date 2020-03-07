@@ -255,7 +255,7 @@ void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<unsigned>& coor
 			for (auto i = 0; i < shapes.size(); i++) {
 				for (auto element : focus) {
 					if (element == i) {
-						vect.push_back(shapes[i]);
+						vect.push_back(ShapeDealer::MakeCopy(shapes[i]));
 						break;
 					}
 				}
@@ -265,7 +265,7 @@ void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<unsigned>& coor
 			for (auto i = 0; i < shapes.size(); i++) {
 				for (auto coordinate : coordinates) {
 					if (coordinate == i) {
-						vect.push_back(shapes[i]);
+						vect.push_back(ShapeDealer::MakeCopy(shapes[i]));
 						break;
 					}
 				}

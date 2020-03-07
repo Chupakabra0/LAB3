@@ -53,5 +53,8 @@ struct ShapeDealer
 	static void SwitchTrace(Figure* figure) {
 		figure->setTrace(!figure->getTrace());
 		if (figure->getTrace()) figure->setTraceNum(figure->getHistory().size() - 1);
+	}	
+	static Figure* MakeCopy(Figure* figure) {
+		return figure->Copy();
 	}
 };
