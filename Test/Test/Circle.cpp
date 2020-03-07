@@ -24,13 +24,16 @@ void Circle::Draw(RenderWindow& window, std::vector<Figure*>& shapes) {
 	}
 
 	this->pic.rotate(this->angle.GetValue());
-	this->pic.scale(this->scale.GetValueX(), this->scale.GetValueY());
+	this->pic.setScale(this->scale.GetValueX(), this->scale.GetValueY());
 
-	for (auto element : shapes) {
-		//if (this->pic.getGlobalBounds().intersects()) {
-		//	this->pic.setScale(this->scale.GetValueX() + 25.f, this->scale.GetValueY());
-		//	break;
-		//}
+	for (auto& element : shapes) {
+		if (element != this
+			&&
+			pow(this->dot.getX() - element->GetPosition().getX(), 2) + pow(this->dot.getY() - element->GetPosition().getY(), 2) <= pow(this->radius, 2)
+			) {
+			this->pic.setScale(this->scale.GetValueX() + 10.f, this->scale.GetValueY());
+			break;
+		}
 	}
 
 	if (this->getTrace()) {
@@ -50,6 +53,11 @@ void Circle::Draw(RenderWindow& window, std::vector<Figure*>& shapes) {
 		this->pic.setOutlineColor(this->pic.getFillColor());
 	}
 	window.draw(this->pic);
+}
+
+XY Circle::GetPosition()
+{
+	return this->dot;
 }
 
 void Circle::SetPosition(XY xy) {

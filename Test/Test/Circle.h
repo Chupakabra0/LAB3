@@ -66,6 +66,7 @@ public:
 protected:
 	void Draw(sf::RenderWindow& window, std::vector<Figure*>& shapes) override;
 	//---------------------------------------------------------------------
+	XY GetPosition() override;
 	void SetPosition(XY xy) override;
 	void ChangePosition(XY xy) override;
 	//---------------------------------------------------------------------

@@ -48,27 +48,28 @@ protected:
 };
 
 __interface IShape {  //интерфейс ведения истории
-	virtual void PreviousCondition() abstract;
-	virtual void RememberCondition() abstract;
-	virtual void FirstCondition()	 abstract;
+	void PreviousCondition();
+	void RememberCondition();
+	void FirstCondition();
 };
 
 __interface IMove : IShape { //интерфейс передвижения
-	virtual void SetPosition(XY xy) abstract;
-	virtual void ChangePosition(XY xy) abstract;
+	XY GetPosition();
+	void SetPosition(XY xy);
+	void ChangePosition(XY xy);
 };
 
 __interface IRotate : IShape { //интерфейс поворота 
-	virtual void SetAngle(Angle angle)  abstract;
-	virtual void ChangeAngle(Angle angle) abstract;
+	void SetAngle(Angle angle);
+	void ChangeAngle(Angle angle);
 };
 
 __interface IDraw : IShape { //интерфейс рисования
-	virtual void Draw(sf::RenderWindow& window, std::vector<Figure*>& shapes) abstract;
-	virtual void SetColor(sf::Color rgba) abstract;
+	void Draw(sf::RenderWindow& window, std::vector<Figure*>& shapes);
+	void SetColor(sf::Color rgba);
 };
 
 __interface IScale : IShape { //интерфейс масштабирования
-	virtual void SetScale(Scale scale) abstract;
-	virtual void ChangeScale(Scale scale) abstract;
+	void SetScale(Scale scale);
+	void ChangeScale(Scale scale);
 };
