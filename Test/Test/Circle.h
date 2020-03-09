@@ -5,7 +5,8 @@
 
 struct Figure : virtual IMove, virtual IScale, virtual IDraw, virtual IRotate {
 	Figure() : Figure(XY(0)) {}
-	Figure(XY xy) : trace(0), dot(xy), scale(1.f), angle(0.f) {
+	Figure(XY xy) : Figure(xy , sf::Color::Red) {}
+	Figure(XY xy, sf::Color rgba) : trace(0), dot(xy), scale(1.f), angle(0.f), color(rgba) {
 		this->setFocus(false);
 		this->setTrace(false);
 		this->setVisible(true);
@@ -54,6 +55,7 @@ protected:
 	XY dot;
 	Scale scale;
 	Angle angle;
+	sf::Color color;
 private:
 	static void set(bool& first, const bool& second) {
 		if (first != second) first = second;
@@ -102,5 +104,4 @@ protected:
 	//---------------------------------------------------------------------
 	sf::CircleShape pic;
 	float radius;
-	sf::Color color;
 };
