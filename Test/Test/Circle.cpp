@@ -23,8 +23,8 @@ void Circle::Draw(RenderWindow& window, std::vector<Figure*>& shapes) {
 		this->pic.setFillColor(Color::Black);
 	}
 
-	this->pic.rotate(this->angle.GetValue());
 	this->pic.setScale(this->scale.GetValueX(), this->scale.GetValueY());
+	this->pic.setRotation(this->angle.GetValue());
 
 	for (auto& element : shapes) {
 		if (element != this
