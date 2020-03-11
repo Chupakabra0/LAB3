@@ -22,7 +22,8 @@ const std::string CMD::VISIBLE     = "Visible";
 const std::string CMD::TRACE       = "Trace";
 const std::string CMD::DOWN		   = "Down";
 const std::string CMD::UP		   = "Up";
-const std::string CMD::ALL         = "All";
+const std::string CMD::ALL		   = "All";
+const std::string CMD::BD			= "_";
 
 const std::string CMD::SPEED_TEXT  = "Speed";
 const std::string CMD::MOVE_TEXT   = "Move";
@@ -43,7 +44,7 @@ std::string to_string(figureID id) {
 	}
 }
 
-void CMD::Key(std::vector<Figure*>& shapes, Event& event, std::vector<unsigned>& focus, figureID& id) {
+void CMD::Key(std::vector<Figure*>& shapes, Event& event, std::vector<unsigned>& focus, std::string& cmd, figureID& id) {
 	if (!shapes.empty() && event.type == Event::KeyPressed) {
 		if (Keyboard::isKeyPressed(Keyboard::Key::Left)) {
 			for (auto element : focus) ShapeDealer::Move(dynamic_cast<IMove*>(shapes[element]), XY(-MOVE, 0.f));

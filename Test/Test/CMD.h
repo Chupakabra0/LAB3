@@ -39,6 +39,7 @@ struct CMD {
 	const static std::string UP;
 	const static std::string DOWN;
 	const static std::string ALL;
+	static const std::string BD;
 
 	const static std::string SPEED_TEXT;
 	const static std::string MOVE_TEXT;
@@ -52,7 +53,7 @@ struct CMD {
 	const static std::string AGREGAT;
 	const static std::string CIRCLE;
 
-	static void Key(std::vector<Figure*>& shapes, Event& event, std::vector<unsigned>& focus, figureID& id);
+	static void Key(std::vector<Figure*>& shapes, Event& event, std::vector<unsigned>& focus, std::string& string, figureID& id);
 	static void Text(std::vector<Figure*>& shapes, std::string& string, const Event& event, std::vector<unsigned>& focus);
 private:
 	static void Check(std::vector<Figure*>& shapes, std::string& string, std::vector<unsigned>& focus);
