@@ -20,6 +20,8 @@ const std::string CMD::FOCUS       = "Focus";
 const std::string CMD::DELETE      = "Delete";
 const std::string CMD::VISIBLE     = "Visible";
 const std::string CMD::TRACE       = "Trace";
+const std::string CMD::DOWN		   = "Down";
+const std::string CMD::UP		   = "Up";
 const std::string CMD::ALL         = "All";
 
 const std::string CMD::SPEED_TEXT  = "Speed";
@@ -80,22 +82,22 @@ void CMD::Key(std::vector<Figure*>& shapes, Event& event, std::vector<unsigned>&
 			for (auto element : focus) ShapeDealer::SwitchTrace(dynamic_cast<Figure*>(shapes[element]));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::PageDown)) {
-			for (auto element : focus) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[element]));
+			//for (auto element : focus) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[element]));
 
-			if (focus.size() > 1) focus.erase(focus.begin() + 1, focus.end());
+			//if (focus.size() > 1) focus.erase(focus.begin() + 1, focus.end());
 
-			if (focus[0] != 0) focus[0]--;
-			else focus[0] = shapes.size() - 1;
-			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus[0]]));
+			//if (focus[0] != 0) focus[0]--;
+			//else focus[0] = shapes.size() - 1;
+			//ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus[0]]));
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::PageUp)) {
-			for (auto element : focus) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[element]));
+			//for (auto element : focus) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[element]));
 
-			if (focus.size() > 1) focus.erase(focus.begin() + 1, focus.end());
+			//if (focus.size() > 1) focus.erase(focus.begin() + 1, focus.end());
 
-			if (focus[0] != shapes.size() - 1) focus[0]++;
-			else focus[0] = 0;
-			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus[0]]));
+			//if (focus[0] != shapes.size() - 1) focus[0]++;
+			//else focus[0] = 0;
+			//ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus[0]]));
 		}
 	}
 	else if (event.type == Event::KeyReleased) {
@@ -216,6 +218,26 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<u
 				auto coordinates = Convert(string);
 				if (!coordinates.empty()) SetFigureVisible(shapes, coordinates);
 				else for (auto element : focus) SetFigureVisible(shapes, element);
+			}
+			else if (string.find(FOCUS, 0) != -1) {
+				if (string.find(UP, 0) != -1) {
+					for (auto element : focus) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[element]));
+
+					if (focus.size() > 1) focus.erase(focus.begin() + 1, focus.end());
+
+					if (focus[0] != shapes.size() - 1) focus[0]++;
+					else focus[0] = 0;
+					ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus[0]]));
+				}
+				else if (string.find(DOWN, 0) != -1) {
+					for (auto element : focus) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[element]));
+
+					if (focus.size() > 1) focus.erase(focus.begin() + 1, focus.end());
+
+					if (focus[0] != 0) focus[0]--;
+					else focus[0] = shapes.size() - 1;
+					ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[focus[0]]));
+				}
 			}
 		}
 	}
