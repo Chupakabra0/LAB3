@@ -65,7 +65,7 @@ struct IRotate : virtual IShape { //интерфейс поворота
 };
 
 struct IDraw : virtual IShape { //интерфейс рисования
-	virtual void Draw(sf::RenderWindow& window, std::vector<Figure*>& shapes) abstract;
+	virtual void Draw(sf::RenderWindow& window) abstract;
 	virtual void SetColor(sf::Color rgba) abstract;
 };
 

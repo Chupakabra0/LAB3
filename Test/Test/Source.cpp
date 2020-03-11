@@ -48,8 +48,9 @@ int main(void) {
 		}
 
 		window.clear();
-		for (auto& shape : shapes) {
-			ShapeDealer::Draw(dynamic_cast<IDraw*>(shape), window, shapes);
+		for (auto i = 0; i < shapes.size(); i++) {
+			ShapeDealer::ObstacleScale(shapes, i);
+			ShapeDealer::Draw(dynamic_cast<IDraw*>(shapes[i]), window);
 		}
 		for (auto i : focus) std::cout << i;
 		cout << endl;

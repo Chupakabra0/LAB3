@@ -7,8 +7,8 @@ struct ShapeDealer
 	ShapeDealer() = delete;
 	~ShapeDealer() = delete;
 	//---------------------------------------------------------------------
-	static void Draw(IDraw* draw, sf::RenderWindow& window, std::vector<Figure*>& shapes) {
-		draw->Draw(window, shapes);
+	static void Draw(IDraw* draw, sf::RenderWindow& window) {
+		draw->Draw(window);
 	}
 	static void Move(IMove* move, XY xy) {
 		move->ChangePosition(xy);
@@ -56,5 +56,23 @@ struct ShapeDealer
 	}	
 	static Figure* MakeCopy(Figure* figure) {
 		return figure->Copy();
+	}
+	static void ObstacleScale(std::vector<Figure*>& shapes, unsigned index) {
+		for (auto i = 0; i < shapes.size(); i++) {
+			if (i != index) {
+				if (CountRadius(shapes[index], shapes[i]) <= shapes[index]->getRadius() + shapes[i]->getRadius()) {
+					shapes[index]->setTouch(true);
+				}
+				else if (shapes[index]->getTouch()) {
+					shapes[index]->setTouch(false);
+				}
+			}
+		}
+	}
+private:
+	static float CountRadius(Figure* first, Figure* second) {
+		return sqrtf(powf(second->GetPosition().getX() - first->GetPosition().getX(), 2)
+						+
+						powf(second->GetPosition().getY() - first->GetPosition().getY(), 2));
 	}
 };

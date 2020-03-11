@@ -14,11 +14,11 @@ public:
 
 	virtual ~Agregat() = default;
 protected:
-	void Draw(sf::RenderWindow& window, std::vector<Figure*>& shapes) override {
+	void Draw(sf::RenderWindow& window) override {
 		for (auto& element : this->figures) {
 			if (this->isFocused && !element->getFocus()) ShapeDealer::SwitchFocus(element);
 			else if (!this->isFocused && element->getFocus()) ShapeDealer::SwitchFocus(element);
-			element->Draw(window, shapes);
+			element->Draw(window);
 		}
 	}
 
@@ -107,6 +107,7 @@ private:
 	std::vector<Figure*> figures;
 
 	void centerPos() {
+		this->dot = XY(0.f, 0.f);
 		for (auto element : this->figures) {
 			this->dot += element->GetPosition();
 		}

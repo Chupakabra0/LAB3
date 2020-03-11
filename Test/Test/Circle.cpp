@@ -10,11 +10,11 @@ Circle::Circle(float x, float radius): Circle(x, x, radius) {}
 Circle::Circle(float x, float y, float radius): Circle(x, y, Color(255, 255, 255 , 255), radius) {}
 Circle::Circle(float x, float y, Color color, float radius) : Circle(XY(x, y), color, radius) { }
 
-Circle::Circle(XY xy, Color color, float radius) : Figure(xy), radius(radius) {
+Circle::Circle(XY xy, Color color, float radius) : Figure(xy) {
 	this->Circle::RememberCondition();
 }
 
-void Circle::Draw(RenderWindow& window, std::vector<Figure*>& shapes) {
+void Circle::Draw(RenderWindow& window) {
 	this->pic.setRadius(this->radius);
 	if (this->getVisible()) {
 		this->pic.setFillColor(this->color);
@@ -23,18 +23,10 @@ void Circle::Draw(RenderWindow& window, std::vector<Figure*>& shapes) {
 		this->pic.setFillColor(Color::Black);
 	}
 
-	this->pic.setScale(this->scale.GetValueX(), this->scale.GetValueY());
+	if (this->getTouch()) this->pic.setScale(this->scale.GetValueX() + 2.f, this->scale.GetValueY() + 2.f);
+	else this->pic.setScale(this->scale.GetValueX(), this->scale.GetValueY());
+	
 	this->pic.setRotation(this->angle.GetValue());
-
-	for (auto& element : shapes) {
-		if (element != this
-			&&
-			pow(this->dot.getX() - element->GetPosition().getX(), 2) + pow(this->dot.getY() - element->GetPosition().getY(), 2) <= pow(this->radius, 2)
-			) {
-			this->pic.setScale(this->scale.GetValueX() + 10.f, this->scale.GetValueY());
-			break;
-		}
-	}
 
 	if (this->getTrace()) {
 		const auto size = this->history.size();
