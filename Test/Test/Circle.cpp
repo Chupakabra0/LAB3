@@ -18,13 +18,13 @@ void Circle::Draw(RenderWindow& window) {
 	this->pic.setRadius(this->radius);
 	if (this->getVisible()) {
 		this->pic.setFillColor(this->color);
+		this->pic.setOutlineColor(this->pic.getFillColor());
 	}
 	else {
 		this->pic.setFillColor(Color::Black);
 	}
 
-	if (this->getTouch()) this->pic.setScale(this->scale.GetValueX() + 2.f, this->scale.GetValueY() + 2.f);
-	else this->pic.setScale(this->scale.GetValueX(), this->scale.GetValueY());
+	this->pic.setScale(this->scale.GetValueX(), this->scale.GetValueY());
 	
 	this->pic.setRotation(this->angle.GetValue());
 

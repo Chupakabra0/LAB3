@@ -21,7 +21,7 @@ int main(void) {
 	std::vector<Figure*> shapes; // тут хранятся фигуры
 	Clock clock; // тут тикает время
 	std::string cmd; // тут командная строка
-	std::vector<unsigned> focus = { 0 };
+	std::vector<int> focus = { 0 };
 	figureID id = CIRCLE; // id текущей фигуры
 	bool cmdActive = false;
 

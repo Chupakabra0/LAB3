@@ -57,7 +57,7 @@ struct ShapeDealer
 	static Figure* MakeCopy(Figure* figure) {
 		return figure->Copy();
 	}
-	static void ObstacleScale(std::vector<Figure*>& shapes, unsigned index) {
+	static void ObstacleScale(std::vector<Figure*>& shapes, int index) {
 		for (auto i = 0; i < shapes.size(); i++) {
 			if (i != index) {
 				if (CountRadius(shapes[index], shapes[i]) <= shapes[index]->getRadius() + shapes[i]->getRadius()) {
