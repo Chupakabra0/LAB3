@@ -24,6 +24,7 @@ int main() {
 
 	std::vector<Figure*> shapes; // тут хранятся фигуры
 	Clock clock; // тут тикает время
+	View camera;
 	std::string cmd; // тут командная строка
 	std::vector<int> focus = { 0 };
 	auto id = CIRCLE; // id текущей фигуры
@@ -41,6 +42,7 @@ int main() {
 	ContextSettings settings;
 	settings.antialiasingLevel = 10;
 	RenderWindow window{ VideoMode(1920, 1080), L"Геометрические фигуры" };
+	camera.reset(sf::FloatRect(0, 0, 1920, 1080));
 
 	while (window.isOpen()) {
 
@@ -69,10 +71,13 @@ int main() {
 			ShapeDealer::ObstacleScale(shapes, i);
 			ShapeDealer::Draw(dynamic_cast<IDraw*>(shapes[i]), window);
 		}
-		for (auto i : focus) std::cout << i;
-		cout << endl;
 
 		//
+		if (!shapes.empty() && !focus.empty()) {
+			camera.setCenter(shapes[focus[0]]->GetPosition().getX(), shapes[focus[0]]->GetPosition().getY());
+		}
+		window.setView(camera);
+
 		Text cmdText;
 		Font font;
 		font.loadFromFile("BAUHS93.ttf");
@@ -92,7 +97,6 @@ int main() {
 		}
 		cmdActiveText.setPosition(1700.f, 0.f);
 		window.draw(cmdActiveText);
-
 		//
 
 		window.display();
