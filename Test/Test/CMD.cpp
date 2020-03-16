@@ -48,67 +48,82 @@ std::string to_string(figureID id) {
 }
 
 void CMD::Key(std::vector<Figure*>& shapes, Event& event, std::vector<int>& focus, figureID& id) {
+	string cmd;
 	if (!shapes.empty() && event.type == Event::KeyPressed) {
 		if (Keyboard::isKeyPressed(Keyboard::Key::Left)) {
-			string cmd = CHANGE + POSITION + '_' + to_string(-MOVE) + '_' + to_string(0);
+			cmd = CHANGE + POSITION + '_' + to_string(-MOVE) + '_' + to_string(0);
+			RememberToFile(cmd);
 			Check(shapes, cmd, focus);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Right)) {
-			string cmd = CHANGE + POSITION + '_' + to_string(MOVE) + '_' + to_string(0);
+			cmd = CHANGE + POSITION + '_' + to_string(MOVE) + '_' + to_string(0);
+			RememberToFile(cmd);
 			Check(shapes, cmd, focus);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Up)) {
-			string cmd = CHANGE + POSITION + '_' + to_string(0) + '_' + to_string(-MOVE);
+			cmd = CHANGE + POSITION + '_' + to_string(0) + '_' + to_string(-MOVE);
+			RememberToFile(cmd);
 			Check(shapes, cmd, focus);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Down)) {
-			string cmd = CHANGE + POSITION + '_' + to_string(0) + '_' + to_string(MOVE);
+			cmd = CHANGE + POSITION + '_' + to_string(0) + '_' + to_string(MOVE);
+			RememberToFile(cmd);
 			Check(shapes, cmd, focus);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::E)) {
-			string cmd = CHANGE + ANGLE + '_' + to_string(-ROTATE);
+			cmd = CHANGE + ANGLE + '_' + to_string(-ROTATE);
+			RememberToFile(cmd);
 			Check(shapes, cmd, focus);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Q)) {
-			string cmd = CHANGE + ANGLE + '_' + to_string(ROTATE);
+			cmd = CHANGE + ANGLE + '_' + to_string(ROTATE);
+			RememberToFile(cmd);
 			Check(shapes, cmd, focus);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::W)) {
-			string cmd = CHANGE + SCALE + '_' + to_string(SCALE_PLUS);
+			cmd = CHANGE + SCALE + '_' + to_string(SCALE_PLUS);
+			RememberToFile(cmd);
 			Check(shapes, cmd, focus);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::S)) {
-			string cmd = CHANGE + SCALE + '_' + to_string(SCALE_MINUS);
+			cmd = CHANGE + SCALE + '_' + to_string(SCALE_MINUS);
+			RememberToFile(cmd);
 			Check(shapes, cmd, focus);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::Z)) {
-			string cmd = WIPE;
+			cmd = WIPE;
+			RememberToFile(cmd);
 			Check(shapes, cmd, focus);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::X)) {
-			string cmd = WIPE + ALL;
+			cmd = WIPE + ALL;
+			RememberToFile(cmd);
 			Check(shapes, cmd, focus);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::V)) {
-			string cmd = SWITCH + VISIBLE;
+			cmd = SWITCH + VISIBLE;
+			RememberToFile(cmd);
 			Check(shapes, cmd, focus);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::C)) {
-			string cmd = SWITCH + TRACE;
+			cmd = SWITCH + TRACE;
+			RememberToFile(cmd);
 			Check(shapes, cmd, focus);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::PageDown)) {
-			string cmd = SWITCH + FOCUS + DOWN;
+			cmd = SWITCH + FOCUS + DOWN;
+			RememberToFile(cmd);
 			Check(shapes, cmd, focus);
 		}
 		if (Keyboard::isKeyPressed(Keyboard::Key::PageUp)) {
-			string cmd = SWITCH + FOCUS + UP;
+			cmd = SWITCH + FOCUS + UP;
+			RememberToFile(cmd);
 			Check(shapes, cmd, focus);
 		}
 	}
 	else if (event.type == Event::KeyReleased) {
 		if (event.key.code == Keyboard::Key::Add) {
-			string cmd = CREATE;
+			cmd = CREATE;
 			switch (id) {
 			case figureID::CIRCLE:
 				cmd += CIRCLE;
@@ -119,13 +134,20 @@ void CMD::Key(std::vector<Figure*>& shapes, Event& event, std::vector<int>& focu
 			default:
 				break;
 			}
+			RememberToFile(cmd);
 			Check(shapes, cmd, focus);
 		}
 		if (event.key.code == Keyboard::Key::Subtract) {
-			string cmd = DELETE;
+			cmd = DELETE;
+			RememberToFile(cmd);
 			Check(shapes, cmd, focus);
 		}
 	}
+}
+
+void CMD::RememberToFile(std::string string) {
+	ofstream file("tex.txt", ios_base::app);
+	file << string << endl;
 }
 
 void CMD::Text(std::vector<Figure*>& shapes, std::string& string, const Event& event, std::vector<int>& focus) {
@@ -133,7 +155,10 @@ void CMD::Text(std::vector<Figure*>& shapes, std::string& string, const Event& e
 		if (event.text.unicode == '\b') {
 			if (!string.empty()) string.erase(string.cend() - 1);
 		}
-		else if (event.text.unicode == 13) Check(shapes, string, focus);
+		else if (event.text.unicode == 13) {
+			RememberToFile(string);
+			Check(shapes, string, focus);
+		}
 		else if (event.text.unicode != 43 && event.text.unicode != 96 && event.text.unicode != 1105) string += {
 			static_cast<char>(event.text.unicode)
 		};
@@ -151,8 +176,6 @@ void CMD::WipeAllFigure(vector<Figure*>& shape, vector<int>& focus)
 }
 
 void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<int>& focus) {
-	ofstream file("tex.txt", ios_base::app);
-	file << string << endl;
 	if (string.find(CREATE, 0) != -1) {
 		if (string.find(CIRCLE, 0) != -1) {
 			auto coordinates = Convert(string);

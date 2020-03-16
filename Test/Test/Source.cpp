@@ -1,29 +1,46 @@
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
-#include "ShapeDealer.h"
 #include <iostream>
-#include "Circle.h"
 #include <vector>
-
 #include <string>
-#include <algorithm>
+#include <fstream>
+
 #include "CMD.h"
+#include "ShapeDealer.h"
 
 using namespace sf;
 
-int main(void) {
+int main() {
 
-	ContextSettings settings;
-	settings.antialiasingLevel = 10;
+	std::string temp;
+	auto file = false;
 
-	RenderWindow window{ VideoMode(1920, 1080), L"Геометрические фигуры" };
+	std::cout << "Do you want to open config-file?" << std::endl;
+	getline(cin, temp);
+
+	if (temp == "yes" || temp == "y" || temp == "Yes" || temp == "Y") {
+		file = true;
+	}
 
 	std::vector<Figure*> shapes; // тут хранятся фигуры
 	Clock clock; // тут тикает время
 	std::string cmd; // тут командная строка
 	std::vector<int> focus = { 0 };
-	figureID id = CIRCLE; // id текущей фигуры
-	bool cmdActive = false;
+	auto id = CIRCLE; // id текущей фигуры
+	auto cmdActive = false;
+
+	if(file) {
+		ifstream config("tex.txt");
+		while (!config.eof()) {
+			std::string command;
+			getline(config, command);
+			CMD::Check(shapes, command, focus);
+		}
+	}
+
+	ContextSettings settings;
+	settings.antialiasingLevel = 10;
+	RenderWindow window{ VideoMode(1920, 1080), L"Геометрические фигуры" };
 
 	while (window.isOpen()) {
 

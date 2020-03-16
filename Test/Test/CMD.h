@@ -57,12 +57,14 @@ struct CMD {
 
 	static void Key(std::vector<Figure*>& shapes, Event& event, std::vector<int>& focus, figureID& id);
 	static void Text(std::vector<Figure*>& shapes, std::string& string, const Event& event, std::vector<int>& focus);
+	static void Check(std::vector<Figure*>& shapes, std::string& string, std::vector<int>& focus);
 private:
+	static void RememberToFile(std::string string);
+
 	static void WipeFigure(vector<Figure*> shape, vector<int>& focus);
 
 	static void WipeAllFigure(vector<Figure*>& shape, vector<int>& focus);
 
-	static void Check(std::vector<Figure*>& shapes, std::string& string, std::vector<int>& focus);
 	static std::vector<int> Convert(std::string& string);
 	static std::string NumberCheck(std::string& string);
 
