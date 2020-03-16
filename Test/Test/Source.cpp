@@ -72,18 +72,11 @@ int main() {
 			ShapeDealer::Draw(dynamic_cast<IDraw*>(shapes[i]), window);
 		}
 
-		//
-		if (!shapes.empty() && !focus.empty()) {
-			camera.setCenter(shapes[focus[0]]->GetPosition().getX(), shapes[focus[0]]->GetPosition().getY());
-		}
-		window.setView(camera);
-
 		Text cmdText;
 		Font font;
 		font.loadFromFile("BAUHS93.ttf");
 		cmdText.setString(cmd);
 		cmdText.setFont(font);
-		window.draw(cmdText);
 
 		Text cmdActiveText;
 		cmdActiveText.setFont(font);
@@ -95,10 +88,17 @@ int main() {
 			cmdActiveText.setString("Manual mode");
 			cmdActiveText.setFillColor(Color::Red);
 		}
-		cmdActiveText.setPosition(1700.f, 0.f);
-		window.draw(cmdActiveText);
-		//
 
+		if (!shapes.empty() && !focus.empty()) {
+			camera.setCenter(shapes[focus[0]]->GetPosition().getX(), shapes[focus[0]]->GetPosition().getY());
+		}
+		cmdActiveText.setPosition(camera.getCenter().x + 750.f, camera.getCenter().y - 540.f);
+		cmdText.setPosition(camera.getCenter().x - 960.f, camera.getCenter().y - 540.f);
+
+		window.draw(cmdText);
+		window.draw(cmdActiveText);
+
+		window.setView(camera);
 		window.display();
 	}
 
