@@ -1,5 +1,8 @@
 #include "History.h"
 
+
+History::History(XY dot, Scale scale, Angle angle, sf::Color color): dot(dot), scale(std::move(scale)), angle(angle), color(color) {}
+
 XY History::GetDot() const {
 	return this->dot;
 }
