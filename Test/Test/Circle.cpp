@@ -24,7 +24,13 @@ void Circle::Draw(RenderWindow& window) {
 		this->pic.setFillColor(Color::Black);
 	}
 
-	this->pic.setScale(this->scale.GetValueX(), this->scale.GetValueY());
+
+	if (this->isTouched) {
+		this->pic.setScale(this->scale.GetValueX() + 2, this->scale.GetValueY() + 2);
+	}
+	else {
+		this->pic.setScale(this->scale.GetValueX(), this->scale.GetValueY());
+	}
 	
 	this->pic.setRotation(this->angle.GetValue());
 
