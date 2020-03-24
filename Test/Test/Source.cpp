@@ -21,8 +21,10 @@ struct Main {
 			||
 			temp == "no" || temp == "n" || temp == "No" || temp == "N" || temp == "-"));					// и так пока не получим нужный ответ
 
+
+		ifstream config;
 		if (temp == "yes" || temp == "y" || temp == "Yes" || temp == "Y" || temp == "+") {					// если ответ положительный, то проводим читку с файла
-			ifstream config("tex.txt");
+			config.open("tex.txt", ios_base::in);
 			if (!config.is_open()) {
 				cout << "ERROR" << endl;
 				system("cls");
@@ -33,6 +35,10 @@ struct Main {
 				CMD::Check(shapes, command, focus);
 			}
 		}
+		else {
+			config.open("tex.txt", ios_base::out | ios_base::trunc);
+		}
+		config.close();
 	}
 
 	static void TextDisplay(RenderWindow& window, View camera, string cmd, bool cmdActive) {
