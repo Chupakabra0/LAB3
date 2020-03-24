@@ -20,35 +20,23 @@ protected:
 	void SetPosition(XY xy) override;
 	void ChangePosition(XY xy) override;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	Scale GetScale() override {
-		return this->scale;
-	}
+	Scale GetScale() override;
 	void SetScale(Scale scale) override;
 	void ChangeScale(Scale scale) override;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	void SetColor(sf::Color rgb) override;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	Angle GetAngle() override {
-		return this->angle;
-	}
-	void SetAngle(Angle angle) override {
-		this->angle = angle;
-	}
-	void ChangeAngle(Angle angle) override {
-		this->SetAngle(Angle(this->angle.GetValue() + angle.GetValue()));
-	}
+	Angle GetAngle() override;
+	void SetAngle(Angle angle) override;
+	void ChangeAngle(Angle angle) override;
 	//---------------------------------------------------------------------
-	sf::CircleShape getPicture() const {
-		return this->pic;
-	}
+	sf::CircleShape GetPicture() const;
 	//---------------------------------------------------------------------
 	void PreviousCondition() override;
 	void RememberCondition() override;
 	void FirstCondition() override;
 	//---------------------------------------------------------------------
-	Figure* Copy() override {
-		return new Circle(*this);
-	}
+	Figure* Copy() override;
 	//---------------------------------------------------------------------
 	sf::CircleShape pic;
 };

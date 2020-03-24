@@ -39,6 +39,9 @@ protected:
 		this->centerPos();
 	}
 
+	Scale GetScale() override {
+		return this->scale;
+	}
 	void SetScale(Scale scale) override {
 		for (auto& element : this->figures) {
 			element->SetScale(scale);
@@ -52,6 +55,9 @@ protected:
 		this->scale = Scale(XY(this->scale.GetValueX() + scale.GetValueX(), this->scale.GetValueY() + scale.GetValueY()));
 	}
 
+	Angle GetAngle() override {
+		return this->angle;
+	}
 	void SetAngle(Angle angle) override {
 		for (auto& element : this->figures) {
 			element->SetAngle(angle);
