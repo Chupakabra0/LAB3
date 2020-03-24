@@ -2,7 +2,7 @@
 #include "XY.h"
 #include <SFML/Graphics.hpp>
 
-class Figure;
+struct Figure;
 
 class Angle {
 public:

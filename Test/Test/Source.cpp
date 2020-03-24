@@ -1,5 +1,4 @@
 #include <SFML/Graphics.hpp>
-#include <cstdlib>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -12,23 +11,29 @@ using namespace sf;
 
 int main() {
 
-	std::string temp;
-	auto file = false;
 
-	std::cout << "Do you want to open config-file?" << std::endl;
-	getline(cin, temp);
+	std::string temp;									// строка в которой хранится ответ
+	auto file = false;									// грузить ли файл конфигурации
 
-	if (temp == "yes" || temp == "y" || temp == "Yes" || temp == "Y") {
+	do {
+		std::cout << "Do you want to open config-file?" << std::endl;
+		getline(cin, temp);
+		system("cls");
+	} while (!(temp == "yes" || temp == "y" || temp == "Yes" || temp == "Y" || temp == "+"
+			 ||
+			 temp == "no" || temp == "n" || temp == "No" || temp == "N" || temp == "-"));
+
+	if (temp == "yes" || temp == "y" || temp == "Yes" || temp == "Y" || temp == "+") {
 		file = true;
 	}
 
-	std::vector<Figure*> shapes; // тут хранятся фигуры
-	Clock clock; // тут тикает время
-	View camera;
-	std::string cmd; // тут командная строка
-	std::vector<int> focus = { 0 };
-	auto id = CIRCLE; // id текущей фигуры
-	auto cmdActive = false;
+	std::vector<Figure*> shapes;						// тут хранятся фигуры
+	Clock clock;										// тут тикает время
+	View camera;										// камера
+	std::string cmd;									// тут командная строка
+	std::vector<int> focus = { 0 };						// вектор фигур, которые в фокусе
+	auto id = CIRCLE;									// id текущей фигуры
+	auto cmdActive = false;								// активна ли консоль
 
 	if(file) {
 		ifstream config("tex.txt");

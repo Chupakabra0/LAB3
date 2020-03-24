@@ -8,6 +8,7 @@
 class Agregat : public Figure {
 public:
 	Agregat() = delete;
+	Agregat(const Agregat& copy) : Agregat(copy.getFigures()) {}
 	Agregat(std::vector<Figure*> figures) : figures(std::move(figures)) {
 		this->centerPos();
 	}
@@ -102,6 +103,14 @@ protected:
 
 	Figure* Copy() override {
 		return new Agregat(*this);
+	}
+
+	std::vector<Figure*> getFigures() const {
+		std::vector<Figure*> temp;
+		for (auto element : this->figures) {
+			temp.push_back(ShapeDealer::MakeCopy(element));
+		}
+		return temp;
 	}
 private:
 	std::vector<Figure*> figures;
