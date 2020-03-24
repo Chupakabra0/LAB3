@@ -29,10 +29,12 @@ struct Main {
 				cout << "ERROR" << endl;
 				system("cls");
 			}
-			while (!config.eof()) {
-				string command;
-				getline(config, command);
-				CMD::Check(shapes, command, focus);
+			else {
+				while (!config.eof()) {
+					string command;
+					getline(config, command);
+					CMD::Check(shapes, command, focus);
+				}
 			}
 		}
 		else {
