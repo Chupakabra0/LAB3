@@ -125,6 +125,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Agregat.cpp" />
+    <ClCompile Include="Angle.cpp" />
     <ClCompile Include="CMD.cpp" />
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="History.cpp" />
@@ -136,6 +137,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Agregat.h" />
+    <ClInclude Include="Angle.h" />
     <ClInclude Include="CMD.h" />
     <ClInclude Include="Figure.h" />
     <ClInclude Include="History.h" />
