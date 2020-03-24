@@ -17,8 +17,8 @@ public:
 protected:
 	void Draw(sf::RenderWindow& window) override {
 		for (auto& element : this->figures) {
-			if (this->isFocused && !element->getFocus()) ShapeDealer::SwitchFocus(element);
-			else if (!this->isFocused && element->getFocus()) ShapeDealer::SwitchFocus(element);
+			if (this->isFocused && !element->GetFocus()) ShapeDealer::SwitchFocus(element);
+			else if (!this->isFocused && element->GetFocus()) ShapeDealer::SwitchFocus(element);
 			element->Draw(window);
 		}
 	}

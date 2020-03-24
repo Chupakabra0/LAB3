@@ -5,8 +5,7 @@
 #include "History.h"
 #include "Figure.h"
 
-class Circle : public Figure
-{
+class Circle : public Figure {
 public:
 	Circle() = delete;
 	Circle(float x, float radius);
@@ -16,16 +15,22 @@ public:
 	virtual ~Circle();
 protected:
 	void Draw(sf::RenderWindow& window) override;
-	//---------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	XY GetPosition() override;
 	void SetPosition(XY xy) override;
 	void ChangePosition(XY xy) override;
-	//---------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------------
+	Scale GetScale() override {
+		return this->scale;
+	}
 	void SetScale(Scale scale) override;
 	void ChangeScale(Scale scale) override;
-	//---------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	void SetColor(sf::Color rgb) override;
-	//---------------------------------------------------------------------
+	//-----------------------------------------------------------------------------------------------------------------------------------------------
+	Angle GetAngle() override {
+		return this->angle;
+	}
 	void SetAngle(Angle angle) override {
 		this->angle = angle;
 	}

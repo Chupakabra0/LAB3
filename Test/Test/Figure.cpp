@@ -6,41 +6,41 @@ Figure::Figure(XY xy, float radius): Figure(xy, radius, sf::Color::Red) {}
 Figure::Figure(XY xy, sf::Color rgba): Figure(xy, 10.f, rgba) {}
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 Figure::Figure(XY xy, float radius, sf::Color rgba): trace(0), dot(xy), scale(1.f), angle(0.f), color(rgba), radius(radius) {
-	this->setFocus(false);
-	this->setTrace(false);
-	this->setTouch(false);
-	this->setVisible(true);
+	this->SetFocus(false);
+	this->SetTrace(false);
+	this->SetTouch(false);
+	this->SetVisible(true);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-bool Figure::getFocus() const {
+bool Figure::GetFocus() const {
 	return this->isFocused;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-void Figure::setFocus(bool focus) {
+void Figure::SetFocus(bool focus) {
 	set(this->isFocused, focus);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-bool Figure::getVisible() const {
+bool Figure::GetVisible() const {
 	return this->isVisible;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-void Figure::setVisible(bool visible) {
+void Figure::SetVisible(bool visible) {
 	set(this->isVisible, visible);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-bool Figure::getTrace() const {
+bool Figure::GetTrace() const {
 	return this->isTraced;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-void Figure::setTrace(bool trace) {
+void Figure::SetTrace(bool trace) {
 	set(this->isTraced, trace);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-bool Figure::getTouch() const {
+bool Figure::GetTouch() const {
 	return this->isTouched;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-void Figure::setTouch(bool touch) {
+void Figure::SetTouch(bool touch) {
 	set(this->isTouched, touch);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
@@ -48,19 +48,19 @@ size_t Figure::getTraceNum() const {
 	return this->trace;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-void Figure::setTraceNum(size_t trace) {
+void Figure::SetTraceNum(size_t trace) {
 	this->trace = trace;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-std::vector<History> Figure::getHistory() const {
+std::vector<History> Figure::GetHistory() const {
 	return this->history;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-void Figure::setRadius(float radius) {
+void Figure::SetRadius(float radius) {
 	this->radius = radius;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-float Figure::getRadius() const {
+float Figure::GetRadius() const {
 	return this->radius;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------

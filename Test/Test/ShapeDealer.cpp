@@ -48,16 +48,16 @@ void ShapeDealer::FirstCondition(IHistory* shape) {
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 void ShapeDealer::SwitchFocus(Figure* figure) {
-	figure->setFocus(!figure->getFocus());
+	figure->SetFocus(!figure->GetFocus());
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 void ShapeDealer::SwitchVisible(Figure* figure) {
-	figure->setVisible(!figure->getVisible());
+	figure->SetVisible(!figure->GetVisible());
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 void ShapeDealer::SwitchTrace(Figure* figure) {
-	figure->setTrace(!figure->getTrace());
-	if (figure->getTrace()) figure->setTraceNum(figure->getHistory().size() - 1);
+	figure->SetTrace(!figure->GetTrace());
+	if (figure->GetTrace()) figure->SetTraceNum(figure->GetHistory().size() - 1);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 Figure* ShapeDealer::MakeCopy(Figure* figure) {
@@ -67,11 +67,11 @@ Figure* ShapeDealer::MakeCopy(Figure* figure) {
 void ShapeDealer::ObstacleScale(std::vector<Figure*>& shapes, int index) {
 	for (auto i = 0; i < shapes.size(); i++) {
 		if (i != index) {
-			if (CountRadius(shapes[index], shapes[i]) <= shapes[index]->getRadius() + shapes[i]->getRadius()) {
-				shapes[index]->setTouch(true);
+			if (CountRadius(shapes[index], shapes[i]) <= shapes[index]->GetRadius() + shapes[i]->GetRadius()) {
+				shapes[index]->SetTouch(true);
 			}
-			else if (shapes[index]->getTouch()) {
-				shapes[index]->setTouch(false);
+			else if (shapes[index]->GetTouch()) {
+				shapes[index]->SetTouch(false);
 			}
 		}
 	}

@@ -16,7 +16,7 @@ Circle::Circle(XY xy, Color color, float radius) : Figure(xy) {
 
 void Circle::Draw(RenderWindow& window) {
 	this->pic.setRadius(this->radius);
-	if (this->getVisible()) {
+	if (this->GetVisible()) {
 		this->pic.setFillColor(this->color);
 		this->pic.setOutlineColor(this->pic.getFillColor());
 	}
@@ -34,7 +34,7 @@ void Circle::Draw(RenderWindow& window) {
 	
 	this->pic.setRotation(this->angle.GetValue());
 
-	if (this->getTrace()) {
+	if (this->GetTrace()) {
 		const auto size = this->history.size();
 		for (auto i = this->getTraceNum(); i < size - 1; i++) {
 			this->pic.setPosition(this->history[i].GetDot().getX(), this->history[i].GetDot().getY() + highLimit);

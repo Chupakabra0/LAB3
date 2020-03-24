@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics/Color.hpp>
+
 #include "Interfaces.h"
 #include "History.h"
 
@@ -10,25 +11,25 @@ struct Figure : virtual IMove, virtual IScale, virtual IDraw, virtual IRotate {
 	Figure(XY xy, sf::Color rgba);
 	Figure(XY xy, float radius, sf::Color rgba);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	bool getFocus() const;
-	void setFocus(bool focus);
+	bool GetFocus() const;
+	void SetFocus(bool focus);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	bool getVisible() const;
-	void setVisible(bool visible);
+	bool GetVisible() const;
+	void SetVisible(bool visible);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	bool getTrace() const;
-	void setTrace(bool trace);
+	bool GetTrace() const;
+	void SetTrace(bool trace);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	bool getTouch() const;
-	void setTouch(bool touch);
+	bool GetTouch() const;
+	void SetTouch(bool touch);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	size_t getTraceNum() const;
-	void setTraceNum(size_t trace);
+	size_t GetTraceNum() const;
+	void SetTraceNum(size_t trace);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	std::vector<History> getHistory() const;
+	std::vector<History> GetHistory() const;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	float getRadius() const;
-	void setRadius(float radius);
+	float GetRadius() const;
+	void SetRadius(float radius);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	virtual Figure* Copy() abstract;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
