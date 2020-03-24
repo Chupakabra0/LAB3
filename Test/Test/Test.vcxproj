@@ -126,6 +126,7 @@
   <ItemGroup>
     <ClCompile Include="Agregat.cpp" />
     <ClCompile Include="CMD.cpp" />
+    <ClCompile Include="Figure.cpp" />
     <ClCompile Include="History.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="ShapeDealer.cpp" />
@@ -135,6 +136,7 @@
   <ItemGroup>
     <ClInclude Include="Agregat.h" />
     <ClInclude Include="CMD.h" />
+    <ClInclude Include="Figure.h" />
     <ClInclude Include="History.h" />
     <ClInclude Include="Interfaces.h" />
     <ClInclude Include="Circle.h" />
