@@ -9,7 +9,7 @@ int CMD::MOVE					   = 1;
 float CMD::ROTATE                  = 0.1f;
 int CMD::SCALE_PLUS				   = 1;
 int CMD::SCALE_MINUS			   = -SCALE_PLUS;
-								   
+//-----------------------------------------------------------------------------------------------------------------------------------------------
 const std::string CMD::SET		   = "Set";
 const std::string CMD::CHANGE	   = "Change";
 const std::string CMD::CREATE      = "Create";
@@ -27,26 +27,32 @@ const std::string CMD::DOWN		   = "Down";
 const std::string CMD::UP		   = "Up";
 const std::string CMD::ALL		   = "All";
 const std::string CMD::BD			= "_";
-
+//-----------------------------------------------------------------------------------------------------------------------------------------------
 const std::string CMD::SPEED_TEXT  = "Speed";
 const std::string CMD::MOVE_TEXT   = "Move";
 const std::string CMD::ROTATE_TEXT = "Rotate";
 const std::string CMD::SCALE_TEXT  = "Scale";
-
+//-----------------------------------------------------------------------------------------------------------------------------------------------
 const std::string CMD::X           = "X";
 const std::string CMD::Y           = "Y";
-
+//-----------------------------------------------------------------------------------------------------------------------------------------------
 const std::string CMD::AGREGAT     = to_string(figureID::AGREGAT);
 const std::string CMD::CIRCLE      = to_string(figureID::CIRCLE);
-
+/*
+ * Чтобы добавить новую фигуру, писать сюда to_string(id новой фигуры)
+ */
+//-----------------------------------------------------------------------------------------------------------------------------------------------
 std::string to_string(figureID id) {
 	switch (id) {
 	case CIRCLE: return typeid(Circle).name() + std::string("class ").size();
 	case AGREGAT : return typeid(Agregat).name() + std::string("class ").size();
+	/*
+	* Чтобы добавить новую фигуру, писать сюда новый case(id новой фигуры)
+	 */
 	default: return "unknown";
 	}
 }
-
+//-----------------------------------------------------------------------------------------------------------------------------------------------
 void CMD::Key(std::vector<Figure*>& shapes, Event& event, std::vector<int>& focus, figureID& id) {
 	string cmd;
 	if (!shapes.empty() && event.type == Event::KeyPressed) {
@@ -131,6 +137,9 @@ void CMD::Key(std::vector<Figure*>& shapes, Event& event, std::vector<int>& focu
 			case figureID::AGREGAT:
 				cmd += AGREGAT;
 				break;
+				/*
+				* Чтобы добавить новую фигуру, писать сюда новый case(id новой фигуры)
+				*/
 			default:
 				break;
 			}
@@ -144,12 +153,12 @@ void CMD::Key(std::vector<Figure*>& shapes, Event& event, std::vector<int>& focu
 		}
 	}
 }
-
+//-----------------------------------------------------------------------------------------------------------------------------------------------
 void CMD::RememberToFile(std::string string) {
 	ofstream file("tex.txt", ios_base::app);
 	file << string << endl;
 }
-
+//-----------------------------------------------------------------------------------------------------------------------------------------------
 void CMD::Text(std::vector<Figure*>& shapes, std::string& string, const Event& event, std::vector<int>& focus) {
 	if (event.type == sf::Event::TextEntered) {
 		if (event.text.unicode == '\b') {
@@ -164,17 +173,15 @@ void CMD::Text(std::vector<Figure*>& shapes, std::string& string, const Event& e
 		};
 	}
 }
-
-void CMD::WipeFigure(vector<Figure*> shape, vector<int>& focus)
-{
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+void CMD::WipeFigure(vector<Figure*> shape, vector<int>& focus) {
 	for (auto element : focus) ShapeDealer::LegacyCondition(dynamic_cast<IHistory*>(shape[element]));
 }
-
-void CMD::WipeAllFigure(vector<Figure*>& shape, vector<int>& focus)
-{
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+void CMD::WipeAllFigure(vector<Figure*>& shape, vector<int>& focus) {
 	for (auto element : focus) ShapeDealer::FirstCondition(dynamic_cast<IHistory*>(shape[element]));
 }
-
+//-----------------------------------------------------------------------------------------------------------------------------------------------
 void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<int>& focus) {
 	if (string.find(CREATE, 0) != -1) {
 		if (string.find(CIRCLE, 0) != -1) {
@@ -185,6 +192,9 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<i
 			auto coordinates = Convert(string);
 			CreateFigure(shapes, coordinates, focus, figureID::AGREGAT);
 		}
+		/*
+		* Чтобы добавить новую фигуру, писать сюда новый if (найден строка-id новой фигуры)
+		*/
 	}
 	else if (string.find(CHANGE, 0) != -1) {
 		if (!shapes.empty()) {
@@ -235,7 +245,6 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<i
 				SetFigureFocus(shapes, coordinates, focus);
 			}
 		}
-
 		if (string.find(SPEED_TEXT, 0) != -1) {
 			auto coordinates = Convert(string);
 			if (!coordinates.empty()) ConstantSetter(SPEED, coordinates[0]);
@@ -321,14 +330,14 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<i
 	}
 	string.erase();
 }
-
+//-----------------------------------------------------------------------------------------------------------------------------------------------
 std::vector<int> CMD::Convert(std::string& string) {
 	string = NumberCheck(string);
 	std::replace(string.begin(), string.end(), '_', ' ');
 	std::istringstream ss(string);
 	return std::vector<int>{std::istream_iterator<int>(ss), {}};
 }
-
+//-----------------------------------------------------------------------------------------------------------------------------------------------
 std::string CMD::NumberCheck(std::string& string) {
 	std::string result;
 	const auto size = string.size();
@@ -339,9 +348,8 @@ std::string CMD::NumberCheck(std::string& string) {
 	}
 	return result;
 }
-
-void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<int>& coordinates, std::vector<int>& focus,
-						figureID id) {
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<int>& coordinates, std::vector<int>& focus, figureID id) {
 	if (!shapes.empty()) {
 		for (auto element : focus) {
 			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[element]));
@@ -403,6 +411,9 @@ void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<int>& coordinat
 		temp = new Circle(XY(xy.getX(), xy.getY()), color, radius);
 		break;
 	}
+	/*
+	* Чтобы добавить новую фигуру, писать сюда новый case (id новой фигуры)
+	*/
 	default: {
 		break;
 	}
