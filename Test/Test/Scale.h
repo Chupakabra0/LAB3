@@ -1,23 +1,20 @@
 #pragma once
-
 #include "XY.h"
-#include "Interfaces.h"
 
-class History {
+class Scale {
 public:
-	explicit History() = delete;
-	explicit History(XY dot, Scale scale, Angle angle, sf::Color color);
+	explicit Scale();
+	explicit Scale(float scale);
+	explicit Scale(XY scale);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	XY GetDot() const;
+	float GetValueX() const;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	Scale GetScale() const;
+	float GetValueY() const;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	Angle GetAngle() const;
+	XY getPoint() const;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	sf::Color GetColor() const;
+	friend bool operator==(const Scale& first, const Scale& second);
+	friend bool operator!=(const Scale& first, const Scale& second);
 protected:
-	XY dot;
-	Scale scale;
-	Angle angle;
-	sf::Color color;
+	XY scale;
 };

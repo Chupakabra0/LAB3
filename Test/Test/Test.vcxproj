@@ -129,6 +129,7 @@
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="History.cpp" />
     <ClCompile Include="Circle.cpp" />
+    <ClCompile Include="Scale.cpp" />
     <ClCompile Include="ShapeDealer.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="XY.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="History.h" />
     <ClInclude Include="Interfaces.h" />
     <ClInclude Include="Circle.h" />
+    <ClInclude Include="Scale.h" />
     <ClInclude Include="ShapeDealer.h" />
     <ClInclude Include="XY.h" />
   </ItemGroup>

@@ -1,8 +1,8 @@
 #pragma once
-#include "XY.h"
 #include <SFML/Graphics.hpp>
 
-struct Figure;
+#include "XY.h"
+#include "Scale.h"
 
 class Angle {
 public:
@@ -20,31 +20,6 @@ protected:
 		}
 	}
 	float angle;
-};
-
-class Scale {
-
-public:
-	explicit Scale() = default;
-	explicit Scale(float scale) : Scale(XY(scale)) {}
-	explicit Scale(XY scale) : scale(scale) {}
-	float GetValueX() const {
-		return this->scale.getX();
-	}
-	float GetValueY() const {
-		return this->scale.getY();
-	}
-	friend bool operator==(const Scale& first, const Scale& second) {
-		return first.getPoint() == second.getPoint();
-	}
-	friend bool operator!=(const Scale& first, const Scale& second) {
-		return !(first == second);
-	}
-protected:
-	XY scale;
-	XY getPoint() const {
-		return this->scale;
-	}
 };
 
 struct IShape {  //интерфейс ведения истории
