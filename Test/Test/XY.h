@@ -15,14 +15,8 @@ public:
 	//---------------------------------------------------------------------
 	friend bool operator==(const XY& first, const XY& second);
 	friend bool operator!=(const XY& first, const XY& second);
-	friend XY operator+=(XY& first, const XY& second) {
-		first = XY(first.getX() + second.getX(), first.getY() + second.getY());
-		return first;
-	}
-	friend XY operator /=(XY& first, int second) {
-		first = XY(first.getX() / second, first.getY() / second);
-		return first;
-	}
+	friend XY operator+=(XY& first, const XY& second);
+	friend XY operator/=(XY& first, int second);
 	//---------------------------------------------------------------------
 	virtual ~XY() = default;
 protected:

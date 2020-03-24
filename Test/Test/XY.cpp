@@ -36,3 +36,13 @@ bool operator==(const XY& first, const XY& second) {
 bool operator!=(const XY& first, const XY& second) {
 	return !(first == second);
 }
+
+XY operator+=(XY& first, const XY& second) {
+	first = XY(first.getX() + second.getX(), first.getY() + second.getY());
+	return first;
+}
+
+XY operator/=(XY& first, int second) {
+	first = XY(first.getX() / static_cast<float>(second), first.getY() / static_cast<float>(second));
+	return first;
+}
