@@ -1,6 +1,6 @@
 #include "XY.h"
 
-XY::XY() = default;
+XY::XY() : XY(0) {}
 XY::XY(float x) : XY(x, x) {}
 XY::XY(float x, float y) : x(x), y(y) {}
 
