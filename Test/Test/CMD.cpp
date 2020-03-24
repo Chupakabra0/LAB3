@@ -5,10 +5,10 @@
 #include "Agregat.h"
 
 float CMD::SPEED                   = 800.f;
-int CMD::MOVE                 = 1;
+int CMD::MOVE					   = 1;
 float CMD::ROTATE                  = 0.1f;
-int CMD::SCALE_PLUS           = 1;
-int CMD::SCALE_MINUS          = -SCALE_PLUS;
+int CMD::SCALE_PLUS				   = 1;
+int CMD::SCALE_MINUS			   = -SCALE_PLUS;
 								   
 const std::string CMD::SET		   = "Set";
 const std::string CMD::CHANGE	   = "Change";
@@ -167,12 +167,12 @@ void CMD::Text(std::vector<Figure*>& shapes, std::string& string, const Event& e
 
 void CMD::WipeFigure(vector<Figure*> shape, vector<int>& focus)
 {
-	for (auto element : focus) ShapeDealer::LegacyCondition(dynamic_cast<IShape*>(shape[element]));
+	for (auto element : focus) ShapeDealer::LegacyCondition(dynamic_cast<IHistory*>(shape[element]));
 }
 
 void CMD::WipeAllFigure(vector<Figure*>& shape, vector<int>& focus)
 {
-	for (auto element : focus) ShapeDealer::FirstCondition(dynamic_cast<IShape*>(shape[element]));
+	for (auto element : focus) ShapeDealer::FirstCondition(dynamic_cast<IHistory*>(shape[element]));
 }
 
 void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<int>& focus) {

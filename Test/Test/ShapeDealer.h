@@ -38,10 +38,10 @@ struct ShapeDealer
 		object->SetScale(scale);
 		object->RememberCondition();
 	}
-	static void LegacyCondition(IShape* shape) {
+	static void LegacyCondition(IHistory* shape) {
 		shape->PreviousCondition();
 	}
-	static void FirstCondition(IShape* shape) {
+	static void FirstCondition(IHistory* shape) {
 		shape->FirstCondition();
 	}
 	static void SwitchFocus(Figure* figure) {
