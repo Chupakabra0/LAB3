@@ -2,6 +2,7 @@
 
 #include "Circle.h"
 #include "History.h"
+#include "ShapeDealer.h"
 
 using namespace sf;
 
@@ -46,7 +47,7 @@ void Circle::Draw(RenderWindow& window) {
 
 	if (this->isFocused) {
 		this->pic.setOutlineThickness(1.f / std::max(this->scale.GetValueX(), this->scale.GetValueY()));
-		this->pic.setOutlineColor(Color::Green);
+		this->pic.setOutlineColor(ShapeDealer::ReverseColor(this->color));
 	}
 	else {
 		this->pic.setOutlineColor(this->pic.getFillColor());
@@ -96,6 +97,10 @@ void Circle::SetScale(Scale scale) {
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 void Circle::ChangeScale(Scale scale) {
 	this->SetScale(Scale(scale.GetValueX() + this->scale.GetValueY()));
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+Color Circle::GetColor() {
+	return this->color;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 void Circle::SetColor(sf::Color rgb) {

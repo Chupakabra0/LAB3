@@ -101,6 +101,10 @@ void Agregat::FirstCondition() {
 	this->RememberCondition();
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
+sf::Color Agregat::GetColor() {
+	return this->color;
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
 void Agregat::SetColor(sf::Color rgba) {
 	for (auto& element : this->figures) {
 		element->SetColor(rgba);

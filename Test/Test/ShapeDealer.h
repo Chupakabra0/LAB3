@@ -29,6 +29,9 @@ struct ShapeDealer {
 	static Figure* MakeCopy(Figure* figure);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	static void ObstacleScale(std::vector<Figure*>& shapes, int index);
+	static void DrawPosition(Figure* figure, sf::RenderWindow& window);
+	//-----------------------------------------------------------------------------------------------------------------------------------------------
+	static sf::Color ReverseColor(sf::Color color);
 private:
 	static float CountRadius(Figure* first, Figure* second);
 };

@@ -24,8 +24,9 @@ struct IRotate : virtual IHistory {											// интерфейс поворота
 };
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 struct IDraw : virtual IHistory {											// интерфейс рисования
-	virtual void Draw(sf::RenderWindow& window) abstract;
-	virtual void SetColor(sf::Color rgba)		abstract;
+	virtual void	  Draw(sf::RenderWindow& window) abstract;
+	virtual void	  SetColor(sf::Color rgba)		 abstract;
+	virtual sf::Color GetColor()					 abstract;
 };
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 struct IScale : virtual IHistory {											// интерфейс масштабирования

@@ -24,6 +24,7 @@ protected:
 	void SetScale(Scale scale) override;
 	void ChangeScale(Scale scale) override;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
+	sf::Color GetColor() override;
 	void SetColor(sf::Color rgb) override;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	Angle GetAngle() override;

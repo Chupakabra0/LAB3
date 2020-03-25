@@ -1,4 +1,5 @@
 #include "ShapeDealer.h"
+#include "Main.h"
 
 void ShapeDealer::Draw(IDraw* draw, sf::RenderWindow& window) {
 	draw->Draw(window);
@@ -77,8 +78,25 @@ void ShapeDealer::ObstacleScale(std::vector<Figure*>& shapes, int index) {
 	}
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
+void ShapeDealer::DrawPosition(Figure* figure, sf::RenderWindow& window) {
+	sf::Text text;
+	Main::TextProcedure(text, std::to_string(static_cast<long long>(figure->GetPosition().getX())) + ";" + std::to_string(static_cast<long long>(figure->GetPosition().getY())));
+	text.setPosition(figure->GetPosition().getX() + 10.f, figure->GetPosition().getY() + 15.f);
+	text.setFillColor(figure->GetColor());
+	text.setOutlineThickness(1.f);
+	text.setOutlineColor(ReverseColor(text.getFillColor()));
+	sf::Font font;
+	font.loadFromFile("BAUHS93.ttf");
+	text.setFont(font);
+	window.draw(text);
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
 float ShapeDealer::CountRadius(Figure* first, Figure* second) {
 	return sqrtf(powf(second->GetPosition().getX() - first->GetPosition().getX(), 2)
 		+
 		powf(second->GetPosition().getY() - first->GetPosition().getY(), 2));
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+sf::Color ShapeDealer::ReverseColor(sf::Color color) {
+	return {static_cast<sf::Uint8>(255 - color.r), static_cast<sf::Uint8>(255 - color.g), static_cast<sf::Uint8>(255 - color.b), color.a};
 }
