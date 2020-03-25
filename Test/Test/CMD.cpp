@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <fstream>
 #include "Agregat.h"
+#include "Triangle.h"
 
 float CMD::SPEED                   = 800.f;
 int CMD::MOVE					   = 1;
@@ -37,7 +38,8 @@ const std::string CMD::X           = "X";
 const std::string CMD::Y           = "Y";
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 const std::string CMD::AGREGAT     = to_string(figureID::AGREGAT);
-const std::string CMD::CIRCLE      = to_string(figureID::CIRCLE);
+const std::string CMD::CIRCLE	   = to_string(figureID::CIRCLE);
+const std::string CMD::TRIANGLE    = to_string(figureID::TRIANGLE);
 /*
  * Чтобы добавить новую фигуру, писать сюда to_string(id новой фигуры)
  */
@@ -45,7 +47,8 @@ const std::string CMD::CIRCLE      = to_string(figureID::CIRCLE);
 std::string to_string(figureID id) {
 	switch (id) {
 	case CIRCLE: return typeid(Circle).name() + std::string("class ").size();
-	case AGREGAT : return typeid(Agregat).name() + std::string("class ").size();
+	case AGREGAT: return typeid(Agregat).name() + std::string("class ").size();
+	case TRIANGLE : return typeid(Triangle).name() + std::string("class ").size();
 	/*
 	* Чтобы добавить новую фигуру, писать сюда новый case(id новой фигуры)
 	 */
@@ -137,6 +140,9 @@ void CMD::Key(std::vector<Figure*>& shapes, Event& event, std::vector<int>& focu
 			case figureID::AGREGAT:
 				cmd += AGREGAT;
 				break;
+			case figureID::TRIANGLE:
+				cmd += TRIANGLE;
+				break;
 				/*
 				* Чтобы добавить новую фигуру, писать сюда новый case(id новой фигуры)
 				*/
@@ -191,6 +197,10 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<i
 		else if (string.find(AGREGAT, 0) != -1) {
 			auto coordinates = Convert(string);
 			CreateFigure(shapes, coordinates, focus, figureID::AGREGAT);
+		}
+		else if (string.find(TRIANGLE, 0) != -1) {
+			auto coordinates = Convert(string);
+			CreateFigure(shapes, coordinates, focus, figureID::TRIANGLE);
 		}
 		/*
 		* Чтобы добавить новую фигуру, писать сюда новый if (найден строка-id новой фигуры)
@@ -409,6 +419,35 @@ void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<int>& coordinat
 			color = Color(coordinates[3], coordinates[4], coordinates[5]);
 		}
 		temp = new Circle(XY(xy.getX(), xy.getY()), color, radius);
+		break;
+	}
+	case figureID::TRIANGLE: {
+		XY xy;
+		Color color;
+		float radius = 10.f;
+		if (coordinates.empty()) {
+			xy.setXY(0.f, 0.f);
+			color = Color::Blue;
+		}
+		else if (coordinates.size() == 1) {
+			xy.setXY(coordinates[0], coordinates[0]);
+			color = Color::Blue;
+		}
+		else if (coordinates.size() == 2) {
+			xy.setXY(coordinates[0], coordinates[1]);
+			color = Color::Blue;
+		}
+		else if (coordinates.size() == 3 || coordinates.size() == 4 || coordinates.size() == 5) {
+			xy.setXY(coordinates[0], coordinates[1]);
+			radius = coordinates[2];
+			color = Color::Blue;
+		}
+		else if (coordinates.size() >= 6) {
+			xy.setXY(coordinates[0], coordinates[1]);
+			radius = coordinates[2];
+			color = Color(coordinates[3], coordinates[4], coordinates[5]);
+		}
+		temp = new Triangle(XY(xy.getX(), xy.getY()), color, radius);
 		break;
 	}
 	/*

@@ -9,7 +9,7 @@ struct Figure : virtual IMove, virtual IScale, virtual IDraw, virtual IRotate {
 	Figure(XY xy);
 	Figure(XY xy, float radius);
 	Figure(XY xy, sf::Color rgba);
-	Figure(XY xy, float radius, sf::Color rgba);
+	Figure(XY xy, sf::Color rgba, float radius);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	bool GetFocus() const;
 	void SetFocus(bool focus);

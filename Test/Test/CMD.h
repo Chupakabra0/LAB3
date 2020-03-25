@@ -8,7 +8,8 @@ using namespace sf;
 
 enum figureID {
 	AGREGAT,
-	CIRCLE
+	CIRCLE,
+	TRIANGLE
 	/*
 	 * „тобы добавить новую фигуру, писать сюда новый id
 	*/
@@ -56,6 +57,7 @@ struct CMD {
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	const static std::string AGREGAT;
 	const static std::string CIRCLE;
+	const static std::string TRIANGLE;
 	/*
 	 * „тобы добавить новую фигуру, писать сюда новую строку-id
 	 */
