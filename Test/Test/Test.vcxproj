@@ -131,6 +131,7 @@
     <ClCompile Include="History.cpp" />
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Diamond.cpp" />
     <ClCompile Include="Scale.cpp" />
     <ClCompile Include="ShapeDealer.cpp" />
     <ClCompile Include="Source.cpp" />
@@ -146,6 +147,7 @@
     <ClInclude Include="Interfaces.h" />
     <ClInclude Include="Circle.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="Diamond.h" />
     <ClInclude Include="Scale.h" />
     <ClInclude Include="ShapeDealer.h" />
     <ClInclude Include="Triangle.h" />

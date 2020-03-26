@@ -4,6 +4,7 @@
 #include <fstream>
 #include "Agregat.h"
 #include "Triangle.h"
+#include "Diamond.h"
 
 float CMD::SPEED                   = 800.f;
 int CMD::MOVE					   = 1;
@@ -27,7 +28,7 @@ const std::string CMD::TRACE       = "Trace";
 const std::string CMD::DOWN		   = "Down";
 const std::string CMD::UP		   = "Up";
 const std::string CMD::ALL		   = "All";
-const std::string CMD::BD			= "_";
+const std::string CMD::BD		   = "_";
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 const std::string CMD::SPEED_TEXT  = "Speed";
 const std::string CMD::MOVE_TEXT   = "Move";
@@ -39,20 +40,22 @@ const std::string CMD::Y           = "Y";
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 const std::string CMD::AGREGAT     = to_string(figureID::AGREGAT);
 const std::string CMD::CIRCLE	   = to_string(figureID::CIRCLE);
-const std::string CMD::TRIANGLE    = to_string(figureID::TRIANGLE);
+const std::string CMD::TRIANGLE	   = to_string(figureID::TRIANGLE);
+const std::string CMD::DIAMOND     = to_string(figureID::DIAMOND);
 /*
  * Чтобы добавить новую фигуру, писать сюда to_string(id новой фигуры)
  */
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 std::string to_string(figureID id) {
 	switch (id) {
-	case CIRCLE: return typeid(Circle).name() + std::string("class ").size();
-	case AGREGAT: return typeid(Agregat).name() + std::string("class ").size();
-	case TRIANGLE : return typeid(Triangle).name() + std::string("class ").size();
+	case CIRCLE:		return typeid(Circle).name() + std::string("class ").size();
+	case AGREGAT:		return typeid(Agregat).name() + std::string("class ").size();
+	case TRIANGLE:		return typeid(Triangle).name() + std::string("class ").size();
+	case DIAMOND:		return typeid(Diamond).name() + std::string("class ").size();
 	/*
 	* Чтобы добавить новую фигуру, писать сюда новый case(id новой фигуры)
 	 */
-	default: return "unknown";
+	default:			return "unknown";
 	}
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
@@ -143,6 +146,9 @@ void CMD::Key(std::vector<Figure*>& shapes, Event& event, std::vector<int>& focu
 			case figureID::TRIANGLE:
 				cmd += TRIANGLE;
 				break;
+			case figureID::DIAMOND:
+				cmd += DIAMOND;
+				break;
 				/*
 				* Чтобы добавить новую фигуру, писать сюда новый case(id новой фигуры)
 				*/
@@ -201,6 +207,10 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<i
 		else if (string.find(TRIANGLE, 0) != -1) {
 			auto coordinates = Convert(string);
 			CreateFigure(shapes, coordinates, focus, figureID::TRIANGLE);
+		}
+		else if (string.find(DIAMOND, 0) != -1) {
+			auto coordinates = Convert(string);
+			CreateFigure(shapes, coordinates, focus, figureID::DIAMOND);
 		}
 		/*
 		* Чтобы добавить новую фигуру, писать сюда новый if (найден строка-id новой фигуры)
@@ -450,6 +460,35 @@ void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<int>& coordinat
 		temp = new Triangle(XY(xy.GetX(), xy.GetY()), color, radius);
 		break;
 	}
+	case figureID::DIAMOND: {
+		XY xy;
+		Color color;
+		float radius = 10.f;
+		if (coordinates.empty()) {
+			xy.SetXY(0.f, 0.f);
+			color = Color::Green;
+		}
+		else if (coordinates.size() == 1) {
+			xy.SetXY(coordinates[0], coordinates[0]);
+			color = Color::Green;
+		}
+		else if (coordinates.size() == 2) {
+			xy.SetXY(coordinates[0], coordinates[1]);
+			color = Color::Green;
+		}
+		else if (coordinates.size() == 3 || coordinates.size() == 4 || coordinates.size() == 5) {
+			xy.SetXY(coordinates[0], coordinates[1]);
+			radius = coordinates[2];
+			color = Color::Green;
+		}
+		else if (coordinates.size() >= 6) {
+			xy.SetXY(coordinates[0], coordinates[1]);
+			radius = coordinates[2];
+			color = Color(coordinates[3], coordinates[4], coordinates[5]);
+		}
+		temp = new Diamond(XY(xy.GetX(), xy.GetY()), color, radius);
+		break;
+	}
 	/*
 	* Чтобы добавить новую фигуру, писать сюда новый case (id новой фигуры)
 	*/
@@ -588,5 +627,5 @@ void CMD::ConstantSetter(float& value, const float& coordinates) {
 }
 
 void CMD::ConstantSetter(int& value, const float& coordinates) {
-	value = coordinates;
+	value = static_cast<int>(coordinates);
 }
