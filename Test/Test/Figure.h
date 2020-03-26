@@ -31,71 +31,24 @@ struct Figure : virtual IMove, virtual IScale, virtual IDraw, virtual IRotate {
 	float GetRadius() const;
 	void SetRadius(float radius);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	XY GetPosition() override {
-		return this->dot;
-	}
+	XY GetPosition() override;
+	void SetPosition(XY xy) override;
+	void ChangePosition(XY xy) override;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	void SetPosition(XY xy) override {
-		this->dot.SetXY(xy.GetX(), xy.GetY());
-	}
+	Angle GetAngle() override;
+	void SetAngle(Angle angle) override;
+	void ChangeAngle(Angle angle) override;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	void ChangePosition(XY xy) override {
-		this->SetPosition(XY(xy.GetX() + this->dot.GetX(), xy.GetY() + this->dot.GetY()));
-	}
+	Scale GetScale() override;
+	void SetScale(Scale scale) override;
+	void ChangeScale(Scale scale) override;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	Angle GetAngle() override {
-		return this->angle;
-	}
+	sf::Color GetColor() override;
+	void SetColor(sf::Color rgb) override;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	void SetAngle(Angle angle) override {
-		this->angle = angle;
-	}
-	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	void ChangeAngle(Angle angle) override {
-		this->SetAngle(Angle(this->angle.GetValue() + angle.GetValue()));
-	}
-	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	Scale GetScale() override {
-		return this->scale;
-	}
-	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	void SetScale(Scale scale) override {
-		this->scale = scale;
-	}
-	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	void ChangeScale(Scale scale) override {
-		this->SetScale(Scale(scale.GetX() + this->scale.GetY()));
-	}
-	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	sf::Color GetColor() override {
-		return this->color;
-	}
-	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	void SetColor(sf::Color rgb) override {
-		this->color = rgb;
-	}
-	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	void PreviousCondition() override {
-		if (this->history.size() > 1) {
-			this->history.pop_back();
-			const auto size = this->history.size() - 1;
-			if (this->dot != this->history[size].GetDot()) this->SetPosition(this->history[size].GetDot());
-			if (this->scale != this->history[size].GetScale()) this->SetScale(this->history[size].GetScale());
-			if (this->color != this->history[size].GetColor()) this->SetColor(this->history[size].GetColor());
-		}
-	}
-	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	void RememberCondition() override {
-		this->history.emplace_back(this->dot, this->scale, this->angle, this->color);
-	}
-	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	void FirstCondition() override {
-		if (this->dot != this->history[0].GetDot()) this->SetPosition(this->history[0].GetDot());
-		if (this->scale != this->history[0].GetScale()) this->SetScale(this->history[0].GetScale());
-		if (this->color != this->history[0].GetColor()) this->SetColor(this->history[0].GetColor());
-		this->history.clear();
-		this->RememberCondition();
-	}
+	void PreviousCondition() override;
+	void RememberCondition() override;
+	void FirstCondition() override;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	virtual Figure* Copy() abstract;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
