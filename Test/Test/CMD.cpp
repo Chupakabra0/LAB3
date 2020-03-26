@@ -6,6 +6,7 @@
 #include "Triangle.h"
 #include "Diamond.h"
 #include "Star.h"
+#include "Trapezoid.h"
 
 float CMD::SPEED                   = 800.f;
 int CMD::MOVE					   = 1;
@@ -44,6 +45,7 @@ const std::string CMD::CIRCLE	   = to_string(figureID::CIRCLE);
 const std::string CMD::TRIANGLE	   = to_string(figureID::TRIANGLE);
 const std::string CMD::DIAMOND	   = to_string(figureID::DIAMOND);
 const std::string CMD::STAR		   = to_string(figureID::STAR);
+const std::string CMD::TRAPEZOID   = to_string(figureID::TRAPEZOID);
 /*
  * Чтобы добавить новую фигуру, писать сюда to_string(id новой фигуры)
  */
@@ -55,6 +57,7 @@ std::string to_string(figureID id) {
 	case TRIANGLE:		return typeid(Triangle).name() + std::string("class ").size();
 	case DIAMOND:		return typeid(Diamond).name() + std::string("class ").size();
 	case STAR:			return typeid(Star).name() + std::string("class ").size();
+	case TRAPEZOID:		return typeid(Trapezoid).name() + std::string("class ").size();
 	/*
 	* Чтобы добавить новую фигуру, писать сюда новый case(id новой фигуры)
 	 */
@@ -199,6 +202,10 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<i
 		else if (string.find(STAR, 0) != -1) {
 			auto coordinates = Convert(string);
 			CreateFigure(shapes, coordinates, focus, figureID::STAR);
+		}
+		else if (string.find(TRAPEZOID, 0) != -1) {
+			auto coordinates = Convert(string);
+			CreateFigure(shapes, coordinates, focus, figureID::TRAPEZOID);
 		}
 		/*
 		* Чтобы добавить новую фигуру, писать сюда новый if (найден строка-id новой фигуры)
@@ -504,6 +511,35 @@ void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<int>& coordinat
 			color = Color(coordinates[3], coordinates[4], coordinates[5]);
 		}
 		temp = new Star(XY(xy.GetX(), xy.GetY()), color, radius);
+		break;
+	}
+	case figureID::TRAPEZOID: {
+		XY xy;
+		Color color;
+		float radius = 10.f;
+		if (coordinates.empty()) {
+			xy.SetXY(0.f, 0.f);
+			color = Color::Magenta;
+		}
+		else if (coordinates.size() == 1) {
+			xy.SetXY(coordinates[0], coordinates[0]);
+			color = Color::Magenta;
+		}
+		else if (coordinates.size() == 2) {
+			xy.SetXY(coordinates[0], coordinates[1]);
+			color = Color::Magenta;
+		}
+		else if (coordinates.size() == 3 || coordinates.size() == 4 || coordinates.size() == 5) {
+			xy.SetXY(coordinates[0], coordinates[1]);
+			radius = coordinates[2];
+			color = Color::Magenta;
+		}
+		else if (coordinates.size() >= 6) {
+			xy.SetXY(coordinates[0], coordinates[1]);
+			radius = coordinates[2];
+			color = Color(coordinates[3], coordinates[4], coordinates[5]);
+		}
+		temp = new Trapezoid(XY(xy.GetX(), xy.GetY()), color, radius);
 		break;
 	}
 	/*

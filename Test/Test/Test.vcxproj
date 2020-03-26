@@ -136,6 +136,7 @@
     <ClCompile Include="ShapeDealer.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Star.cpp" />
+    <ClCompile Include="Trapezoid.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="XY.cpp" />
   </ItemGroup>
@@ -152,6 +153,7 @@
     <ClInclude Include="Scale.h" />
     <ClInclude Include="ShapeDealer.h" />
     <ClInclude Include="Star.h" />
+    <ClInclude Include="Trapezoid.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="XY.h" />
   </ItemGroup>

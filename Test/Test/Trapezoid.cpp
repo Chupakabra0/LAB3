@@ -1,25 +1,20 @@
-#include "Star.h"
+#include "Trapezoid.h"
 #include "ShapeDealer.h"
 
-Star::Star(float x, float radius): Star(x, x, radius) {}
-Star::Star(float x, float y, float radius): Star(x, y, sf::Color::Yellow, radius) {}
-Star::Star(float x, float y, sf::Color color, float radius): Star(XY(x, y), color, radius) {}
-Star::Star(XY xy, sf::Color color, float radius): Figure(xy, color, radius) {
-		pic.setPointCount(10);
+Trapezoid::Trapezoid(float x, float radius): Trapezoid(x, x, radius) {}
+Trapezoid::Trapezoid(float x, float y, float radius): Trapezoid(x, y, sf::Color::Magenta, radius) {}
+Trapezoid::Trapezoid(float x, float y, sf::Color color, float radius): Trapezoid(XY(x, y), color, radius) {}
+Trapezoid::Trapezoid(XY xy, sf::Color color, float radius): Figure(xy, color, radius) {
+		this->pic.setPointCount(4);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-void Star::Draw(sf::RenderWindow& window) {
+void Trapezoid::Draw(sf::RenderWindow& window) {
 
-	this->pic.setPoint(0, sf::Vector2f(1.2f * this->radius, 0));
-	this->pic.setPoint(1, sf::Vector2f(1.44f * this->radius, 0.8f * this->radius));
-	this->pic.setPoint(2, sf::Vector2f(2.2f * this->radius, 0.8f * this->radius));
-	this->pic.setPoint(3, sf::Vector2f(1.6f * this->radius, 1.2f * this->radius));
-	this->pic.setPoint(4, sf::Vector2f(2.f * this->radius, 2.f * this->radius));
-	this->pic.setPoint(5, sf::Vector2f(1.2f * this->radius, 1.4f * this->radius));
-	this->pic.setPoint(6, sf::Vector2f(0.4f * this->radius, 2.f * this->radius));
-	this->pic.setPoint(7, sf::Vector2f(0.8f * this->radius, 1.2f * this->radius));
-	this->pic.setPoint(8, sf::Vector2f(0.2f * this->radius, 0.8f * this->radius));
-	this->pic.setPoint(9, sf::Vector2f(0.96f * this->radius, 0.8f * this->radius));
+	this->pic.setPoint(0, sf::Vector2f(-1.6f * this->radius, this->radius));
+	this->pic.setPoint(1, sf::Vector2f(-0.8f * this->radius, -this->radius));
+	this->pic.setPoint(2, sf::Vector2f(0.8f * this->radius, -this->radius));
+	this->pic.setPoint(3, sf::Vector2f(1.6f * this->radius, this->radius));
+
 
 	if (this->GetVisible()) {
 		this->pic.setFillColor(this->color);
@@ -59,12 +54,12 @@ void Star::Draw(sf::RenderWindow& window) {
 	window.draw(this->pic);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-Figure* Star::Copy() {
-	return new Star(*this);
-}
-//-----------------------------------------------------------------------------------------------------------------------------------------------
-sf::ConvexShape Star::GetPicture() const {
+sf::ConvexShape Trapezoid::GetPicture() const {
 	return this->pic;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-Star::~Star() = default;
+Figure* Trapezoid::Copy() {
+	return new Trapezoid(*this);
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+Trapezoid::~Trapezoid() = default;

@@ -11,7 +11,8 @@ enum figureID {
 	CIRCLE,
 	TRIANGLE,
 	DIAMOND,
-	STAR
+	STAR,
+	TRAPEZOID
 	/*
 	 * „тобы добавить новую фигуру, писать сюда новый id
 	*/
@@ -62,6 +63,7 @@ struct CMD {
 	const static std::string TRIANGLE;
 	const static std::string DIAMOND;
 	const static std::string STAR;
+	const static std::string TRAPEZOID;
 	/*
 	 * „тобы добавить новую фигуру, писать сюда новую строку-id
 	 */
