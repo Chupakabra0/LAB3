@@ -22,7 +22,7 @@ void Circle::Draw(RenderWindow& window) {
 		this->pic.setFillColor(this->color);
 	}
 	else {
-		this->pic.setFillColor(Color::Black);
+		this->pic.setFillColor(Color::Transparent);
 	}
 
 	this->pic.setOutlineColor(this->pic.getFillColor());

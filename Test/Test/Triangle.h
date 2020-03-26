@@ -24,7 +24,7 @@ protected:
 			this->pic.setFillColor(this->color);
 		}
 		else {
-			this->pic.setFillColor(sf::Color::Black);
+			this->pic.setFillColor(sf::Color::Transparent);
 		}
 
 		this->pic.setOutlineColor(this->color);
