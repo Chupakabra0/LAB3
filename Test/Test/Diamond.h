@@ -12,9 +12,7 @@ public:
 	Diamond(float x, float radius) : Diamond(x, x, radius) {}
 	Diamond(float x, float y, float radius) : Diamond(x, y, sf::Color::Green, radius) {}
 	Diamond(float x, float y, sf::Color color, float radius) : Diamond(XY(x, y), color, radius) {}
-	Diamond(XY xy, sf::Color color, float radius) : Figure(xy, color, radius) {
-		this->Diamond::RememberCondition();
-	}
+	Diamond(XY xy, sf::Color color, float radius) : Figure(xy, color, radius) {}
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	virtual ~Diamond() = default;
 private:

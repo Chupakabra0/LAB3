@@ -3,10 +3,7 @@
 Triangle::Triangle(float x, float radius): Triangle(x, x, radius) {}
 Triangle::Triangle(float x, float y, float radius): Triangle(x, y, sf::Color::Blue, radius) {}
 Triangle::Triangle(float x, float y, sf::Color color, float radius): Triangle(XY(x, y), color, radius) {}
-
-Triangle::Triangle(XY xy, sf::Color color, float radius): Figure(xy, color, radius) {
-	this->Triangle::RememberCondition();
-}
+Triangle::Triangle(XY xy, sf::Color color, float radius): Figure(xy, color, radius) {}
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 void Triangle::Draw(sf::RenderWindow& window) {
 	this->pic.setPointCount(3);

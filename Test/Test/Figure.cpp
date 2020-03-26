@@ -5,11 +5,12 @@ Figure::Figure(XY xy): Figure(xy, sf::Color::Red) {}
 Figure::Figure(XY xy, float radius): Figure(xy, sf::Color::Red, radius) {}
 Figure::Figure(XY xy, sf::Color rgba): Figure(xy, rgba, 10.f) {}
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-Figure::Figure(XY xy, sf::Color rgba, float radius): trace(0), dot(xy), scale(1.f), angle(0.f), color(rgba), radius(radius) {
+Figure::Figure(XY xy, sf::Color rgba, float radius) : trace(0), dot(xy), scale(1.f), angle(0.f), color(rgba), radius(radius) {
 	this->SetFocus(false);
 	this->SetTrace(false);
 	this->SetTouch(false);
 	this->SetVisible(true);
+	this->RememberCondition();
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 bool Figure::GetFocus() const {
