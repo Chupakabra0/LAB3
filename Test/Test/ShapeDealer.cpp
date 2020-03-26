@@ -81,7 +81,7 @@ void ShapeDealer::ObstacleScale(std::vector<Figure*>& shapes, int index) {
 void ShapeDealer::DrawPosition(Figure* figure, sf::RenderWindow& window) {
 	sf::Text text;
 	Main::TextProcedure(text, std::to_string(static_cast<long long>(figure->GetPosition().GetX())) + ";" + std::to_string(static_cast<long long>(figure->GetPosition().GetY())));
-	text.setPosition(figure->GetPosition().GetX() * figure->GetScale().GetX() + 10.f, figure->GetPosition().GetY() + 15.f);
+	text.setPosition(figure->GetPosition().GetX() + 10.f * figure->GetScale().GetX() , figure->GetPosition().GetY() + 15.f * figure->GetScale().GetY());
 	text.setFillColor(figure->GetColor());
 	text.setOutlineThickness(1.f);
 	text.setOutlineColor(ReverseColor(text.getFillColor()));
