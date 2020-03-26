@@ -6,14 +6,14 @@ public:
 	explicit XY(float x);
 	explicit XY(float x, float y);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	virtual float getX() const;
-	virtual void setX(float x);
+	virtual float GetX() const;
+	virtual void SetX(float x);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	virtual float getY() const;
-	virtual void setY(float y);
+	virtual float GetY() const;
+	virtual void SetY(float y);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	virtual void setXY(float x, float y);
-	virtual void setXY(XY dxdy);
+	virtual void SetXY(float x, float y);
+	virtual void SetXY(XY dxdy);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	friend bool operator==(const XY& first, const XY& second);
 	friend bool operator!=(const XY& first, const XY& second);

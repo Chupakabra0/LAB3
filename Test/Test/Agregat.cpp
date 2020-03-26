@@ -49,7 +49,7 @@ void Agregat::ChangeScale(Scale scale) {
 	for (auto& element : this->figures) {
 		element->ChangeScale(scale);
 	}
-	this->scale = Scale(XY(this->scale.GetValueX() + scale.GetValueX(), this->scale.GetValueY() + scale.GetValueY()));
+	this->scale = Scale(XY(this->scale.GetX() + scale.GetX(), this->scale.GetY() + scale.GetY()));
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 Angle Agregat::GetAngle() {

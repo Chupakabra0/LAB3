@@ -397,28 +397,28 @@ void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<int>& coordinat
 		Color color;
 		float radius = 10.f;
 		if (coordinates.empty()) {
-			xy.setXY(0.f, 0.f);
+			xy.SetXY(0.f, 0.f);
 			color = Color::Red;
 		}
 		else if (coordinates.size() == 1) {
-			xy.setXY(coordinates[0], coordinates[0]);
+			xy.SetXY(coordinates[0], coordinates[0]);
 			color = Color::Red;
 		}
 		else if (coordinates.size() == 2) {
-			xy.setXY(coordinates[0], coordinates[1]);
+			xy.SetXY(coordinates[0], coordinates[1]);
 			color = Color::Red;
 		}
 		else if (coordinates.size() == 3 || coordinates.size() == 4 || coordinates.size() == 5) {
-			xy.setXY(coordinates[0], coordinates[1]);
+			xy.SetXY(coordinates[0], coordinates[1]);
 			radius = coordinates[2];
 			color = Color::Red;
 		}
 		else if (coordinates.size() >= 6) {
-			xy.setXY(coordinates[0], coordinates[1]);
+			xy.SetXY(coordinates[0], coordinates[1]);
 			radius = coordinates[2];
 			color = Color(coordinates[3], coordinates[4], coordinates[5]);
 		}
-		temp = new Circle(XY(xy.getX(), xy.getY()), color, radius);
+		temp = new Circle(XY(xy.GetX(), xy.GetY()), color, radius);
 		break;
 	}
 	case figureID::TRIANGLE: {
@@ -426,28 +426,28 @@ void CMD::CreateFigure(std::vector<Figure*>& shapes, std::vector<int>& coordinat
 		Color color;
 		float radius = 10.f;
 		if (coordinates.empty()) {
-			xy.setXY(0.f, 0.f);
+			xy.SetXY(0.f, 0.f);
 			color = Color::Blue;
 		}
 		else if (coordinates.size() == 1) {
-			xy.setXY(coordinates[0], coordinates[0]);
+			xy.SetXY(coordinates[0], coordinates[0]);
 			color = Color::Blue;
 		}
 		else if (coordinates.size() == 2) {
-			xy.setXY(coordinates[0], coordinates[1]);
+			xy.SetXY(coordinates[0], coordinates[1]);
 			color = Color::Blue;
 		}
 		else if (coordinates.size() == 3 || coordinates.size() == 4 || coordinates.size() == 5) {
-			xy.setXY(coordinates[0], coordinates[1]);
+			xy.SetXY(coordinates[0], coordinates[1]);
 			radius = coordinates[2];
 			color = Color::Blue;
 		}
 		else if (coordinates.size() >= 6) {
-			xy.setXY(coordinates[0], coordinates[1]);
+			xy.SetXY(coordinates[0], coordinates[1]);
 			radius = coordinates[2];
 			color = Color(coordinates[3], coordinates[4], coordinates[5]);
 		}
-		temp = new Triangle(XY(xy.getX(), xy.getY()), color, radius);
+		temp = new Triangle(XY(xy.GetX(), xy.GetY()), color, radius);
 		break;
 	}
 	/*

@@ -4,20 +4,20 @@ Scale::Scale(): Scale(0.f) {}
 Scale::Scale(float scale): Scale(XY(scale)) {}
 Scale::Scale(XY scale): scale(scale) {}
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-float Scale::GetValueX() const {
-	return this->scale.getX();
+float Scale::GetX() const {
+	return this->scale.GetX();
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-float Scale::GetValueY() const {
-	return this->scale.getY();
+float Scale::GetY() const {
+	return this->scale.GetY();
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-XY Scale::getPoint() const {
+XY Scale::GetXY() const {
 	return this->scale;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 bool operator==(const Scale& first, const Scale& second) {
-	return first.getPoint() == second.getPoint();
+	return first.GetXY() == second.GetXY();
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 bool operator!=(const Scale& first, const Scale& second) {

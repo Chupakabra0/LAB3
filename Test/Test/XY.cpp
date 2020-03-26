@@ -4,33 +4,33 @@ XY::XY() : XY(0) {}
 XY::XY(float x) : XY(x, x) {}
 XY::XY(float x, float y) : x(x), y(y) {}
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-float XY::getX() const {
+float XY::GetX() const {
 	return this->x;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-float XY::getY() const {
+float XY::GetY() const {
 	return this->y;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-void XY::setX(float x) {
+void XY::SetX(float x) {
 	this->x = x;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-void XY::setY(float y) {
+void XY::SetY(float y) {
 	this->y = y;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-void XY::setXY(float x, float y) {
-	this->setX(x);
-	this->setY(y);
+void XY::SetXY(float x, float y) {
+	this->SetX(x);
+	this->SetY(y);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-void XY::setXY(XY dxdy) {
-	this->setXY(dxdy.getX(), dxdy.getY());
+void XY::SetXY(XY dxdy) {
+	this->SetXY(dxdy.GetX(), dxdy.GetY());
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 bool operator==(const XY& first, const XY& second) {
-	return (first.getX() == second.getX()) && (first.getY() == second.getY());
+	return (first.GetX() == second.GetX()) && (first.GetY() == second.GetY());
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 bool operator!=(const XY& first, const XY& second) {
@@ -38,11 +38,11 @@ bool operator!=(const XY& first, const XY& second) {
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 XY operator+=(XY& first, const XY& second) {
-	first = XY(first.getX() + second.getX(), first.getY() + second.getY());
+	first = XY(first.GetX() + second.GetX(), first.GetY() + second.GetY());
 	return first;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 XY operator/=(XY& first, int second) {
-	first = XY(first.getX() / static_cast<float>(second), first.getY() / static_cast<float>(second));
+	first = XY(first.GetX() / static_cast<float>(second), first.GetY() / static_cast<float>(second));
 	return first;
 }

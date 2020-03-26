@@ -126,8 +126,8 @@ void Main::Program() {
 			if (std::find(focus.begin(), focus.end(), i) != focus.end()) ShapeDealer::DrawPosition(shapes[i], window);
 		}
 
-		if (!shapes.empty() && !focus.empty()) camera.setCenter(shapes[focus[0]]->GetPosition().getX(),
-																shapes[focus[0]]->GetPosition().getY());
+		if (!shapes.empty() && !focus.empty()) camera.setCenter(shapes[focus[0]]->GetPosition().GetX(),
+																shapes[focus[0]]->GetPosition().GetY());
 		// меняем фигуру, к которой приклеплена камера
 		TextDisplay(window, camera, cmd, cmdActive); // выводим текст
 

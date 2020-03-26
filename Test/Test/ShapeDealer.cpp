@@ -80,8 +80,8 @@ void ShapeDealer::ObstacleScale(std::vector<Figure*>& shapes, int index) {
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 void ShapeDealer::DrawPosition(Figure* figure, sf::RenderWindow& window) {
 	sf::Text text;
-	Main::TextProcedure(text, std::to_string(static_cast<long long>(figure->GetPosition().getX())) + ";" + std::to_string(static_cast<long long>(figure->GetPosition().getY())));
-	text.setPosition(figure->GetPosition().getX() + 10.f, figure->GetPosition().getY() + 15.f);
+	Main::TextProcedure(text, std::to_string(static_cast<long long>(figure->GetPosition().GetX())) + ";" + std::to_string(static_cast<long long>(figure->GetPosition().GetY())));
+	text.setPosition(figure->GetPosition().GetX() * figure->GetScale().GetX() + 10.f, figure->GetPosition().GetY() + 15.f);
 	text.setFillColor(figure->GetColor());
 	text.setOutlineThickness(1.f);
 	text.setOutlineColor(ReverseColor(text.getFillColor()));
@@ -92,9 +92,9 @@ void ShapeDealer::DrawPosition(Figure* figure, sf::RenderWindow& window) {
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 float ShapeDealer::CountRadius(Figure* first, Figure* second) {
-	return sqrtf(powf(second->GetPosition().getX() - first->GetPosition().getX(), 2)
+	return sqrtf(powf(second->GetPosition().GetX() - first->GetPosition().GetX(), 2)
 		+
-		powf(second->GetPosition().getY() - first->GetPosition().getY(), 2));
+		powf(second->GetPosition().GetY() - first->GetPosition().GetY(), 2));
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 sf::Color ShapeDealer::ReverseColor(sf::Color color) {

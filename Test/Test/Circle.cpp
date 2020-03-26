@@ -28,10 +28,10 @@ void Circle::Draw(RenderWindow& window) {
 	this->pic.setOutlineColor(this->pic.getFillColor());
 
 	if (this->isTouched) {
-		this->pic.setScale(this->scale.GetValueX() + 2, this->scale.GetValueY() + 2);
+		this->pic.setScale(this->scale.GetX() + 2, this->scale.GetY() + 2);
 	}
 	else {
-		this->pic.setScale(this->scale.GetValueX(), this->scale.GetValueY());
+		this->pic.setScale(this->scale.GetX(), this->scale.GetY());
 	}
 	
 	this->pic.setRotation(this->angle.GetValue());
@@ -39,15 +39,15 @@ void Circle::Draw(RenderWindow& window) {
 	if (this->GetTrace()) {
 		const auto size = this->history.size();
 		for (auto i = this->GetTraceNum(); i < size - 1; i++) {
-			this->pic.setPosition(this->history[i].GetDot().getX(), this->history[i].GetDot().getY());
+			this->pic.setPosition(this->history[i].GetDot().GetX(), this->history[i].GetDot().GetY());
 			window.draw(this->pic);
 		}
 	}
 
-	this->pic.setPosition(this->dot.getX(), this->dot.getY());
+	this->pic.setPosition(this->dot.GetX(), this->dot.GetY());
 
 	if (this->isFocused) {
-		this->pic.setOutlineThickness(1.f / std::max(this->scale.GetValueX(), this->scale.GetValueY()));
+		this->pic.setOutlineThickness(1.f / std::max(this->scale.GetX(), this->scale.GetY()));
 		this->pic.setOutlineColor(ShapeDealer::ReverseColor(this->color));
 	}
 	else {
@@ -61,11 +61,11 @@ XY Circle::GetPosition() {
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 void Circle::SetPosition(XY xy) {
-	this->dot.setXY(xy.getX(), xy.getY());
+	this->dot.SetXY(xy.GetX(), xy.GetY());
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 void Circle::ChangePosition(XY xy) {
-	this->SetPosition(XY(xy.getX() + this->dot.getX(), xy.getY() + this->dot.getY()));
+	this->SetPosition(XY(xy.GetX() + this->dot.GetX(), xy.GetY() + this->dot.GetY()));
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 Angle Circle::GetAngle() {
@@ -97,7 +97,7 @@ void Circle::SetScale(Scale scale) {
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 void Circle::ChangeScale(Scale scale) {
-	this->SetScale(Scale(scale.GetValueX() + this->scale.GetValueY()));
+	this->SetScale(Scale(scale.GetX() + this->scale.GetY()));
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 Color Circle::GetColor() {
