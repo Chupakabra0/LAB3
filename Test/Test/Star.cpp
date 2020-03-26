@@ -1,16 +1,24 @@
-#include "Diamond.h"
-#include "ShapeDealer.h"
+#include "Star.h"
 
-Diamond::Diamond(float x, float radius): Diamond(x, x, radius) {}
-Diamond::Diamond(float x, float y, float radius): Diamond(x, y, sf::Color::Green, radius) {}
-Diamond::Diamond(float x, float y, sf::Color color, float radius): Diamond(XY(x, y), color, radius) {}
-Diamond::Diamond(XY xy, sf::Color color, float radius): Figure(xy, color, radius) {}
+Star::Star(float x, float radius): Star(x, x, radius) {}
+Star::Star(float x, float y, float radius): Star(x, y, sf::Color::Yellow, radius) {}
+Star::Star(float x, float y, sf::Color color, float radius): Star(XY(x, y), color, radius) {}
+Star::Star(XY xy, sf::Color color, float radius): Figure(xy, color, radius) {
+		pic.setPointCount(10);
+}
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-void Diamond::Draw(sf::RenderWindow& window) {
+void Star::Draw(sf::RenderWindow& window) {
 
-	this->pic.setPointCount(4);
-
-	this->pic.setRadius(this->radius);
+	this->pic.setPoint(0, sf::Vector2f(1.2f * this->radius, 0));
+	this->pic.setPoint(1, sf::Vector2f(1.44f * this->radius, 0.8f * this->radius));
+	this->pic.setPoint(2, sf::Vector2f(2.2f * this->radius, 0.8f * this->radius));
+	this->pic.setPoint(3, sf::Vector2f(1.6f * this->radius, 1.2f * this->radius));
+	this->pic.setPoint(4, sf::Vector2f(2.f * this->radius, 2.f * this->radius));
+	this->pic.setPoint(5, sf::Vector2f(1.2f * this->radius, 1.4f * this->radius));
+	this->pic.setPoint(6, sf::Vector2f(0.4f * this->radius, 2.f * this->radius));
+	this->pic.setPoint(7, sf::Vector2f(0.8f * this->radius, 1.2f * this->radius));
+	this->pic.setPoint(8, sf::Vector2f(0.2f * this->radius, 0.8f * this->radius));
+	this->pic.setPoint(9, sf::Vector2f(0.96f * this->radius, 0.8f * this->radius));
 
 	if (this->GetVisible()) {
 		this->pic.setFillColor(this->color);
@@ -50,13 +58,12 @@ void Diamond::Draw(sf::RenderWindow& window) {
 	window.draw(this->pic);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-
-Figure* Diamond::Copy() {
-	return new Diamond(*this);
+Figure* Star::Copy() {
+	return new Star(*this);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-sf::CircleShape Diamond::GetPicture() const {
+sf::ConvexShape Star::GetPicture() const {
 	return this->pic;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-Diamond::~Diamond() = default;
+Star::~Star() = default;

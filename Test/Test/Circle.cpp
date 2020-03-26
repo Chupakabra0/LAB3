@@ -7,7 +7,7 @@
 using namespace sf;
 
 Circle::Circle(float x, float radius): Circle(x, x, radius) {}
-Circle::Circle(float x, float y, float radius): Circle(x, y, Color(255, 255, 255 , 255), radius) {}
+Circle::Circle(float x, float y, float radius): Circle(x, y, sf::Color::Red, radius) {}
 Circle::Circle(float x, float y, Color color, float radius) : Circle(XY(x, y), color, radius) { }
 Circle::Circle(XY xy, Color color, float radius) : Figure(xy, color, radius) {}
 //-----------------------------------------------------------------------------------------------------------------------------------------------

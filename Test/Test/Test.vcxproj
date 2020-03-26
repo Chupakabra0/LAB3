@@ -135,6 +135,7 @@
     <ClCompile Include="Scale.cpp" />
     <ClCompile Include="ShapeDealer.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Star.cpp" />
     <ClCompile Include="Triangle.cpp" />
     <ClCompile Include="XY.cpp" />
   </ItemGroup>
@@ -150,6 +151,7 @@
     <ClInclude Include="Diamond.h" />
     <ClInclude Include="Scale.h" />
     <ClInclude Include="ShapeDealer.h" />
+    <ClInclude Include="Star.h" />
     <ClInclude Include="Triangle.h" />
     <ClInclude Include="XY.h" />
   </ItemGroup>

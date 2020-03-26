@@ -1,25 +1,24 @@
 #pragma once
 
-#include "Interfaces.h"														 
-#include "History.h"
 #include "Figure.h"
+#include "ShapeDealer.h"
 
-class Diamond : public Figure
+class Star : public Figure
 {
 public:
-	Diamond() = delete;
-	Diamond(float x, float radius);
-	Diamond(float x, float y, float radius);
-	Diamond(float x, float y, sf::Color color, float radius);
-	Diamond(XY xy, sf::Color color, float radius);
+	Star() = delete;
+	Star(float x, float radius);
+	Star(float x, float y, float radius);
+	Star(float x, float y, sf::Color color, float radius);
+	Star(XY xy, sf::Color color, float radius);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	virtual ~Diamond();
+	virtual ~Star() ;
 private:
 	void Draw(sf::RenderWindow& window) override;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	Figure* Copy() override;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	sf::CircleShape GetPicture() const;
+	sf::ConvexShape GetPicture() const;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
-	sf::CircleShape pic;
+	sf::ConvexShape pic;
 };

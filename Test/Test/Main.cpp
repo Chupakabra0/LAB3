@@ -84,7 +84,7 @@ void Main::Program() {
 	Clock clock; // тут тикает время
 	std::string cmd; // тут командная строка
 	std::vector<int> focus = {0}; // вектор фигур, которые в фокусе
-	auto id = CIRCLE; // id текущей фигуры
+	auto id = STAR; // id текущей фигуры
 	auto cmdActive = false; // активна ли консоль
 
 	FileProcedure(shapes, focus); // файловая процедура
