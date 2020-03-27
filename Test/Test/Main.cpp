@@ -15,7 +15,8 @@ void Main::FileProcedure(std::vector<Figure*>& shapes, std::vector<int>& focus) 
 	string temp; // строка в которой хранится ответ
 	do {
 		cout << "Do you want to open config-file?" << endl; // выводим вопрос
-		getline(cin, temp); // вводим ответ
+		//getline(cin, temp); // вводим ответ
+		temp = "+";
 		system("cls");
 	}
 	while (!(temp == "yes" || temp == "y" || temp == "Yes" || temp == "Y" || temp == "+"
@@ -40,6 +41,9 @@ void Main::FileProcedure(std::vector<Figure*>& shapes, std::vector<int>& focus) 
 			}
 		}
 	}
+	//
+
+	//
 	else {
 		config.open("tex.txt", ios_base::out | ios_base::trunc);
 	}
@@ -151,7 +155,7 @@ void Main::Program() {
 
 		window.clear(); // чистим окно перед рисованием нового кадра
 		for (auto i = 0; i < shapes.size(); i++) {
-			ShapeDealer::ObstacleScale(shapes, i); // проверяем столкновение фигур
+			//ShapeDealer::ObstacleScale(shapes, i); // проверяем столкновение фигур
 			ShapeDealer::Draw(dynamic_cast<IDraw*>(shapes[i]), window); // рисуем фигуру
 			if (coordinateActive && std::find(focus.begin(), focus.end(), i) != focus.end()) ShapeDealer::DrawPosition(shapes[i], window);
 		}

@@ -96,6 +96,7 @@ private:
 	static void SetFigureScaleX(IScale* shape, std::vector<int>& coordinates);
 	static void SetFigureScaleY(IScale* shape, std::vector<int>& coordinates);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
+	static void SetFigureFocus(std::vector<Figure*>& shapes, std::vector<int>& focus);
 	static void SetFigureFocus(std::vector<Figure*>& shapes, vector<int>& coordinates, std::vector<int>& focus);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	static void DeleteFigure(std::vector<Figure*>& shapes);

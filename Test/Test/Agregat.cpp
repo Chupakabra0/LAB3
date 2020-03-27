@@ -4,7 +4,7 @@
 
 Agregat::Agregat(const Agregat& copy): Agregat(copy.GetFigures()) {}
 
-Agregat::Agregat(std::vector<Figure*> figures): figures(std::move(figures)), Figure(XY(NULL)) {
+Agregat::Agregat(std::vector<Figure*> figures): figures(std::move(figures)), Figure(XY(NULL), figures[0]->GetColor()) {
 	this->CenterPos();
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------

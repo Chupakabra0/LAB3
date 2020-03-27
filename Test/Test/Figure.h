@@ -15,10 +15,10 @@ struct Figure : virtual IMove, virtual IScale, virtual IDraw, virtual IRotate {
 	void SetFocus(bool focus);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	bool GetVisible() const;
-	void SetVisible(bool visible);
+	virtual void SetVisible(bool visible);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	bool GetTrace() const;
-	void SetTrace(bool trace);
+	virtual void SetTrace(bool trace);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	bool GetTouch() const;
 	virtual void SetTouch(bool touch);
@@ -29,7 +29,7 @@ struct Figure : virtual IMove, virtual IScale, virtual IDraw, virtual IRotate {
 	std::vector<History> GetHistory() const;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	float GetRadius() const;
-	void SetRadius(float radius);
+	virtual void SetRadius(float radius);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	XY GetPosition() override;
 	void SetPosition(XY xy) override;

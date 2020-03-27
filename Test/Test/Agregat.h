@@ -39,11 +39,32 @@ protected:
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	sf::Shape* GetPicture() override;
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
+	void SetRadius(float radius) override {
+		for (auto& element : this->figures) {
+			element->SetRadius(radius);
+		}
+		if (this->radius != radius) this->radius = radius;
+	}
+	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	void SetTouch(bool touch) override {
 		for (auto& element : this->figures) {
 			element->SetTouch(touch);
 		}
 		if (this->isTouched != touch) this->isTouched = touch;
+	}
+	//-----------------------------------------------------------------------------------------------------------------------------------------------
+	void SetTrace(bool trace) override {
+		for (auto& element : this->figures) {
+			element->SetTrace(trace);
+		}
+		if (this->isTraced != trace) this->isTraced = trace;
+	}
+	//-----------------------------------------------------------------------------------------------------------------------------------------------
+	void SetVisible(bool visible) override {
+		for (auto& element : this->figures) {
+			element->SetVisible(visible);
+		}
+		if (this->isVisible != trace) this->isVisible = visible;
 	}
 private:
 	void CenterPos();

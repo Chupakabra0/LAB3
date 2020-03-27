@@ -256,8 +256,13 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<i
 				}
 			}
 			else if (string.find(FOCUS, 0) != -1) {
-				auto coordinates = Convert(string);
-				SetFigureFocus(shapes, coordinates, focus);
+				if (string.find(ALL, 0) != -1) {
+					SetFigureFocus(shapes, focus);
+				}
+				else {
+					auto coordinates = Convert(string);
+					SetFigureFocus(shapes, coordinates, focus);
+				}
 			}
 		}
 		if (string.find(SPEED_TEXT, 0) != -1) {
@@ -333,14 +338,12 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<i
 			}
 		}
 	}
-	else {
-		if (string.find(WIPE, 0) != -1) {
-			if (!shapes.empty()) {
-				if (string.find(ALL, 0) != -1) {
-					WipeAllFigure(shapes, focus);
-				}
-				else WipeFigure(shapes, focus);
+	else if (string.find(WIPE, 0) != -1) {
+		if (!shapes.empty()) {
+			if (string.find(ALL, 0) != -1) {
+				WipeAllFigure(shapes, focus);
 			}
+			else WipeFigure(shapes, focus);
 		}
 	}
 	string.erase();
@@ -598,10 +601,23 @@ void CMD::SetFigureScaleY(IScale* shape, std::vector<int>& coordinates) {
 	if (!coordinates.empty()) ShapeDealer::SetScale(shape, Scale(XY(1.f, coordinates[0])));
 }
 
+void CMD::SetFigureFocus(std::vector<Figure*>& shapes, std::vector<int>& focus) {
+		for (auto element : focus) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[element]));
+		focus.clear();
+		for (auto i = 0; i < shapes.size(); i++) {
+			focus.push_back(i);
+			ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[i]));
+		}
+		if (focus.empty()) {
+			focus.push_back(0);
+			if (!shapes.empty()) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[0]));
+		}
+}
+
 void CMD::SetFigureFocus(std::vector<Figure*>& shapes,  vector<int>& coordinates, std::vector<int>& focus) {
 	if (!coordinates.empty()) {
 		for (auto element : focus) ShapeDealer::SwitchFocus(dynamic_cast<Figure*>(shapes[element]));
-		focus.erase(focus.begin(), focus.end());
+		focus.clear();
 		for (auto element : coordinates) {
 			if (shapes.size() > element) {
 				focus.push_back(element);
