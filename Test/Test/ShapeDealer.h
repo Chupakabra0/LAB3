@@ -29,7 +29,6 @@ struct ShapeDealer {
 	static Figure* MakeCopy(Figure* figure);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	static void ObstacleScale(std::vector<Figure*>& shapes, int index);
-	static void IntersectProcedure(std::vector<Figure*>& shapes, int index);
 	static void DrawPosition(Figure* figure, sf::RenderWindow& window);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	static sf::Color ReverseColor(sf::Color color);

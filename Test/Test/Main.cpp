@@ -46,17 +46,20 @@ void Main::FileProcedure(std::vector<Figure*>& shapes, std::vector<int>& focus) 
 	config.close();
 }
 
-void Main::TextDisplay(RenderWindow& window, View camera, string cmd, bool cmdActive) {
+void Main::TextDisplay(RenderWindow& window, View camera, string cmd, bool cmdActive, figureID id) {
 
 	Text cmdText;
 	Text cmdActiveText;
+	Text idText;
 	TextProcedure(cmdText, std::move(cmd));
 	TextProcedure(cmdActiveText, "");
+	TextProcedure(idText, to_string(id));
 
 	Font font;
 	font.loadFromFile("BAUHS93.ttf");
 	cmdActiveText.setFont(font);
 	cmdText.setFont(font);
+	idText.setFont(font);
 
 	if (cmdActive) {
 		cmdActiveText.setString("CMD mode");
@@ -67,12 +70,15 @@ void Main::TextDisplay(RenderWindow& window, View camera, string cmd, bool cmdAc
 		cmdActiveText.setFillColor(Color::Red);
 	}
 
+	idText.setFillColor(Color(3, 238, 255));
 
 	cmdActiveText.setPosition(camera.getCenter().x + 750.f, camera.getCenter().y - 540.f);
+	idText.setPosition(camera.getCenter().x + 810.f, camera.getCenter().y + 410.f);
 	cmdText.setPosition(camera.getCenter().x - 960.f, camera.getCenter().y - 540.f);
 
 	window.draw(cmdText);
 	window.draw(cmdActiveText);
+	window.draw(idText);
 }
 
 void Main::TextProcedure(Text& text, std::string string) {
@@ -84,8 +90,16 @@ void Main::Program() {
 	Clock clock; // тут тикает время
 	std::string cmd; // тут командная строка
 	std::vector<int> focus = {0}; // вектор фигур, которые в фокусе
-	auto id = STAR; // id текущей фигуры
+	vector<figureID> typeFigure = {
+		CIRCLE,
+		TRIANGLE,
+		DIAMOND,
+		STAR,
+		TRAPEZOID
+	};
+	auto idFigure = 0; // id текущей фигуры
 	auto cmdActive = false; // активна ли консоль
+	auto coordinateActive = true; // активно ли отображение координат
 
 	FileProcedure(shapes, focus); // файловая процедура
 
@@ -108,28 +122,44 @@ void Main::Program() {
 
 			if (event.type == sf::Event::Closed) window.close(); // если нажат крестик, закрываем окно
 
-			if (!cmdActive) CMD::Key(shapes, event, focus, id); // если консоль неактивна, ловим ввод с клавиатуры
+			if (!cmdActive) CMD::Key(shapes, event, focus, typeFigure[idFigure]); // если консоль неактивна, ловим ввод с клавиатуры
 			else CMD::Text(shapes, cmd, event, focus); // иначе ловим ввод с клавиатуры и обновляем консоль
 
-			if (Keyboard::isKeyPressed(Keyboard::Key::Tilde)) // переключение режимов на "тильду"
-				if (time >= CMD::TIME) {
+			if (time >= CMD::TIME) {
+				if (Keyboard::isKeyPressed(Keyboard::Key::Tilde)) { // переключение режимов на "тильду"
 					cmdActive = !cmdActive;
 					cmd.erase();
-					time = 0.f;
 				}
+				if (Keyboard::isKeyPressed(Keyboard::Key::I)) {
+					if (idFigure + 1 >= typeFigure.size()) {
+						idFigure = 0;
+					}
+					else idFigure++;
+				}
+				if (Keyboard::isKeyPressed(Keyboard::Key::K)) {
+					if (idFigure - 1 < 0) {
+						idFigure = typeFigure.size() - 1;
+					}
+					else idFigure--;
+				}
+				if (Keyboard::isKeyPressed(Keyboard::Key::Comma)) {
+					coordinateActive = !coordinateActive;
+				}
+				time = 0.f;
+			}
 		}
 
 		window.clear(); // чистим окно перед рисованием нового кадра
 		for (auto i = 0; i < shapes.size(); i++) {
 			ShapeDealer::ObstacleScale(shapes, i); // проверяем столкновение фигур
 			ShapeDealer::Draw(dynamic_cast<IDraw*>(shapes[i]), window); // рисуем фигуру
-			if (std::find(focus.begin(), focus.end(), i) != focus.end()) ShapeDealer::DrawPosition(shapes[i], window);
+			if (coordinateActive && std::find(focus.begin(), focus.end(), i) != focus.end()) ShapeDealer::DrawPosition(shapes[i], window);
 		}
 
 		if (!shapes.empty() && !focus.empty()) camera.setCenter(shapes[focus[0]]->GetPosition().GetX(),
 																shapes[focus[0]]->GetPosition().GetY());
 		// меняем фигуру, к которой приклеплена камера
-		TextDisplay(window, camera, cmd, cmdActive); // выводим текст
+		TextDisplay(window, camera, cmd, cmdActive, typeFigure[idFigure]); // выводим текст
 
 		window.setView(camera); // устанавливаем камеру
 		window.display(); // обновляем кадр

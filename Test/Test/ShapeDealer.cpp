@@ -117,10 +117,6 @@ void ShapeDealer::ObstacleScale(std::vector<Figure*>& shapes, int index) {
 	shapes[index]->SetTouch(false);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-void ShapeDealer::IntersectProcedure(std::vector<Figure*>& shapes, int index) {
-
-}
-
 void ShapeDealer::DrawPosition(Figure* figure, sf::RenderWindow& window) {
 	sf::Text text;
 	Main::TextProcedure(text, std::to_string(static_cast<long long>(figure->GetPosition().GetX())) + ";" + std::to_string(static_cast<long long>(figure->GetPosition().GetY())));
