@@ -54,8 +54,8 @@ void Trapezoid::Draw(sf::RenderWindow& window) {
 	window.draw(this->pic);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-sf::ConvexShape Trapezoid::GetPicture() const {
-	return this->pic;
+sf::Shape* Trapezoid::GetPicture()  {
+	return &this->pic;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 Figure* Trapezoid::Copy() {

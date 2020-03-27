@@ -17,7 +17,7 @@ public:
 protected:
 	void Draw(sf::RenderWindow& window) override;
 	//---------------------------------------------------------------------
-	sf::CircleShape GetPicture() const;
+	sf::Shape* GetPicture() override;
 	//---------------------------------------------------------------------
 	Figure* Copy() override;
 	//---------------------------------------------------------------------

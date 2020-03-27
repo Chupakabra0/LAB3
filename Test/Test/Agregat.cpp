@@ -4,7 +4,7 @@
 
 Agregat::Agregat(const Agregat& copy): Agregat(copy.GetFigures()) {}
 
-Agregat::Agregat(std::vector<Figure*> figures): figures(std::move(figures)) {
+Agregat::Agregat(std::vector<Figure*> figures): figures(std::move(figures)), Figure(XY(NULL)) {
 	this->CenterPos();
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
@@ -114,6 +114,10 @@ void Agregat::SetColor(sf::Color rgba) {
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 Figure* Agregat::Copy() {
 	return new Agregat(*this);
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+sf::Shape* Agregat::GetPicture() {
+	return nullptr;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 std::vector<Figure*> Agregat::GetFigures() const {

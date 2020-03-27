@@ -1,5 +1,8 @@
 #include "ShapeDealer.h"
 #include "Main.h"
+#include "Agregat.h"
+#include "CMD.h"
+#include <iostream>
 
 void ShapeDealer::Draw(IDraw* draw, sf::RenderWindow& window) {
 	draw->Draw(window);
@@ -66,18 +69,58 @@ Figure* ShapeDealer::MakeCopy(Figure* figure) {
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 void ShapeDealer::ObstacleScale(std::vector<Figure*>& shapes, int index) {
-	for (auto i = 0; i < shapes.size(); i++) {
-		if (i != index) {
-			if (CountRadius(shapes[index], shapes[i]) <= shapes[index]->GetRadius() + shapes[i]->GetRadius()) {
-				shapes[index]->SetTouch(true);
-			}
-			else if (shapes[index]->GetTouch()) {
-				shapes[index]->SetTouch(false);
+	if (!dynamic_cast<Agregat*>(shapes[index])) {
+		for (auto i = 0; i < shapes.size(); i++) {
+			if (i != index) {
+				if (!dynamic_cast<Agregat*>(shapes[i])) {
+					if (shapes[index]->GetPicture()->getGlobalBounds().intersects(shapes[i]->GetPicture()->getGlobalBounds())) {
+						shapes[index]->SetTouch(true);
+						return;
+					}
+				}
+				else {
+					auto temp = dynamic_cast<Agregat*>(shapes[i])->GetFigures();
+					for (auto& j : temp) {
+						if (shapes[index]->GetPicture()->getGlobalBounds().intersects(j->GetPicture()->getGlobalBounds())) {
+							shapes[index]->SetTouch(true);
+							return;
+						}
+					}
+				}
 			}
 		}
 	}
+	else {
+		auto temp = dynamic_cast<Agregat*>(shapes[index])->GetFigures();
+		for (auto& j : temp) {
+			for (auto i = 0; i < shapes.size(); i++) {
+				if (i != index) {
+					if (!dynamic_cast<Agregat*>(shapes[i])) {
+						if (j->GetPicture()->getGlobalBounds().intersects(shapes[i]->GetPicture()->getGlobalBounds())) {
+							shapes[index]->SetTouch(true);
+							return;
+						}
+					}
+					else {
+						auto temp = dynamic_cast<Agregat*>(shapes[i])->GetFigures();
+						for (auto& k : temp) {
+							if (j->GetPicture()->getGlobalBounds().intersects(k->GetPicture()->getGlobalBounds())) {
+								shapes[index]->SetTouch(true);
+								return;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	shapes[index]->SetTouch(false);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
+void ShapeDealer::IntersectProcedure(std::vector<Figure*>& shapes, int index) {
+
+}
+
 void ShapeDealer::DrawPosition(Figure* figure, sf::RenderWindow& window) {
 	sf::Text text;
 	Main::TextProcedure(text, std::to_string(static_cast<long long>(figure->GetPosition().GetX())) + ";" + std::to_string(static_cast<long long>(figure->GetPosition().GetY())));

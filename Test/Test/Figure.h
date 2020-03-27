@@ -21,7 +21,7 @@ struct Figure : virtual IMove, virtual IScale, virtual IDraw, virtual IRotate {
 	void SetTrace(bool trace);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	bool GetTouch() const;
-	void SetTouch(bool touch);
+	virtual void SetTouch(bool touch);
 	//-----------------------------------------------------------------------------------------------------------------------------------------------
 	size_t GetTraceNum() const;
 	void SetTraceNum(size_t trace);
