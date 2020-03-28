@@ -42,7 +42,7 @@ struct CMD {
 	const static std::string COLOR;
 	const static std::string FOCUS;
 	const static std::string SCALE;
-	const static std::string DELETE;
+	const static std::string DESTROY;
 	const static std::string VISIBLE;
 	const static std::string TRACE;
 	const static std::string UP;

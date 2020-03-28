@@ -85,7 +85,7 @@ void Main::TextDisplay(RenderWindow& window, View camera, string cmd, bool cmdAc
 	window.draw(idText);
 }
 
-void Main::TextProcedure(Text& text, std::string string) {
+void Main::TextProcedure(Text& text, sf::String string) {
 	text.setString(string);
 }
 
@@ -101,9 +101,11 @@ void Main::Program() {
 		STAR,
 		TRAPEZOID
 	};
+	
 	auto idFigure = 0; // id текущей фигуры
 	auto cmdActive = false; // активна ли консоль
 	auto coordinateActive = true; // активно ли отображение координат
+	auto tip = false; //активна ли справка на экране
 
 	FileProcedure(shapes, focus); // файловая процедура
 
@@ -113,6 +115,7 @@ void Main::Program() {
 	RenderWindow window{VideoMode(1920, 1080), L"Геометрические фигуры"}; // создание окна
 	View camera; // создание камеры
 	camera.reset(FloatRect(0.f, 0.f, 1920.f, 1080.f)); // ресет камеры
+	camera.setCenter(0.f, 0.f);
 
 	while (window.isOpen()) {
 		// пока окно открыто
@@ -149,6 +152,9 @@ void Main::Program() {
 				if (Keyboard::isKeyPressed(Keyboard::Key::Comma)) {
 					coordinateActive = !coordinateActive;
 				}
+				if (Keyboard::isKeyPressed(Keyboard::Key::F1)) {
+					tip = !tip;
+				}
 				time = 0.f;
 			}
 		}
@@ -164,6 +170,7 @@ void Main::Program() {
 																shapes[focus[0]]->GetPosition().GetY());
 		// меняем фигуру, к которой приклеплена камера
 		TextDisplay(window, camera, cmd, cmdActive, typeFigure[idFigure]); // выводим текст
+		if (tip) Tip(window, camera);
 
 		window.setView(camera); // устанавливаем камеру
 		window.display(); // обновляем кадр

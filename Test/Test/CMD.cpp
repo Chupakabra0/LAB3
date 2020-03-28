@@ -24,7 +24,7 @@ const std::string CMD::ANGLE       = "Angle";
 const std::string CMD::COLOR       = "Color";
 const std::string CMD::SCALE       = "Scale";
 const std::string CMD::FOCUS       = "Focus";
-const std::string CMD::DELETE      = "Delete";
+const std::string CMD::DESTROY     = "Destroy";
 const std::string CMD::VISIBLE     = "Visible";
 const std::string CMD::TRACE       = "Trace";
 const std::string CMD::DOWN		   = "Down";
@@ -146,7 +146,7 @@ void CMD::Key(std::vector<Figure*>& shapes, Event& event, std::vector<int>& focu
 			Check(shapes, cmd, focus);
 		}
 		if (event.key.code == Keyboard::Key::Subtract) {
-			cmd = DELETE;
+			cmd = DESTROY;
 			RememberToFile(cmd);
 			Check(shapes, cmd, focus);
 		}
@@ -285,7 +285,7 @@ void CMD::Check(std::vector<Figure*>& shapes, std::string& string, std::vector<i
 			}
 		}
 	}
-	else if (string.find(DELETE, 0) != -1) {
+	else if (string.find(DESTROY, 0) != -1) {
 		if (string.find(ALL, 0) != -1) {
 			DeleteFigure(shapes);
 			focus.erase(focus.begin(), focus.end());
