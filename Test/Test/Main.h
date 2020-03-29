@@ -13,7 +13,15 @@ struct Main {
 	static void TextProcedure(Text& text, sf::String string);
 	static void Program();
 
-	static void Tip(RenderWindow& window, View& camera) {
+	static void DrawProccess(RenderWindow& window, vector<Figure*>& shapes, vector<int>& focus, bool coordinateActive) {
+		for (auto i = 0; i < shapes.size(); i++) {
+			ShapeDealer::ObstacleScale(shapes, i); // проверяем столкновение фигур
+			ShapeDealer::Draw(dynamic_cast<IDraw*>(shapes[i]), window); // рисуем фигуру
+			if (coordinateActive && std::find(focus.begin(), focus.end(), i) != focus.end()) ShapeDealer::DrawPosition(shapes[i], window);
+		}
+	}
+	
+	static void Tip(RenderWindow& window) {
 		
 		ifstream file("instructions.txt");
 		std::string instructions;
@@ -29,7 +37,7 @@ struct Main {
 			for (auto i = 0; !file.eof(); i += text.getCharacterSize()) {
 				getline(file, instructions);
 				text.setString(instructions);
-				text.setPosition(camera.getCenter().x - 960.f, camera.getCenter().y - 540.f + i);
+				text.setPosition(-960.f, - 540.f + i);
 				window.draw(text);
 			}
 		}

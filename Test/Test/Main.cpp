@@ -15,8 +15,7 @@ void Main::FileProcedure(std::vector<Figure*>& shapes, std::vector<int>& focus) 
 	string temp; // строка в которой хранится ответ
 	do {
 		cout << "Do you want to open config-file?" << endl; // выводим вопрос
-		//getline(cin, temp); // вводим ответ
-		temp = "+";
+		getline(cin, temp); // вводим ответ
 		system("cls");
 	}
 	while (!(temp == "yes" || temp == "y" || temp == "Yes" || temp == "Y" || temp == "+"
@@ -114,6 +113,7 @@ void Main::Program() {
 
 	RenderWindow window{VideoMode(1920, 1080), L"Геометрические фигуры"}; // создание окна
 	View camera; // создание камеры
+	View temp;
 	camera.reset(FloatRect(0.f, 0.f, 1920.f, 1080.f)); // ресет камеры
 	camera.setCenter(0.f, 0.f);
 
@@ -129,8 +129,11 @@ void Main::Program() {
 
 			if (event.type == sf::Event::Closed) window.close(); // если нажат крестик, закрываем окно
 
-			if (!cmdActive) CMD::Key(shapes, event, focus, typeFigure[idFigure]); // если консоль неактивна, ловим ввод с клавиатуры
-			else CMD::Text(shapes, cmd, event, focus); // иначе ловим ввод с клавиатуры и обновляем консоль
+			if (!tip) {
+				if (!cmdActive) CMD::Key(shapes, event, focus, typeFigure[idFigure]); // если консоль неактивна, ловим ввод с клавиатуры
+				else CMD::Text(shapes, cmd, event, focus); // иначе ловим ввод с клавиатуры и обновляем консоль
+
+			}
 
 			if (time >= CMD::TIME) {
 				if (Keyboard::isKeyPressed(Keyboard::Key::Tilde)) { // переключение режимов на "тильду"
@@ -154,24 +157,33 @@ void Main::Program() {
 				}
 				if (Keyboard::isKeyPressed(Keyboard::Key::F1)) {
 					tip = !tip;
+					camera.setCenter(0.f, 0.f);
+				}
+				if (tip) {
+					if (Keyboard::isKeyPressed(Keyboard::Key::Up) && camera.getCenter().y > 0.f) {
+						camera.setCenter(camera.getCenter().x, camera.getCenter().y - 10.f);
+					}
+					if (Keyboard::isKeyPressed(Keyboard::Key::Down) && camera.getCenter().y < 800.f) {
+						camera.setCenter(camera.getCenter().x, camera.getCenter().y + 10.f);
+					}
 				}
 				time = 0.f;
 			}
 		}
 
 		window.clear(); // чистим окно перед рисованием нового кадра
-		for (auto i = 0; i < shapes.size(); i++) {
-			//ShapeDealer::ObstacleScale(shapes, i); // проверяем столкновение фигур
-			ShapeDealer::Draw(dynamic_cast<IDraw*>(shapes[i]), window); // рисуем фигуру
-			if (coordinateActive && std::find(focus.begin(), focus.end(), i) != focus.end()) ShapeDealer::DrawPosition(shapes[i], window);
+
+		if (tip) {
+			Tip(window); // выводим справку
 		}
-
-		if (!shapes.empty() && !focus.empty()) camera.setCenter(shapes[focus[0]]->GetPosition().GetX(),
-																shapes[focus[0]]->GetPosition().GetY());
-		// меняем фигуру, к которой приклеплена камера
-		TextDisplay(window, camera, cmd, cmdActive, typeFigure[idFigure]); // выводим текст
-		if (tip) Tip(window, camera);
-
+		else {
+			DrawProccess(window, shapes, focus, coordinateActive); // выводим фигуры
+			TextDisplay(window, camera, cmd, cmdActive, typeFigure[idFigure]); // выводим текст
+			if (!shapes.empty() && !focus.empty()) {
+				camera.setCenter(shapes[focus[0]]->GetPosition().GetX(), shapes[focus[0]]->GetPosition().GetY());
+			}
+		}
+		
 		window.setView(camera); // устанавливаем камеру
 		window.display(); // обновляем кадр
 	}
