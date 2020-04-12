@@ -1,4 +1,5 @@
 #include "Figure.h"
+#include "Agregat.h"
 
 Figure::Figure(): Figure(XY(0)) {}
 Figure::Figure(XY xy): Figure(xy, sf::Color::Red) {}
@@ -133,6 +134,17 @@ float Figure::GetRadius() const {
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 void Figure::set(bool& first, const bool& second) {
 	if (first != second) first = second;
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+bool Figure::Intersects(Figure* shape) {
+	if (!dynamic_cast<Agregat*>(shape)) {
+		return this->GetPicture()->getGlobalBounds().intersects(shape->GetPicture()->getGlobalBounds());
+	}
+	auto temp = dynamic_cast<Agregat*>(shape)->GetFigures();
+	for (auto& j : temp) {
+		if (j->Intersects(this)) return true;
+	}
+	return false;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 Figure::~Figure() = default;

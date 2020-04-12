@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
-#include <string>
 
 #include "Main.h"
 

@@ -15,6 +15,7 @@ struct Main {
 
 	static void DrawProccess(RenderWindow& window, vector<Figure*>& shapes, vector<int>& focus, bool coordinateActive) {
 		for (auto i = 0; i < shapes.size(); i++) {
+			//-
 			ShapeDealer::ObstacleScale(shapes, i); // проверяем столкновение фигур
 			ShapeDealer::Draw(dynamic_cast<IDraw*>(shapes[i]), window); // рисуем фигуру
 			if (coordinateActive && std::find(focus.begin(), focus.end(), i) != focus.end()) ShapeDealer::DrawPosition(shapes[i], window);
@@ -31,7 +32,7 @@ struct Main {
 		else {
 			Text text;
 			Font font;
-			font.loadFromFile("MKARCADECAPS.ttf");
+			font.loadFromFile("BAUHS93.ttf");
 			text.setFont(font);
 			text.setFillColor(Color::White);
 			for (auto i = 0; !file.eof(); i += text.getCharacterSize()) {

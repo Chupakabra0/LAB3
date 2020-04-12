@@ -69,48 +69,11 @@ Figure* ShapeDealer::MakeCopy(Figure* figure) {
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 void ShapeDealer::ObstacleScale(std::vector<Figure*>& shapes, int index) {
-	if (!dynamic_cast<Agregat*>(shapes[index])) {
-		for (auto i = 0; i < shapes.size(); i++) {
-			if (i != index) {
-				if (!dynamic_cast<Agregat*>(shapes[i])) {
-					if (shapes[index]->GetPicture()->getGlobalBounds().intersects(shapes[i]->GetPicture()->getGlobalBounds())) {
-						shapes[index]->SetTouch(true);
-						return;
-					}
-				}
-				else {
-					auto temp = dynamic_cast<Agregat*>(shapes[i])->GetFigures();
-					for (auto& j : temp) {
-						if (shapes[index]->GetPicture()->getGlobalBounds().intersects(j->GetPicture()->getGlobalBounds())) {
-							shapes[index]->SetTouch(true);
-							return;
-						}
-					}
-				}
-			}
-		}
-	}
-	else {
-		auto temp = dynamic_cast<Agregat*>(shapes[index])->GetFigures();
-		for (auto& j : temp) {
-			for (auto i = 0; i < shapes.size(); i++) {
-				if (i != index) {
-					if (!dynamic_cast<Agregat*>(shapes[i])) {
-						if (j->GetPicture()->getGlobalBounds().intersects(shapes[i]->GetPicture()->getGlobalBounds())) {
-							shapes[index]->SetTouch(true);
-							return;
-						}
-					}
-					else {
-						auto temp = dynamic_cast<Agregat*>(shapes[i])->GetFigures();
-						for (auto& k : temp) {
-							if (j->GetPicture()->getGlobalBounds().intersects(k->GetPicture()->getGlobalBounds())) {
-								shapes[index]->SetTouch(true);
-								return;
-							}
-						}
-					}
-				}
+	for (auto i = 0; i < shapes.size(); i++) {
+		if (i != index) {
+			if (shapes[index]->Intersects(shapes[i])) {
+				shapes[index]->SetTouch(true);
+				return;
 			}
 		}
 	}

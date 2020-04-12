@@ -113,7 +113,6 @@ void Main::Program() {
 
 	RenderWindow window{VideoMode(1920, 1080), L"Геометрические фигуры"}; // создание окна
 	View camera; // создание камеры
-	View temp;
 	camera.reset(FloatRect(0.f, 0.f, 1920.f, 1080.f)); // ресет камеры
 	camera.setCenter(0.f, 0.f);
 

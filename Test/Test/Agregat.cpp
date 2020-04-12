@@ -112,7 +112,7 @@ void Agregat::SetColor(sf::Color rgba) {
 	this->color = rgba;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
-Figure* Agregat::Copy() {
+Agregat* Agregat::Copy() {
 	return new Agregat(*this);
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
@@ -126,6 +126,44 @@ std::vector<Figure*> Agregat::GetFigures() const {
 		temp.push_back(ShapeDealer::MakeCopy(element));
 	}
 	return temp;
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+bool Agregat::Intersects(Figure* shape) {
+	for (auto i = 0; i < this->GetFigures().size(); i++) {
+		if (this->GetFigures()[i]->Intersects(shape)) {
+			this->GetFigures()[i]->SetTouch(true);
+			return true;
+		}
+	}
+	return false;
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+void Agregat::SetRadius(float radius) {
+	for (auto& element : this->figures) {
+		element->SetRadius(radius);
+	}
+	if (this->radius != radius) this->radius = radius;
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+void Agregat::SetTouch(bool touch) {
+	for (auto& element : this->figures) {
+		element->SetTouch(touch);
+	}
+	if (this->isTouched != touch) this->isTouched = touch;
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+void Agregat::SetTrace(bool trace) {
+	for (auto& element : this->figures) {
+		element->SetTrace(trace);
+	}
+	if (this->isTraced != trace) this->isTraced = trace;
+}
+//-----------------------------------------------------------------------------------------------------------------------------------------------
+void Agregat::SetVisible(bool visible) {
+	for (auto& element : this->figures) {
+		element->SetVisible(visible);
+	}
+	if (this->isVisible != trace) this->isVisible = visible;
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------
 void Agregat::CenterPos() {
