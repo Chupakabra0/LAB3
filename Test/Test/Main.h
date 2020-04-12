@@ -24,7 +24,7 @@ struct Main {
 	
 	static void Tip(RenderWindow& window) {
 		
-		ifstream file("instructions.txt");
+		ifstream file("instruction.txt");
 		std::string instructions;
 		if (!file.is_open()) {
 			instructions = "Error";
@@ -32,7 +32,7 @@ struct Main {
 		else {
 			Text text;
 			Font font;
-			font.loadFromFile("BAUHS93.ttf");
+			font.loadFromFile("MKARCADECAPS.ttf");
 			text.setFont(font);
 			text.setFillColor(Color::White);
 			for (auto i = 0; !file.eof(); i += text.getCharacterSize()) {

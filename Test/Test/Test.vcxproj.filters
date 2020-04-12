@@ -111,4 +111,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="tex.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+    <Text Include="instruction.txt">
+      <Filter>Файлы ресурсов</Filter>
+    </Text>
+  </ItemGroup>
 </Project>
